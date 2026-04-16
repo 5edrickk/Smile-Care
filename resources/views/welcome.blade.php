@@ -54,7 +54,7 @@
                 <div class="text-[13px] leading-[20px] flex-1 p-6 pb-6 lg:p-20 lg:pb-10 bg-white dark:bg-[#161615] dark:text-[#EDEDEC] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] rounded-bl-lg rounded-br-lg lg:rounded-tl-lg lg:rounded-br-none">
 
                     <!--ÉCRIVEZ VOTRE NOM ICI-->
-                    <h1><span class="text-green-500">Sèdrick</span>, Bernardo, <span class="text-red-500">Alexandre</span></h1>
+                    <h1><span class="text-green-500">Sèdrick</span>, Bernardo, Abdoulaye <span class="text-red-500">Alexandre</span></h1>
                     <h1 class="mb-1 font-medium">Let's get started</h1>
 
                     <p class="mb-2 text-[#706f6c] dark:text-[#A1A09A]">With so many options available to you,<br /> we suggest you start with the following:</p>
