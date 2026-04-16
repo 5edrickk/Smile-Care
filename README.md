@@ -89,4 +89,5 @@ docker compose -f compose.dev.yaml exec workspace bash
 composer install
 composer update
 npm install
+php artisan migrate:fresh
 ```
