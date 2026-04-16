@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolesSeeder::class,
             MedicamentsSeeder::class,
-            EtatRendezVousSeeder::class,
+            EtatsRendezVousSeeder::class,
         ]);
 
         User::factory()->create([
