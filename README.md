@@ -88,6 +88,7 @@ docker compose -f compose.dev.yaml exec workspace bash
 ```
 composer install
 composer update
+npx @tailwindcss/upgrade --force
 npm install
 php artisan migrate:fresh
 ```
