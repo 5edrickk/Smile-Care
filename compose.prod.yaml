@@ -43,7 +43,7 @@ services:
     ports:
       - "${DB_PORT:-3306}:3306"
     environment:
-      - MYSQL_DATABASE=${DB_DATABASE:-labolaravel}
+      - MYSQL_DATABASE=${DB_DATABASE:-smilecare}
       - MYSQL_USER=${DB_USERNAME:-laravel}
       - MYSQL_PASSWORD=${DB_PASSWORD:-f4q2DG2obVd3}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-f4q2DG2obVd3}
@@ -52,7 +52,16 @@ services:
     networks:
       - laravel-production
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u${DB_USERNAME:-laravel}", "-p${DB_PASSWORD:-f4q2DG2obVd3}"]
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u${DB_USERNAME:-laravel}",
+          "-p${DB_PASSWORD:-f4q2DG2obVd3}",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
