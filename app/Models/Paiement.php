@@ -17,4 +17,8 @@ class Paiement extends Model
     {
         return this->belongsTo(RendezVous::class, "id");
     }
+    public function etatsPaiement(): BelongsTo
+    {
+        return this->belongsTo(EtatsPaiement::class, "id");
+    }
 }

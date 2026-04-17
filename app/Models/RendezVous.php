@@ -23,4 +23,9 @@ class RendezVous extends Model
     {
         return this->belongsTo(EtatsRendezVous::class, "id");
     }
+
+    public function service(): BelongsTo
+    {
+        return this->belongsTo(Services::class, "id");
+    }
 }

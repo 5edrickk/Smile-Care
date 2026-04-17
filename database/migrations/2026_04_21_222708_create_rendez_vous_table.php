@@ -16,6 +16,7 @@ return new class extends Migration
             $table->bigInteger('id_user')->unsigned();
             $table->bigInteger('id_dentiste')->unsigned();
             $table->bigInteger('id_etat')->unsigned();
+            $table->bigInteger('id_service')->unsigned();
 
             $table->timestamp('heure_date');
             $table->string('commentaire')->nullable();
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->foreign('id_user')->references('id')->on('users');
             $table->foreign('id_dentiste')->references('id')->on('users');
             $table->foreign('id_etat')->references('id')->on('etats_rendez_vous');
+            $table->foreign('id_service')->references('id')->on('services');
         });
     }
 
