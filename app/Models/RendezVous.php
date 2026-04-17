@@ -10,7 +10,7 @@ class RendezVous extends Model
 {
     //
     use HasFactory;
-    protected $table = "InnoDB";
+    protected $table = "rendez_vous";
     protected $primaryKey = "id";
     public $timestamps = false;
 
