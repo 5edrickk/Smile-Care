@@ -13,6 +13,7 @@ class RendezVousController extends Controller
     public function index()
     {
         //
+        return view('rendezVous/rendezvous');
     }
 
     /**
