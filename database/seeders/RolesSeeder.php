@@ -24,12 +24,16 @@ class RolesSeeder extends Seeder
             'description' => 'Role de base des employés standards'],
 
             ['id' => 3,
-            'name' => 'receptionniste',
+            'name' => 'Receptionniste',
             'description' => 'Role propre au receptionnistes'],
 
             ['id' => 4,
             'name' => 'Dentiste',
             'description' => 'Role propre au dentistes'],
+
+            ['id' => 5,
+            'name' => 'Client',
+            'description' => 'Role pour les clients'],
         ]);
     }
 }
