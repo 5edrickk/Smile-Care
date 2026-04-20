@@ -16,16 +16,16 @@ class RendezVous extends Model
 
     public function user(): BelongsTo
     {
-        return this->belongsTo(User::class, "id");
+        return $this->belongsTo(User::class, "id");
     }
 
     public function etatsRendezVous(): BelongsTo
     {
-        return this->belongsTo(EtatsRendezVous::class, "id");
+        return $this->belongsTo(EtatsRendezVous::class, "id");
     }
 
     public function service(): BelongsTo
     {
-        return this->belongsTo(Services::class, "id");
+        return $this->belongsTo(Services::class, "id");
     }
 }
