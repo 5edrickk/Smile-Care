@@ -19,7 +19,11 @@ _ide_helper.php
 /.nova
 /.vscode
 /.zed
+
 CLAUDE.md
+.claude/
+.claudeignore
+*.claude
 
 Homestead.json
 Homestead.yaml

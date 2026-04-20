@@ -1,7 +1,17 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RendezVousController;
 use Illuminate\Support\Facades\Route;
+
+// Route::controller(NomDuControleur::class)->group(function() { 
+//     Route::get('/Route', 'MethodeDuControleur')->name('NomDeLaRoute'); 
+//     });
+
+//Route--> c'est l'url que l'on va utiliser pour accéder à la page
+//NomDeLaRoute--> c'est le nom de la route que l'on va utiliser pour accéder à la page
+//MethodeDuControleur--> c'est la méthode que l'on va utiliser pour afficher la page
+//NomDuControleur--> c'est le nom du contrôleur que l'on va utiliser pour afficher la page
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,6 +25,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::controller(RendezVousController::class)->group(function() {
+    Route::get('/rendezvous', 'index')->name('rendezvous');
 });
 
 require __DIR__.'/auth.php';

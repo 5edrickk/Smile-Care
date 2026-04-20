@@ -21,14 +21,7 @@ class DatabaseSeeder extends Seeder
             RolesSeeder::class,
             MedicamentsSeeder::class,
             EtatsRendezVousSeeder::class,
-        ]);
-
-        User::factory()->create([
-            'name' => 'Debug',
-            'prenom' => 'Debug',
-            'id_role' => 1,
-            'email' => 'debug@debug.com',
-            'password' => 'debug',
+            UserSeeder::class,
         ]);
     }
 }
