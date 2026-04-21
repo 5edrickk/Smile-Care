@@ -3,9 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RendezVousController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MfaController;
 
-// Route::controller(NomDuControleur::class)->group(function() { 
-//     Route::get('/Route', 'MethodeDuControleur')->name('NomDeLaRoute'); 
+// Route::controller(NomDuControleur::class)->group(function() {
+//     Route::get('/Route', 'MethodeDuControleur')->name('NomDeLaRoute');
 //     });
 
 //Route--> c'est l'url que l'on va utiliser pour accéder à la page
@@ -29,6 +30,17 @@ Route::middleware('auth')->group(function () {
 
 Route::controller(RendezVousController::class)->group(function() {
     Route::get('/rendezvous', 'index')->name('rendezvous');
+});
+
+Route::controller(MfaController::class)->group(function () {
+    // Page "vérifiez votre courriel" — accessible sans être connecté
+    Route::get('/mfa/notice', 'notice')->name('mfa.notice');
+
+    // Lien cliqué depuis le courriel — accessible sans être connecté
+    Route::get('/mfa/verify', 'verify')->name('mfa.verify');
+
+    // Renvoyer le lien — accessible sans être connecté
+    Route::post('/mfa/resend', 'resend')->name('mfa.resend');
 });
 
 require __DIR__.'/auth.php';
