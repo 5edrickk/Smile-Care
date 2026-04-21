@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             EtatsRendezVousSeeder::class,
             UserSeeder::class,
             TypesServicesSeeder::class,
-            ServicesUserSeeder::class,
+            ServicesSeeder::class,
         ]);
     }
 }
