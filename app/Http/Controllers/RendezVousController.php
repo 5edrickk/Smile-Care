@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\RendezVous;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class RendezVousController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() : View
     {
         //
-        return view('rendezVous/rendezvous');
+        return view('rendezVous/rendezvous', ['rendezVous' => RendezVous::all()]);
     }
 
     /**
@@ -34,10 +35,18 @@ class RendezVousController extends Controller
 
     /**
      * Display the specified resource.
+     * 
      */
-    public function show(RendezVous $rendezVous)
+    public function show(RendezVous $rendezVous): View
     {
-        //
+        
+        if ($rendezVous) {
+            $rendezVous = RendezVous::find($rendezVous->id);
+            return view('rendezVous/rendezvousId', ['rendezVous' => $rendezVous]);
+        } else {
+            $rendezVous = RendezVous::all();
+            return view('rendezVous/rendezvous', ['rendezVous' => $rendezVous]);
+        }
     }
 
     /**

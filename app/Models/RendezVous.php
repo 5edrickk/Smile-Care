@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,5 +28,15 @@ class RendezVous extends Model
     public function service(): BelongsTo
     {
         return $this->belongsTo(Services::class, "id");
+    }
+    public function formaterDate(): string
+    {
+                                                //modifier pour permettre de mettre anglais aussi jsp comment
+        return Carbon::parse($this->heure_date)->locale('fr')->translatedFormat('j F Y');
+    }
+
+    public function formaterHeure(): string
+    {
+        return Carbon::parse($this->heure_date)->format('H:i');
     }
 }

@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
 
 Route::controller(RendezVousController::class)->group(function() {
     Route::get('/rendezvous', 'index')->name('rendezvous');
+    Route::get('/rendezvous/{id}', 'show')->name('rendezvousID'); // ajouter un middleware pour verifier l'auth et verifier si l'user a le droit d'acceder a cette route
+    
 });
 
 require __DIR__.'/auth.php';
