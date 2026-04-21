@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             MedicamentsSeeder::class,
             EtatsRendezVousSeeder::class,
             UserSeeder::class,
+            TypesServicesSeeder::class,
+            ServicesSeeder::class,
         ]);
     }
 }
