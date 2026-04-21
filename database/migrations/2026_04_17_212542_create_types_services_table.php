@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('types_services', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description')->nullable();
+            $table->string('description', 500)->nullable();
         });
     }
 
