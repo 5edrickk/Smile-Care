@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RendezVousController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MfaController;
+use App\Http\Controllers\PaiementController;
 
 // Route::controller(NomDuControleur::class)->group(function() {
 //     Route::get('/Route', 'MethodeDuControleur')->name('NomDeLaRoute');
@@ -41,6 +42,18 @@ Route::controller(MfaController::class)->group(function () {
 
     // Renvoyer le lien — accessible sans être connecté
     Route::post('/mfa/resend', 'resend')->name('mfa.resend');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::controller(PaiementController::class)->group(function () {
+        Route::get('/paiements', 'index')->name('paiements.index');
+        Route::get('/paiements/create', 'create')->name('paiements.create');
+        Route::post('/paiements', 'store')->name('paiements.store');
+        Route::get('/paiements/search', 'search')->name('paiements.search');
+        Route::get('/paiements/{id}', 'show')->name('paiements.show');
+        Route::get('/paiements/{id}/edit', 'edit')->name('paiements.edit');
+        Route::put('/paiements/{id}', 'update')->name('paiements.update');
+    });
 });
 
 require __DIR__.'/auth.php';
