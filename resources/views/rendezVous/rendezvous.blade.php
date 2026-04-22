@@ -17,12 +17,11 @@
                     {{ __('Rechercher') }}
                 </button>
             </div>
-
             <div class="mb-6 flex justify-end">
-                <button type="button" wire:click="createRendezVous"
-                    class="rounded-lg border border-cyan-500 bg-cyan-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-cyan-600">
-                    {{ __('Créer un Rendez-vous') }}
-                </button>
+                <a href="{{ route('rendezvousCreate') }}"
+                    class="text-md rounded-lg border border-cyan-400 bg-white px-4 py-2 font-semibold text-cyan-500 shadow-sm hover:bg-cyan-50">
+                    {{ __('Créer un rendez-vous') }}
+                </a>
             </div>
 
             <div class="space-y-4">
@@ -35,24 +34,22 @@
                     @foreach ($rendezVous as $rdv)
                         <div class="overflow-hidden rounded-lg shadow-md">
                             <a href="{{ route('rendezvousID', ['id' => $rdv->id]) }}">
-                                {{-- pour la date et lheure du rdv --}}
                                 <div class="bg-cyan-500 px-4 py-2 text-white">
                                     <p class="font-semibold">{{ $rdv->formaterDate() }}</p>
                                     <p class="text-sm">{{ $rdv->formaterHeure() }}</p>
                                 </div>
 
-                                {{-- pour les informations du patient --}}
                                 <div class="flex items-center gap-4 bg-white px-4 py-4">
-
                                     {{-- limage du patient va etre ici --}}
                                     <div
                                         class="flex h-14 w-14 flex-shrink-0 items-end justify-center overflow-hidden rounded-full bg-gray-300">
                                     </div>
-
-                                    {{-- pour le nom, lage et le traitement --}}
                                     <div>
-                                        <p class="font-semibold text-gray-800">{{ $rdv->user->name }}</p>
-                                        {{-- <p class="text-sm text-gray-800">{{ $rdv->user->age }} ans</p> --}}
+                                        <p class="font-semibold text-gray-800">
+                                            {{ $rdv->user->name . ' ' . $rdv->user->prenom }}
+                                        </p>
+                                        <p class="text-sm text-gray-500">Dentiste :
+                                            {{ $rdv->dentiste->name . ' ' . $rdv->dentiste->prenom }}</p>
                                         <p class="text-sm text-gray-900">Traitement : {{ $rdv->service->name }}</p>
                                     </div>
                                 </div>

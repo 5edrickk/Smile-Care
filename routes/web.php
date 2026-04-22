@@ -4,14 +4,14 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RendezVousController;
 use Illuminate\Support\Facades\Route;
 
-// Route::controller(NomDuControleur::class)->group(function() { 
-//     Route::get('/Route', 'MethodeDuControleur')->name('NomDeLaRoute'); 
+// Route::controller(NomDuControleur::class)->group(function() {
+//     Route::get('/Route', 'MethodeDuControleur')->name('NomDeLaRoute');
 //     });
 
-//Route--> c'est l'url que l'on va utiliser pour accéder à la page
-//NomDeLaRoute--> c'est le nom de la route que l'on va utiliser pour accéder à la page
-//MethodeDuControleur--> c'est la méthode que l'on va utiliser pour afficher la page
-//NomDuControleur--> c'est le nom du contrôleur que l'on va utiliser pour afficher la page
+// Route--> c'est l'url que l'on va utiliser pour accéder à la page
+// NomDeLaRoute--> c'est le nom de la route que l'on va utiliser pour accéder à la page
+// MethodeDuControleur--> c'est la méthode que l'on va utiliser pour afficher la page
+// NomDuControleur--> c'est le nom du contrôleur que l'on va utiliser pour afficher la page
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,10 +27,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::controller(RendezVousController::class)->group(function() {
+Route::controller(RendezVousController::class)->group(function () {
     Route::get('/rendezvous', 'index')->name('rendezvous');
+    Route::get('/rendezvous/create', 'create')->name('rendezvousCreate');
+    Route::post('/rendezvous', 'store')->name('rendezvousStore');
     Route::get('/rendezvous/{id}', 'show')->name('rendezvousID'); // ajouter un middleware pour verifier l'auth et verifier si l'user a le droit d'acceder a cette route
-    
+    Route::get('/rendezvous/{id}/edit', 'edit')->name('rendezvousEdit');
+    Route::put('/rendezvous/{id}', 'update')->name('rendezvousUpdate');
+    Route::post('/rendezvous/destroy', 'destroy')->name('rendezvousDestroy');
 });
 
 require __DIR__.'/auth.php';

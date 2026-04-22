@@ -14,51 +14,33 @@
     <div class="py-8">
         <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
 
-            {{-- A remplacer par les vraies donnees du $rendezVous passe en parametre --}}
-            @php
-                $rdv = [
-                    'date' => '26 mai 2026',
-                    'time' => '11h30',
-                    'commentaire' =>
-                        'Le patient ressent une gêne du côté droit. Prévoir une radiographie de contrôle si nécessaire.',
-                    'id_etat' => 3,
-                    'id_service' => 5,
-                    'id_client' => 14,
-                    'id_employe' => 7,
-                ];
-            @endphp
-
             <div class="overflow-hidden rounded-lg bg-white shadow-md">
-
-                {{-- En-tête avec le nom du client à gauche et la date/heure à droite --}}
                 <div class="flex items-center justify-between bg-cyan-500 px-6 py-5 text-white">
                     <div class="text-base font-semibold">
-                        <span class="font-semibold"> {{ 'George Dubois' }} </span>
+                        <span class="font-semibold"> {{ $rendezVous->user->name . ' ' . $rendezVous->user->prenom }}
+                        </span>
                     </div>
                     <div class="text-right">
-                        <p class="text-lg font-semibold">{{ $rdv['date'] }}</p>
-                        <p class="text-sm opacity-90">{{ $rdv['time'] }}</p>
+                        <p class="text-lg font-semibold">{{ $rendezVous->formaterDate() }}</p>
+                        <p class="text-sm opacity-90">{{ $rendezVous->formaterHeure() }}</p>
                     </div>
                 </div>
 
-
-                {{-- tout changer pour prender les donnes de l'objet rendezvous passee en parametre --}}
-                <div class="grid grid-cols-1 gap-4 border-b border-gray-100 px-6 py-5 sm:grid-cols-2">
+                <div class="grid grid-cols-1 gap-4 px-6 py-5 sm:grid-cols-2">
                     <div>
                         <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">
                             {{ __('État') }}
                         </p>
                         <p class="mt-1 flex items-center text-sm text-gray-900">
-                            {{ $rdv['id_etat'] }}
-                            @if ($rdv['id_etat'] == 1)
+                            {{ $etatRendezVous->name }}
+                            @if ($etatRendezVous->id == 1)
                                 <x-heroicon-o-clock class="mr-1 h-4 w-4 pl-1 text-red-500" />
-                            @elseif ($rdv['id_etat'] == 2)
+                            @elseif ($etatRendezVous->id == 2)
                                 <x-heroicon-o-clock class="mr-1 h-4 w-4 pl-1 text-yellow-500" />
-                            @elseif ($rdv['id_etat'] == 3)
+                            @elseif ($etatRendezVous->id == 3)
                                 <x-heroicon-o-check class="mr-1 h-4 w-4 pl-1 text-green-500" />
                             @endif
                         </p>
-
 
                         </p>
                     </div>
@@ -66,28 +48,50 @@
                         <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">
                             {{ __('Service') }}
                         </p>
-                        <p class="mt-1 text-sm text-gray-900">{{ $rdv['id_service'] }}</p>
+                        <div class="flex flex-col gap-2">
+                            <p class="mt-1 border-b border-gray-300 pb-2 text-sm text-gray-900">
+                                Nom du service : {{ $rendezVous->service->name }}</p>
+                            <p class="mt-1 text-sm text-gray-900">Description : {{ $rendezVous->service->description }}
+                            </p>
+                        </div>
                     </div>
                     <div>
                         <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">
                             {{ __('Client') }}
                         </p>
-                        <p class="mt-1 text-sm text-gray-900">{{ $rdv['id_client'] }}</p>
+                        <p class="mt-1 text-sm text-gray-900">
+                            {{ $rendezVous->user->prenom . ' ' . $rendezVous->user->name }}</p>
                     </div>
                     <div>
                         <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                            {{ __('Employé') }}
+                            {{ __('Dentiste responsable') }}
                         </p>
-                        <p class="mt-1 text-sm text-gray-900">{{ $rdv['id_employe'] }}</p>
+                        <p class="mt-1 text-sm text-gray-900">
+                            {{ $dentiste->prenom . ', ' . $dentiste->name }}</p>
                     </div>
                 </div>
 
-                {{-- Commentaire --}}
                 <div class="px-6 py-5">
                     <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">
                         {{ __('Commentaire') }}
                     </p>
-                    <p class="mt-1 text-sm leading-relaxed text-gray-700">{{ $rdv['commentaire'] }}</p>
+                    <p class="mt-1 text-sm leading-relaxed text-gray-700">{{ $rendezVous->commentaire }}</p>
+                </div>
+                <div class="flex justify-end gap-3 px-6 py-5">
+                    <a href="{{ route('rendezvousEdit', ['id' => $rendezVous->id]) }}"
+                        class="text-md rounded-lg border border-cyan-400 bg-white px-4 py-2 font-semibold text-cyan-500 shadow-sm hover:bg-cyan-50">
+                        <p class="">Modifier</p>
+                    </a>
+
+                    <form method="POST" action="{{ route('rendezvousDestroy') }}">
+                        @csrf
+                        <button type="submit" name="id_rendez_vous" value="{{ $rendezVous->id }}"
+                            class="inline-flex items-center justify-center gap-2 rounded-lg border border-transparent bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:bg-red-800">
+                            <x-heroicon-o-trash class="h-4 w-4 text-white" />
+                            <p class="text-sm font-semibold text-white">Supprimer</p>
+                        </button>
+                    </form>
+
                 </div>
             </div>
 

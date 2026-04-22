@@ -34,11 +34,11 @@ class User extends Authenticatable
 
     public function role(): BelongsTo
     {
-        return this->belongTo(Roles::class, 'id');
+        return $this->belongTo(Roles::class, 'id');
     }
 
     public function medicament(): BelongsTo
     {
-        return this->belongsTo(Medicament::class, 'id');
+        return $this->belongsTo(Medicament::class, 'id');
     }
 }
