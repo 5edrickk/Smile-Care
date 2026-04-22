@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class EtatsPaiement extends Model
 {
-    //
-    protected $table = "etats_paiement";
-    protected $primaryKey = "id";
-    public $timestamps = false;
+    use HasFactory;
+
+    protected $table      = 'etats_paiements';
+    protected $primaryKey = 'id';
+    public $timestamps    = false;
 }

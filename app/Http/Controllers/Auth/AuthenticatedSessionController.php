@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Http\Controllers\MfaController;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -26,9 +27,12 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+        // Au lieu de connecter directement, on déconnecte immédiatement
+        // et on lance le processus MFA
+        Auth::logout();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // Appeler le MfaController pour envoyer le lien courriel
+        return app(MfaController::class)->send($request);
     }
 
     /**

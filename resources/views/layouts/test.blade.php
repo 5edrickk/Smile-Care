@@ -4,11 +4,14 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'SmileCare') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
 
         <!-- Styles / Scripts -->
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
@@ -19,17 +22,41 @@
             </style>
         @endif
     </head>
-    <x-header/>
-    <body class="bg-[#EBEBEB]">
-        <div class="flex max-w-[100%] min-h-[80vh]">
-
-        <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
-            <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
-                <!-- ARTICLES -->
-            </main>
-        </div>
-        @if (Route::has('login'))
-            <div class="h-14.5 hidden lg:block"></div>
-        @endif
+    <body class="bg-gradient-to-b from-hospitalfashion to-lighttooth text-[#1b1b18] flex p-6 lg:p-8 items-center justify-center min-h-screen flex-col">
+        <main class="flex w-full justify-center">
+            <div class="max-w-200 min-w-100 h-auto flex flex-col justify-center items-center">
+                <div class="flex justify-center items-center">
+                    <img src="{{ asset('img/BigMouth.png') }}" alt="A pixel art of tooth with eyes" class="w-25">
+                    <h1 class="text-white text-6xl m-5">Smile Care</h1>
+                </div>
+                <div class="w-4/5 px-6 py-4 bg-white shadow-md overflow-hidden rounded-lg mt-5 m-auto">
+                    <!-- Session Status -->
+                    <form method="POST" action="http://localhost/login">
+                        <input type="hidden" name="_token" value="BsFeqWtJywoZrc9NOEiLGbFKycTa8CxqxtGrMZmt" autocomplete="off">
+                        <!-- Email Address -->
+                        <div>
+                            <label class="block font-medium text-sm text-gray-700" for="email">Email</label>
+                            <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-xs block mt-1 w-full" id="email" type="email" name="email" required="required" autofocus="autofocus" autocomplete="username">
+                        </div>
+                        <!-- Password -->
+                        <div class="mt-4">
+                            <label class="block font-medium text-sm text-gray-700" for="password">Password</label>
+                            <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-xs block mt-1 w-full" id="password" type="password" name="password" required="required" autocomplete="current-password">
+                        </div>
+                        <!-- Remember Me -->
+                        <div class="block mt-4">
+                            <label for="remember_me" class="inline-flex items-center">
+                                <input id="remember_me" type="checkbox" class="rounded-sm border-gray-300 text-indigo-600 shadow-xs focus:ring-indigo-500" name="remember">
+                                <span class="ms-2 text-sm text-gray-600">Remember me</span>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-end mt-4">
+                            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="http://localhost/forgot-password">Forgot your password?</a>
+                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ms-3">Log in</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
     </body>
 </html>
