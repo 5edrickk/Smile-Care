@@ -25,7 +25,13 @@ class UserSeeder extends Seeder
             'prenom' => 'Mr.',
             'id_role' => '1',
             'email' => 'admin@mail.com',
-            'password' => Hash::make('=user123')]
+            'password' => Hash::make('=user123')],
+
+            ['name' => 'Jean',
+            'prenom' => 'Christophe',
+            'id_role' => '4',
+            'email' => 'abc@abc.com',
+            'password' => Hash::make('test')],
         ]);
     }
 }

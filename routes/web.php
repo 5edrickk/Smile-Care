@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RendezVousController;
 use Illuminate\Support\Facades\Route;
 
-// Route::controller(NomDuControleur::class)->group(function() { 
-//     Route::get('/Route', 'MethodeDuControleur')->name('NomDeLaRoute'); 
+// Route::controller(NomDuControleur::class)->group(function() {
+//     Route::get('/Route', 'MethodeDuControleur')->name('NomDeLaRoute');
 //     });
 
 //Route--> c'est l'url que l'on va utiliser pour accéder à la page
@@ -25,6 +26,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::controller(UserController::class)->group(function() {
+    Route::get('/utilisateurs/{id_role}', 'index')->name('utilisateurs');
+    Route::get('utilisateurAdd', 'store')->name('utilisateurAdd');
 });
 
 Route::controller(RendezVousController::class)->group(function() {
