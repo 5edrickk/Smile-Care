@@ -1,6 +1,4 @@
-// Fonction globale appelée par le bouton Rechercher
 function rechercherPaiements() {
-
     const query = document.getElementById('search-input').value.trim();
 
     if (query === '') {
@@ -10,7 +8,6 @@ function rechercherPaiements() {
 
     const tbody = document.getElementById('tbody-paiements');
 
-    // Afficher un indicateur de chargement
     tbody.innerHTML = `
         <tr>
             <td colspan="6" class="px-6 py-8 text-center text-sm text-gray-400">
@@ -19,7 +16,6 @@ function rechercherPaiements() {
         </tr>
     `;
 
-    // Requête fetch asynchrone vers notre route de recherche
     fetch(`/paiements/search?query=${encodeURIComponent(query)}`, {
         method: 'GET',
         headers: {
@@ -28,7 +24,6 @@ function rechercherPaiements() {
         }
     })
     .then(function (response) {
-        // Vérifier que la réponse est ok (statut 200)
         if (!response.ok) {
             throw new Error('Erreur serveur : ' + response.status);
         }
@@ -50,7 +45,6 @@ function rechercherPaiements() {
 }
 
 function afficherResultats(paiements) {
-
     const tbody = document.getElementById('tbody-paiements');
 
     if (paiements.length === 0) {
@@ -65,7 +59,6 @@ function afficherResultats(paiements) {
         return;
     }
 
-    // Construire les lignes du tableau dynamiquement
     tbody.innerHTML = paiements.map(function (p) {
         return `
             <tr class="hover:bg-gray-50">
@@ -100,15 +93,24 @@ function afficherResultats(paiements) {
     }).join('');
 }
 
-// Réinitialiser — recharger la page pour retrouver tous les paiements
 function reinitialiserRecherche() {
     document.getElementById('search-input').value = '';
     window.location.reload();
 }
 
-// Rechercher en appuyant sur Entrée
 document.addEventListener('DOMContentLoaded', function () {
-    const input = document.getElementById('search-input');
+    const btnRechercher    = document.getElementById('btn-rechercher');
+    const btnReinitialiser = document.getElementById('btn-reinitialiser');
+    const input            = document.getElementById('search-input');
+
+    if (btnRechercher) {
+        btnRechercher.addEventListener('click', rechercherPaiements);
+    }
+
+    if (btnReinitialiser) {
+        btnReinitialiser.addEventListener('click', reinitialiserRecherche);
+    }
+
     if (input) {
         input.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {

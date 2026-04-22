@@ -8,11 +8,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let valide = true;
 
-        // Réinitialiser les erreurs
         reinitialiserErreurs();
 
-        // Valider le montant
-        // Format accepté : 99, 99.9, 99.99
+        // Valider le montant — format : 99 ou 99.9 ou 99.99
         const montant = document.getElementById('montant').value.trim();
         if (!/^\d+(\.\d{1,2})?$/.test(montant)) {
             afficherErreur('montant', 'Le montant doit être un nombre valide (ex: 99.99).');
@@ -43,7 +41,6 @@ document.addEventListener('DOMContentLoaded', function () {
             valide = false;
         }
 
-        // Bloquer la soumission si invalide
         if (!valide) {
             e.preventDefault();
         }
