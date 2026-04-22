@@ -53,7 +53,7 @@ class UserController extends Controller
             }
         }
         else {
-            return view('login');
+            return view('auth/login');
         }
 
         return view('usersView', [
