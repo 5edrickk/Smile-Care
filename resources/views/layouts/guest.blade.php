@@ -18,10 +18,10 @@
         <div class="bg-gradient-to-b from-hospitalfashion to-lighttooth min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
             <div>
                 <div class="text-center">
-                    <a href="/" class="text-3xl font-bold text-sky-500 tracking-wide">
-                        SmileCare
-                    </a>
-                    <p class="text-xs text-gray-400 mt-1">Système de gestion clinique</p>
+                        <div class="flex justify-center items-center">
+                            <img src="{{ asset('img/BigMouth.png') }}" alt="A pixel art of tooth with eyes" class="w-25">
+                            <h1 class="text-white text-6xl m-5">Smile Care</h1>
+                        </div>
                 </div>
             </div>
 
