@@ -8,21 +8,21 @@
             p-0">
 
     <!-- Panneau des Dentistes/Administrateurs -->
-    @if(auth()->user() != null)
-        <div class="min-w-[20%] min-h-full
-                    text-[1.5rem]
-                    h-full
-                    border-r-[2px] border-[#EBEBEB]
-                    flex flex-col items-center justify-center">
+    <div class="min-w-[20%] min-h-full
+                text-[1.5rem]
+                h-full
+                border-r-[2px] border-[#EBEBEB]
+                flex flex-col items-center justify-center">
+        @if(auth()->user() != null)
             <p>Panneau</p>
-            <p>des {{ Str::lower(Roles::where('id', '=', auth()->user()->id_role)->value('name')) }} </p>
-        </div>
-    @endif
+            <p>{{ Str::lower(Roles::where('id', '=', auth()->user()->id_role)->value('name')) }} </p>
+        @endif
+    </div>
 
     <!-- [Logo] SmileCare -->
     <div class="min-w-[50%]
                 flex items-center justify-left">
-        <img src="{{ asset('img/logo.png') }}" class="max-w-[15%] ml-[25px]" alt="Logo">
+        <img src="{{ asset('img/logo.png') }}" class="max-w-[15%] max-h-[95%] ml-[25px]" alt="Logo">
         <p class="text-[3rem]">Smile Care</p>
     </div>
 
@@ -31,7 +31,7 @@
                 flex text-right items-center">
         <div class="min-w-[75%]">
             @if(auth()->user() != null)
-                <p>Bienvenu, {{ auth()->user()->name }} !</p>
+                <p>Bienvenu, {{ auth()->user()->prenom . ' ' . auth()->user()->name }} !</p>
                 <p class="text-[#D6D6D6]">{{ Roles::where('id', '=', auth()->user()->id_role)->value('name') }}</p>
             @else
                 <p>Vous n'êtes pas connecté !</p>

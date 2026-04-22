@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\RendezVous;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Validator;
 
@@ -35,8 +36,28 @@ class UserController extends Controller
     }
 
     public function index(int $id_role) {
+
+        if(auth()->user() != null) {
+            if(auth()->user()->id_role === 4) {
+                $users = [];
+                foreach(User::where('id_role', '=', $id_role)->get() as $user) {
+                    foreach(RendezVous::where('id_dentiste', '=', auth()->user()->id)->get() as $rdv) {
+                        if($user->id === $rdv->id_user) {
+                            array_push($users, $user);
+                        }
+                    }
+                }
+                return view('usersView', [
+                    'users' => $users,
+                ]);
+            }
+        }
+        else {
+            return view('welcome');
+        }
+
         return view('usersView', [
-            'users' => User::where('id_role', '=', $id_role)->get()
+            'users' => User::where('id_role', '=', $id_role)->get(),
         ]);
     }
 

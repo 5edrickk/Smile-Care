@@ -11,48 +11,54 @@
         <!-- ADMINISTRATEUR -->
             @if(auth()->user()->id_role === 1)
                 <!-- LES DENTISTES -->
-                @if(str_contains(url()->full(), '/utilisateurs/4'))
-                    <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-[auto] p-1
-                                bg-[#C9F1FD] rounded-lg border-[4px] border-[#00A4D3]">
-                        <img src="{{ asset('img/dent.png') }}" class="h-[100%]">
-                        <p>Les dentistes</p>
-                    </div>
-                @else
-                    <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-[auto] p-1">
-                        <img src="{{ asset('img/dent.png') }}" class="h-[100%]">
-                        <p>Les dentistes</p>
-                    </div>
-                @endif
+                <a href="{{ route('utilisateurs', ['id_role' => 4]) }}">
+                    @if(str_contains(url()->full(), '/utilisateurs/4'))
+                        <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-[auto] p-1
+                                    bg-[#C9F1FD] rounded-lg border-[4px] border-[#00A4D3]">
+                            <img src="{{ asset('img/dent.png') }}" class="h-[100%]">
+                            <p>Les dentistes</p>
+                        </div>
+                    @else
+                        <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-[auto] p-1">
+                            <img src="{{ asset('img/dent.png') }}" class="h-[100%]">
+                            <p>Les dentistes</p>
+                        </div>
+                    @endif
+                </a>
 
-                @if(str_contains(url()->full(), '/utilisateurs/5'))
-                    <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-[auto] p-1
-                                bg-[#C9F1FD] rounded-lg border-[4px] border-[#00A4D3]">
-                        <img src="{{ asset('img/liste.png') }}" class="h-[100%]">
-                        <p>Les clients</p>
-                    </div>
-                @else
-                    <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-[auto] p-1">
-                        <img src="{{ asset('img/liste.png') }}" class="h-[100%]">
-                        <p>Les clients</p>
-                    </div>
-                @endif
+                <a href="{{ route('utilisateurs', ['id_role' => 5]) }}">
+                    @if(str_contains(url()->full(), '/utilisateurs/5'))
+                        <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-[auto] p-1
+                                    bg-[#C9F1FD] rounded-lg border-[4px] border-[#00A4D3]">
+                            <img src="{{ asset('img/liste.png') }}" class="h-[100%]">
+                            <p>Les clients</p>
+                        </div>
+                    @else
+                        <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-[auto] p-1">
+                            <img src="{{ asset('img/liste.png') }}" class="h-[100%]">
+                            <p>Les clients</p>
+                        </div>
+                    @endif
+                </a>
             @endif
 
         <!-- DENTISTES -->
             @if(auth()->user()->id_role === 4)
                 <!-- MES CLIENTS -->
-                @if(str_contains(url()->full(), '/utilisateurs/5'))
-                    <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-[auto] p-1
-                                bg-[#C9F1FD] rounded-lg border-[4px] border-[#00A4D3]">
-                        <img src="{{ asset('img/liste.png') }}" class="h-[100%]">
-                        <p>Mes clients</p>
-                    </div>
-                @else
-                    <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-[auto] p-1">
-                        <img src="{{ asset('img/liste.png') }}" class="h-[100%]">
-                        <p>Mes clients</p>
-                    </div>
-                @endif
+                <a href="{{ route('utilisateurs', ['id_role' => 5]) }}">
+                    @if(str_contains(url()->full(), '/utilisateurs/5'))
+                        <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-[auto] p-1
+                                    bg-[#C9F1FD] rounded-lg border-[4px] border-[#00A4D3]">
+                            <img src="{{ asset('img/liste.png') }}" class="h-[100%]">
+                            <p>Mes clients</p>
+                        </div>
+                    @else
+                        <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-[auto] p-1">
+                            <img src="{{ asset('img/liste.png') }}" class="h-[100%]">
+                            <p>Mes clients</p>
+                        </div>
+                    @endif
+                </a>
             @endif
 
             <!-- RENDEZ-VOUS -->

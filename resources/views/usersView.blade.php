@@ -19,9 +19,30 @@
                         p-4
                         text-lg font-bold
                         shadow-xs">
-                        {{ $user->prenom . ' ' . $user->name }}
+                        {{ $user->name . ' ' . $user->prenom }}
                         <br>
                         {{ Number::format(Carbon::parse($user->dateNaissance)->diffInYears(now()), precision:0) . ' ans'}}
+                    </div>
+
+                    <div class="w-[100%] h-[66%]
+                                flex">
+                        <div class="w-[35%]
+                                    flex items-center">
+                            @if(File::exists(public_path('img/UsersImages/' . $user->photo)))
+                                <img src="{{ asset('img/userIcon.png') }}" class="w-full p-3 rounded-[100px]" alt="Logo">
+                            @else
+                                <img src="{{ asset('img/UsersImages/' . $user->photo) }}" class="w-full p-3 rounded-[100px]" alt="Logo">
+                            @endif
+                        </div>
+                        <div class="w-[65%]
+                                    flex flex-col justify-center">
+                            <p><strong>Téléphone : </strong> {{ " " . $user->telephone }}</p>
+                            <p><strong>Addresse : </strong> {{ " " . $user->addresse }}</p>
+                            @if($user->id_role === 5)
+                                <p><strong>Prochain traitement : </strong><br>Traitement</p>
+                                <p><strong>Date du prochain traitement : </strong><br>Traitement date</p>
+                            @endif
+                        </div>
                     </div>
                 </div>
             @endforeach
