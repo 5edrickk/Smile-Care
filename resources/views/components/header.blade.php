@@ -27,8 +27,7 @@
     </div>
 
     <!-- Bienvenu _______ -->
-    <div class="min-w-[30%]
-                flex text-right items-center">
+    <div class="flex min-w-[30%] items-center text-right">
         <div class="min-w-[75%]">
             @if(auth()->user() != null)
                 <p>Bienvenu, {{ auth()->user()->prenom . ' ' . auth()->user()->name }} !</p>
