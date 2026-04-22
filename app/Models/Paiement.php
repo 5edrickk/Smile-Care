@@ -2,23 +2,40 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Paiement extends Model
 {
     use HasFactory;
-    protected $table = "paiements";
-    protected $primaryKey = "id";
-    public $timestamps = false;
 
+    protected $table      = 'paiements';
+    protected $primaryKey = 'id';
+    public $timestamps    = false;
+
+    protected $fillable = [
+        'montant',
+        'id_rendez_vous',
+        'id_etat',
+        'id_type',
+    ];
+
+    // Un paiement appartient à un rendez-vous
     public function rendezVous(): BelongsTo
     {
-        return this->belongsTo(RendezVous::class, "id");
+        return $this->belongsTo(RendezVous::class, 'id_rendez_vous');
     }
-    public function etatsPaiement(): BelongsTo
+
+    // Un paiement appartient à un état (ex: payé, en attente)
+    public function etatPaiement(): BelongsTo
     {
-        return this->belongsTo(EtatsPaiement::class, "id");
+        return $this->belongsTo(EtatsPaiement::class, 'id_etat');
+    }
+
+    // Un paiement appartient à un type (ex: carte, cash)
+    public function typePaiement(): BelongsTo
+    {
+        return $this->belongsTo(TypesPaiements::class, 'id_type');
     }
 }
