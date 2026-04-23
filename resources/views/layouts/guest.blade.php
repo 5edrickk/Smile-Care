@@ -15,7 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="bg-gradient-to-b from-hospitalfashion to-lighttooth min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+        <div class="bg-linear-to-b from-hospitalfashion to-lighttooth min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
             <div>
                 <div class="text-center">
                         <div class="flex justify-center items-center">

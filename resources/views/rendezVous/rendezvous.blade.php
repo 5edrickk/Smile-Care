@@ -1,7 +1,7 @@
 <x-header/>
 <body class="bg-[#EBEBEB]">
     <div class="flex
-                max-w-[100%] min-h-[80vh]">
+                max-w-full min-h-[80vh]">
         <x-article/>
         <div class="py-8 w-[80%]">
             <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
@@ -40,7 +40,7 @@
                                     <div class="flex items-center gap-4 bg-white px-4 py-4">
                                         {{-- limage du patient va etre ici --}}
                                         <div
-                                            class="flex h-14 w-14 flex-shrink-0 items-end justify-center overflow-hidden rounded-full bg-gray-300">
+                                            class="flex h-14 w-14 shrink-0 items-end justify-center overflow-hidden rounded-full bg-gray-300">
                                         </div>
                                         <div>
                                             <p class="font-semibold text-gray-800">
