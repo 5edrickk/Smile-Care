@@ -93,7 +93,10 @@ class UserController extends Controller
         $user->update($validated->all());
     }
 
-    public function destroy(User $user) {
+    public function destroy(int $id) {
+        $user = User::find($id);
+        $rdv = RendezVous::where('id_dentiste', '=', $id)->delete();
+
         $oldName = $user->name;
         $user->delete();
         return back()->withSuccess($oldName . " a été supprimer avec succès !");

@@ -32,6 +32,18 @@ class UserSeeder extends Seeder
             'id_role' => '4',
             'email' => 'abc@abc.com',
             'password' => Hash::make('test')],
+
+            ['name' => 'John',
+            'prenom' => 'Receptionniste',
+            'id_role' => '3',
+            'email' => 'test@test.com',
+            'password' => Hash::make('test')],
+
+            ['name' => 'John',
+            'prenom' => 'Client',
+            'id_role' => '5',
+            'email' => 'a@a.com',
+            'password' => Hash::make('test')],
         ]);
     }
 }
