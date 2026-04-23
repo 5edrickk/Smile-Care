@@ -14,9 +14,6 @@
                     <div class="bg-[#00C8F8] rounded-lg font-semibold text-lg p-2">{{ $categorie->name }}</div>
                     <div class="p-3 hidden" id="servicesSecrets{{$categorie->id}}">
                         <p class="mb-3"><?php echo $categorie->description; ?></p>
-                        @if ()
-
-                        @endif
                         <p class="font-bold">Traitements et services:</p>
                             <?php $bool = 0?>
                             @foreach ($services as $service)
