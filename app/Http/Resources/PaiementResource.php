@@ -13,8 +13,6 @@ class PaiementResource extends JsonResource
             'id'             => $this->id,
             'montant'        => $this->montant,
             'id_rendez_vous' => $this->id_rendez_vous,
-
-            // retourne le nom au lieu de juste l'ID
             'etat'           => $this->etatPaiement->name ?? null,
             'type'           => $this->typePaiement->name ?? null,
         ];
