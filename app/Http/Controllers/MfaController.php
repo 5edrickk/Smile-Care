@@ -62,7 +62,7 @@ class MfaController extends Controller
      */
     public function verify(Request $request): mixed
     {
-        $token = $request->query('token'); // récupérer ?token=xxx dans l'URL
+        $token = $request->query('token');
 
         // Chercher l'utilisateur qui possède ce token
         $user = User::where('mfa_token', $token)->first();
