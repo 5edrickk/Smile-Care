@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TypesServices;
+use App\Models\Services;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -14,7 +15,8 @@ class TypesServicesController extends Controller
     public function index() : View
     {
         return view('services/services', [
-            'typesServices' => TypesServices::All()
+            'typesServices' => TypesServices::All(),
+            'services' => Services::All()
         ]);
     }
 

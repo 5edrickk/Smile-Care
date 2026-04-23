@@ -11,11 +11,9 @@ class ServicesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() : View
+    public function index()
     {
-       // return view('services/services', [
-        //    'services' => Services::All()
-        //]);
+        return Services::All();
     }
 
     /**

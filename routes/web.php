@@ -35,7 +35,6 @@ Route::controller(RendezVousController::class)->group(function() {
 
 Route::controller(TypesServicesController::class)->group(function() {
     Route::get('/services', 'index')->name('services');
-    Route::get('/service/{id}', 'show')->name('service');
 });
 
 require __DIR__.'/auth.php';
