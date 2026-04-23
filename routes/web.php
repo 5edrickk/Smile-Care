@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
 Route::controller(UserController::class)->group(function() {
     Route::get('/utilisateurs/{id_role}', 'index')->name('utilisateurs');
     Route::get('utilisateurAdd', 'store')->name('utilisateurAdd');
+    Route::get('utilisateurDelete/{id}', 'destroy')->name('utilisateurDelete');
 });
 
 Route::controller(RendezVousController::class)->group(function() {

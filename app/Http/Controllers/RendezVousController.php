@@ -17,6 +17,14 @@ class RendezVousController extends Controller
     public function index(): View
     {
         //
+        if(auth()->user() != null) {
+            if(auth()->user()->id_role === 4) {
+                return view('rendezVous/rendezvous',
+                    ['rendezVous' => RendezVous::where('id_dentiste', '=', auth()->user()->id)->with('user', 'dentiste', 'service')->get(),
+                ]);
+            }
+        }
+
         $rendezVous = RendezVous::with('user', 'dentiste', 'service')->get();
 
         return view('rendezVous/rendezvous', ['rendezVous' => $rendezVous]);

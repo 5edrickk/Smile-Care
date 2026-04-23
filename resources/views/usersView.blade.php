@@ -7,7 +7,7 @@
         <x-article/>
         <div class="pl-25 pr-25 pt-6 pb-6
                     grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 p-10
-                    min-h-[70%] min-w-[80%] max-w-[80%]">
+                    min-h-[70%] w-[80%]">
             <!-- HERE TO FILTER IF USER SHOULD SEE THESE USERS -->
             @foreach($users as $user)
                 <div class="min-w-[33%] h-[300px]
@@ -18,10 +18,22 @@
                         rounded-t-[15px]
                         p-4
                         text-lg font-bold
-                        shadow-xs">
-                        {{ $user->name . ' ' . $user->prenom }}
-                        <br>
-                        {{ Number::format(Carbon::parse($user->dateNaissance)->diffInYears(now()), precision:0) . ' ans'}}
+                        shadow-xs
+                        flex justify-between">
+                        <div class="w-[50%]">
+                            {{ $user->name . ' ' . $user->prenom }}
+                            <br>
+                            {{ Number::format(Carbon::parse($user->dateNaissance)->diffInYears(now()), precision:0) . ' ans'}}
+                        </div>
+                        <div class="w-[50%]
+                                    flex justify-end">
+                            @if(auth()->user()->id_role === 1)
+                                <x-heroicon-o-pencil-square class="w-[12%] mr-2 ml-2 text-[#006E8C] hover:text-[#C9F1FD]"/>
+                                <a href="{{ route('utilisateurDelete', $user->id) }}" class="w-[12%] mr-2 ml-2">
+                                    <x-heroicon-o-trash class="text-red-500 hover:text-[#FDC9C9]"/>
+                                </a>
+                            @endif
+                        </div>
                     </div>
 
                     <div class="w-[100%] h-[66%]

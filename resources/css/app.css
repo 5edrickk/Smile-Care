@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@import 'flatpickr/dist/flatpickr.css';
 
 @plugin '@tailwindcss/forms';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
