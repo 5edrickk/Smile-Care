@@ -88,6 +88,8 @@ class UserController extends Controller
         }
 
         $users = User::where('id_role', '=', $id_role)->get();
+        // $traitement = RendezVous::orderBy('heure_date')->where('heure_date', '>=', now())->first();
+        // $service = Services::find($traitement->id_service);
         return view('usersView', [
             'users' => $users,
         ]);

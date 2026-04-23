@@ -53,7 +53,12 @@
                             <p><strong>Téléphone : </strong> {{ " " . $user->telephone }}</p>
                             <p><strong>Addresse : </strong> {{ " " . $user->addresse }}</p>
 
-
+                            {{-- @if(str_contains(url()->full(), '/utilisateurs/5'))
+                                @if($user->id_role === 5 && (auth()->user()->id_role === 1 || auth()->user()->id_role === 4))
+                                    <p><strong>Prochain traitement : </strong><br>{{ $service->name }}</p>
+                                    <p><strong>Date du prochain traitement : </strong><br>{{ $traitement->heure_date }}</p>
+                                @endif
+                            @endif --}}
                         </div>
                     </div>
                 </div>
@@ -68,6 +73,7 @@
             mt-[-58px]
             sticky bottom-0 left-[100%] p-4
             rounded-t-lg
-            text-green-500">
+            text-green-500
+            flex justify-center align-middle">
     <a href="{{ route('utilisateurForm', -1) }}">Ajouter un utilisateur</a>
 </div>
