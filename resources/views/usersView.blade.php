@@ -29,7 +29,8 @@
                                     flex justify-end">
                             @if(auth()->user()->id_role === 1)
                                 <x-heroicon-o-pencil-square class="w-[12%] mr-2 ml-2 text-[#006E8C] hover:text-[#C9F1FD]"/>
-                                <a href="{{ route('utilisateurDelete', $user->id) }}" class="w-[12%] mr-2 ml-2">
+                                <a href="{{ route('utilisateurDelete', $user->id) }}" class="w-[12%] mr-2 ml-2
+                                                                                            flex justify-center align-middle">
                                     <x-heroicon-o-trash class="text-red-500 hover:text-[#FDC9C9]"/>
                                 </a>
                             @endif
