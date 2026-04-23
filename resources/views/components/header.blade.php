@@ -2,7 +2,7 @@
 @use('App\Models\Roles', 'Roles')
 @use('Illuminate\Support\Facades\File', 'File')
 <div class="sticky top-0 min-w-full h-[20vh]
-            bg-gradient-to-t from-[#009CCF] to-[#B0EEFF]
+            bg-linear-to-t from-[#009CCF] to-[#B0EEFF]
             flex
             text-white font-bold
             p-0">
@@ -11,7 +11,7 @@
     <div class="min-w-[20%] min-h-full
                 text-[1.5rem]
                 h-full
-                border-r-[2px] border-[#EBEBEB]
+                border-r-2 border-[#EBEBEB]
                 flex flex-col items-center justify-center">
         @if(auth()->user() != null)
             <p>Panneau</p>
