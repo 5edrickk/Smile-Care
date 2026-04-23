@@ -9,10 +9,11 @@ use App\Models\TypesPaiements;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
+use App\Http\Resources\PaiementResource;
 
 class PaiementController extends Controller
 {
-    public function index(): View
+    public function index(): mixed
     {
         $paiements = Paiement::with([
             'rendezVous',
@@ -20,18 +21,28 @@ class PaiementController extends Controller
             'typePaiement'
         ])->get();
 
+        // Si requête API → retourner JSON
+        if (request()->is('api/*')) {
+            return PaiementResource::collection($paiements);
+        }
+
+        // Si requête Web → retourner vue
         return view('paiements.index', [
             'paiements' => $paiements
         ]);
     }
 
-    public function show(int $id): View
+    public function show(int $id): mixed
     {
         $paiement = Paiement::with([
             'rendezVous',
             'etatPaiement',
             'typePaiement'
         ])->findOrFail($id);
+
+        if (request()->is('api/*')) {
+            return new PaiementResource($paiement);
+        }
 
         return view('paiements.show', [
             'paiement' => $paiement
@@ -48,7 +59,7 @@ class PaiementController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): mixed
     {
         $validation = Validator::make($request->all(), [
             'montant'        => 'required|regex:/^\d+(\.\d{1,2})?$/',
@@ -65,17 +76,37 @@ class PaiementController extends Controller
         ]);
 
         if ($validation->fails()) {
-            return back()
-                ->withErrors($validation->errors())
-                ->withInput();
+            // API → JSON
+            if (request()->is('api/*')) {
+                return response()->json([
+                    'ERREUR' => $validation->errors()
+                ], 400);
+            }
+            // Web → retour formulaire
+            return back()->withErrors($validation->errors())->withInput();
         }
 
-        Paiement::create($validation->validated());
+        try {
+            $paiement = Paiement::create($validation->validated());
+        } catch (\Illuminate\Database\QueryException $e) {
+            if (request()->is('api/*')) {
+                return response()->json([
+                    'ERREUR' => 'Le paiement n\'a pas pu être ajouté.'
+                ], 500);
+            }
+            return back()->with('erreur', 'Le paiement n\'a pas pu être ajouté.');
+        }
+
+        if (request()->is('api/*')) {
+            return response()->json([
+                'SUCCÈS' => 'Paiement ajouté avec succès.',
+                'data'   => new PaiementResource($paiement)
+            ], 200);
+        }
 
         return redirect()->route('paiements.index')
             ->with('succes', 'Paiement ajouté avec succès.');
     }
-
 
     public function edit(int $id): View
     {
@@ -90,7 +121,7 @@ class PaiementController extends Controller
     }
 
 
-    public function update(Request $request, int $id)
+    public function update(Request $request, int $id): mixed
     {
         $paiement = Paiement::findOrFail($id);
 
@@ -108,9 +139,12 @@ class PaiementController extends Controller
         ]);
 
         if ($validation->fails()) {
-            return back()
-                ->withErrors($validation->errors())
-                ->withInput();
+            if (request()->is('api/*')) {
+                return response()->json([
+                    'ERREUR' => $validation->errors()
+                ], 400);
+            }
+            return back()->withErrors($validation->errors())->withInput();
         }
 
         $paiement->montant        = $request->montant;
@@ -119,8 +153,20 @@ class PaiementController extends Controller
         $paiement->id_type        = $request->id_type;
 
         if ($paiement->save()) {
+            if (request()->is('api/*')) {
+                return response()->json([
+                    'SUCCÈS' => 'Paiement modifié avec succès.',
+                    'data'   => new PaiementResource($paiement)
+                ], 200);
+            }
             return redirect()->route('paiements.index')
                 ->with('succes', 'Paiement modifié avec succès.');
+        }
+
+        if (request()->is('api/*')) {
+            return response()->json([
+                'ERREUR' => 'Échec de la modification.'
+            ], 500);
         }
 
         return back()->with('erreur', 'Échec de la modification.');
