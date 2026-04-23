@@ -4,7 +4,7 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @theme {
-    --color-bluepain: #7FE1FC;
+    --color-bluepain: #00C8F8;
     --color-hospitalfashion: #7FE1FC;
     --color-lighttooth: #E8F9FF;
     --font-sans:
