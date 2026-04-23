@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RendezVousController;
+use App\Http\Controllers\TypesServicesController;
+use App\Http\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
 
-// Route::controller(NomDuControleur::class)->group(function() { 
-//     Route::get('/Route', 'MethodeDuControleur')->name('NomDeLaRoute'); 
+// Route::controller(NomDuControleur::class)->group(function() {
+//     Route::get('/Route', 'MethodeDuControleur')->name('NomDeLaRoute');
 //     });
 
 //Route--> c'est l'url que l'on va utiliser pour accéder à la page
@@ -29,6 +31,11 @@ Route::middleware('auth')->group(function () {
 
 Route::controller(RendezVousController::class)->group(function() {
     Route::get('/rendezvous', 'index')->name('rendezvous');
+});
+
+Route::controller(TypesServicesController::class)->group(function() {
+    Route::get('/services', 'index')->name('services');
+    Route::get('/service/{id}', 'show')->name('service');
 });
 
 require __DIR__.'/auth.php';

@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Services;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ServicesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() : View
     {
-        //
+       // return view('services/services', [
+        //    'services' => Services::All()
+        //]);
     }
 
     /**
