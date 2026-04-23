@@ -92,7 +92,7 @@ class MfaController extends Controller
         // Régénérer la session pour éviter les attaques de fixation de session
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard'));
+        return redirect()->intended(route('pageeinitial'));
     }
 
     /**

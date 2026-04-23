@@ -18,7 +18,7 @@ use App\Http\Controllers\PaiementController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('pageeinitial');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
