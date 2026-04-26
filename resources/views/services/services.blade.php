@@ -1,4 +1,4 @@
- <x-app-layout>
+<x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         {{ __('Liste des services') }}
@@ -7,6 +7,7 @@
 
     <div class="flex justify-center">
         <p>===X===</p>
+        <a href="">aAaAaAa</a>
         <p>___MOD___</p>
         <div class="w-[75%]">
             @foreach ($typesServices as $categorie)

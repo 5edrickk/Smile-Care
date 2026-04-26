@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Services;
+use App\Models\TypesServices;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -19,9 +20,14 @@ class ServicesController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        $name = Services::select('name')->get();
+        $description = Services::select('description')->get();
+        $duree = Services::select('duree')->get();
+        $id_type = TypesServices::all();
+
+        return view('services/servicesCreate', ['name' => $name, 'description' => $description, 'duree' => $duree, 'id_type' => $id_type]);
     }
 
     /**
