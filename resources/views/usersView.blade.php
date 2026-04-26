@@ -77,3 +77,38 @@
             flex justify-center align-middle">
     <a href="{{ route('utilisateurForm', -1) }}">Ajouter un utilisateur</a>
 </div>
+
+<!-- PAGE PRÉCÉDENTE/SUIVANT -->
+<div class="sticky bottom-5
+            flex justify-center align-middle
+            h-[3%]
+            mt-[-30px] ml-[20%]">
+
+    @if($num_page > 0)
+        <a href="{{ route('utilisateurs', ['id_role' => $id_role, 'num_page' => ($num_page - 1)]) }}"
+            class="h-[100%] w-[2%]">
+            <x-heroicon-o-backward class="text-blue-500 fill-blue-500
+                                            hover:text-blue-200 hover:fill-blue-200
+                                            font-bold"/>
+        </a>
+    @else
+        <x-heroicon-o-backward class="text-[#9e9e9e] fill-[#9e9e9e]
+                                font-bold"/>
+    @endif
+
+    <span class="flex items-center justify-center m-2">
+        <p class="text-blue-500 font-bold">{{ $num_page }} / {{ $max_pages }}</p>
+    </span>
+
+    @if($num_page < $max_pages)
+        <a href="{{ route('utilisateurs', ['id_role' => $id_role, 'num_page' => ($num_page + 1)]) }}"
+            class="h-[100%] w-[2%]">
+            <x-heroicon-o-forward class="text-blue-500 fill-blue-500
+                                            hover:text-blue-200 hover:fill-blue-200
+                                            font-bold"/>
+        </a>
+    @else
+        <x-heroicon-o-forward class="text-[#9e9e9e] fill-[#9e9e9e]
+                                font-bold"/>
+    @endif
+</div>

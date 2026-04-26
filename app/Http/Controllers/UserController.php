@@ -49,30 +49,34 @@ class UserController extends Controller
         return $returnValues;
     }
 
-    public function index(int $id_role) {
+    public function index(int $id_role, int $num_page) {
+
+        $amount = 10;
+        $min = ($num_page * $amount) + 1;
+        $max = ($num_page + 1) * $amount;
+
+        $users = [];
+        $index = 0;
 
         if(auth()->user() != null) {
             if(auth()->user()->id_role === 1 && $id_role === 2) {
-
-                $users = [];
-
-                foreach(User::all() as $user) {
-                    if($user->id_role === 2 || $user->id_role === 3 || $user->id_role === 4) {
+                foreach(User::whereBetween('id_role', [2, 4])->orderBy('id')->take($max)->get() as $user) {
+                    $index++;
+                    if($index >= $min) {
                         array_push($users, $user);
                     }
                 }
-                $unique = collect($users)->unique()->values()->all();
                 return view('usersView', [
-                    'users' => $unique,
+                    'users' => $users,
+                    'id_role' => $id_role,
+                    'max_pages' => ceil(count($users) / $amount),
+                    'num_page' => $num_page,
                 ]);
             }
             if(auth()->user()->id_role === 4) {
-
-                $users = [];
-
-                foreach(User::where('id_role', '=', $id_role)->get() as $user) {
+                foreach(User::where('id_role', '=', $id_role)->take($max)->get() as $user) {
                     foreach(RendezVous::where('id_dentiste', '=', auth()->user()->id)->get() as $rdv) {
-                        if($user->id === $rdv->id_user) {
+                        if($user->id === $rdv->id_user && $index >= $min) {
                             array_push($users, $user);
                         }
                     }
@@ -80,6 +84,9 @@ class UserController extends Controller
                 $unique = collect($users)->unique()->values()->all();
                 return view('usersView', [
                     'users' => $unique,
+                    'id_role' => $id_role,
+                    'max_pages' => ceil(count($unique) / $amount),
+                    'num_page' => $num_page,
                 ]);
             }
         }
@@ -87,11 +94,19 @@ class UserController extends Controller
             return view('auth/login');
         }
 
-        $users = User::where('id_role', '=', $id_role)->get();
+        foreach(User::where('id_role', '=', $id_role)->take($max)->get() as $user) {
+            $index++;
+            if($index >= $min) {
+                array_push($users, $user);
+            }
+        }
         // $traitement = RendezVous::orderBy('heure_date')->where('heure_date', '>=', now())->first();
         // $service = Services::find($traitement->id_service);
         return view('usersView', [
             'users' => $users,
+            'id_role' => $id_role,
+            'max_pages' => ceil(count($users) / $amount),
+            'num_page' => $num_page,
         ]);
     }
 

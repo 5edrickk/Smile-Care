@@ -11,7 +11,7 @@
         <!-- ADMINISTRATEUR -->
             @if(auth()->user()->id_role === 1 || auth()->user()->id_role === 3)
                 <!-- LES EMPLOYÉS -->
-                <a href="{{ route('utilisateurs', ['id_role' => 2]) }}">
+                <a href="{{ route('utilisateurs', ['id_role' => 2, 'num_page' => 0]) }}">
                     @if(str_contains(url()->full(), '/utilisateurs/2'))
                         <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-auto p-1
                                     bg-[#C9F1FD] rounded-lg border-4 border-[#00A4D3]">
@@ -27,7 +27,7 @@
                 </a>
 
                 <!-- LES CLIENTS -->
-                <a href="{{ route('utilisateurs', ['id_role' => 5]) }}">
+                <a href="{{ route('utilisateurs', ['id_role' => 5, 'num_page' => 0]) }}">
                     @if(str_contains(url()->full(), '/utilisateurs/5'))
                         <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-auto p-1
                                     bg-[#C9F1FD] rounded-lg border-4 border-[#00A4D3]">
@@ -46,7 +46,7 @@
         <!-- DENTISTES -->
             @if(auth()->user()->id_role === 4)
                 <!-- MES CLIENTS -->
-                <a href="{{ route('utilisateurs', ['id_role' => 5]) }}">
+                <a href="{{ route('utilisateurs', ['id_role' => 5, 'num_page' => 0]) }}">
                     @if(str_contains(url()->full(), '/utilisateurs/5'))
                         <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-auto p-1
                                     bg-[#C9F1FD] rounded-lg border-4 border-[#00A4D3]">
