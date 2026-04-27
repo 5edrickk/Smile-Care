@@ -79,7 +79,7 @@ Route::controller(TypesServicesController::class)->group(function() {
 });
 
 Route::controller(ServicesController::class)->group(function() {
-    Route::get('/services/servicesCreate', 'create')->name('services.new');
+    Route::get('/services/servicesCreate', 'create')->name('services.create');
     Route::post('/services/servicesStore', 'store')->name('services.store');
 });
 

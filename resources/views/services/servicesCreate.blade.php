@@ -1,6 +1,10 @@
-<x-app-layout>
-    <div class="flex justify-center">
-        <div class="w-[75%]">
+<x-header/>
+<body class="bg-[#EBEBEB]">
+    <div class="flex
+                max-w-full min-h-[80vh]">
+        <x-article/>
+
+        <div class="min-h-[70%] w-[80%] flex justify-center flex-col">
             <form action="{{ route('services.store') }}" method="POST" class="flex flex-col">
                 @csrf
                     <input type="text" name="service_name" id="service_name" placeholder="Nom du service" required>
@@ -21,4 +25,4 @@
             </form>
         </div>
     </div>
-</x-app-layout>
+</body>
