@@ -26,7 +26,11 @@
                     <label class="block text-sm font-medium text-gray-700">Role : </label>
                     <select name="id_role" id="id_role" required>
                         @foreach($roles as $role)
-                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            @if ($role->name !== "Admin")
+                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            @elseif (auth()->user()->id_role === 1)
+                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>

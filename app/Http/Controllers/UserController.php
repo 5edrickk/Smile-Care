@@ -141,10 +141,10 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'id_role' => 'required|numeric',
-            'dateNaissance' => 'date',
-            'addresse' => 'string|max:255',
-            'telephone' => 'numeric',
-            'email' => 'string|max:255',
+            'dateNaissance' => 'nullable|date',
+            'addresse' => 'nullable|string|max:255',
+            'telephone' => 'nullable|numeric',
+            'email' => 'nullable|string|max:255',
             'password' => 'required|string|max:255'
         ], [
             'name.required' => 'Veuillez entrez un nom.',
@@ -162,7 +162,9 @@ class UserController extends Controller
         $user->name = $validated['name'];
         $user->prenom = $validated['prenom'];
         $user->id_role = $validated['id_role'];
-        $user->dateNaissance = $validated['dateNaissance'];
+        if(isset($validated['dateNaissance'])) {
+            $user->dateNaissance = $validated['dateNaissance'];
+        }
         $user->addresse = $validated['addresse'];
         $user->telephone = $validated['telephone'];
         $user->email = $validated['email'];

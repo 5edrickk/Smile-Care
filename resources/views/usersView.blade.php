@@ -13,6 +13,7 @@
                         class="mb-6 flex justify-center gap-2
                             min-h-[2%]
                             mt-8">
+                    @csrf
                     <div class="flex flex-row justify-center align-middle
                                 w-[75%]">
                         <input placeholder="Chercher par nom..." name="searchNom" id="searchNom"
