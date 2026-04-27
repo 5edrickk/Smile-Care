@@ -59,9 +59,18 @@
                         <input type="text" name="email" id="email" value="{{ $user->email }}">
                     </div>
 
-                    <div class="flex flex-col justify-center">
-                        <label class="block text-sm font-medium text-gray-700">Mot de passe : </label>
-                        <input type="password" name="password" id="password">
+                    <div class="flex">
+                        <div class="flex flex-col justify-center
+                                    w-[50%]">
+                            <label class="block text-sm font-medium text-gray-700">Nouveau mot de passe : </label>
+                            <input type="password" name="password" id="password">
+                        </div>
+
+                        <div class="flex flex-col justify-center
+                                    w-[50%]">
+                            <label class="block text-sm font-medium text-gray-700">Votre mot de passe : </label>
+                            <input type="password" name="myPassword" id="myPassword">
+                        </div>
                     </div>
 
                     <div class="flex justify-end align-middle">

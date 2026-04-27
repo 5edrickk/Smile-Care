@@ -204,16 +204,22 @@ class UserController extends Controller
             'addresse' => 'string|max:255',
             'telephone' => 'numeric',
             'email' => 'string|max:255',
-            'password' => 'required|string|max:255'
+            'password' => 'required|string|max:255',
+            'myPassword' => 'required|string|max:255',
         ], [
             'name.required' => 'Veuillez entrez un nom.',
             'prenom.required' => 'Veuillez entrez un prénom.',
             'id_role.required' => 'Veuillez attribuez un role.',
-            'password.required' => 'Veuillez entrez le mot de passe.'
+            'password.required' => 'Veuillez entrez le mot de passe.',
+            'myPassword.required' => 'Veuillez entrez votre mot de passe.',
         ]);
 
         if ($validation->fails())
             return back()->withErrors($validation->errors())->withInput();
+
+        if(!password_verify($request->myPassword, auth()->user()->password)) {
+            return back()->withErrors(['Votre mot de passe est incorrect !']);
+        }
 
         $validated = $validation->validated();
 

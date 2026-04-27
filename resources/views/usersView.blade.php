@@ -92,17 +92,6 @@
     </div>
 </body>
 
-<!-- BOUTON ADD -->
-<div class="w-[15%]
-            bg-green-100 border-t-[2px] border-l-[2px] border-r-[2px] border-green-500
-            mt-[-58px]
-            sticky bottom-0 left-[100%] p-4
-            rounded-t-lg
-            text-green-500
-            flex justify-center align-middle">
-    <a href="{{ route('utilisateurForm', -1) }}">Ajouter un utilisateur</a>
-</div>
-
 @if($max_pages > 0)
     <!-- PAGE PRÉCÉDENTE/SUIVANT -->
     <div class="sticky bottom-5
@@ -139,3 +128,14 @@
         @endif
     </div>
 @endif
+
+<!-- BOUTON ADD -->
+<a href="{{ route('utilisateurForm', -1) }}" class="w-[15%]
+                bg-green-100 border-t-[2px] border-l-[2px] border-r-[2px] border-green-500
+                mt-[-50px]
+                sticky bottom-0 left-[100%] p-4
+                rounded-t-lg
+                text-green-500
+                flex justify-center align-middle">
+    <p>Ajouter un utilisateur</p>
+</a>
