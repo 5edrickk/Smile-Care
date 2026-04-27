@@ -141,10 +141,10 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'id_role' => 'required|numeric',
-            'dateNaissance' => 'date',
-            'addresse' => 'string|max:255',
-            'telephone' => 'numeric',
-            'email' => 'string|max:255',
+            'dateNaissance' => 'nullable|date',
+            'addresse' => 'nullable|string|max:255',
+            'telephone' => 'nullable|numeric',
+            'email' => 'nullable|string|max:255',
             'password' => 'required|string|max:255'
         ], [
             'name.required' => 'Veuillez entrez un nom.',
@@ -162,7 +162,9 @@ class UserController extends Controller
         $user->name = $validated['name'];
         $user->prenom = $validated['prenom'];
         $user->id_role = $validated['id_role'];
-        $user->dateNaissance = $validated['dateNaissance'];
+        if(isset($validated['dateNaissance'])) {
+            $user->dateNaissance = $validated['dateNaissance'];
+        }
         $user->addresse = $validated['addresse'];
         $user->telephone = $validated['telephone'];
         $user->email = $validated['email'];
@@ -202,16 +204,22 @@ class UserController extends Controller
             'addresse' => 'string|max:255',
             'telephone' => 'numeric',
             'email' => 'string|max:255',
-            'password' => 'required|string|max:255'
+            'password' => 'required|string|max:255',
+            'myPassword' => 'required|string|max:255',
         ], [
             'name.required' => 'Veuillez entrez un nom.',
             'prenom.required' => 'Veuillez entrez un prénom.',
             'id_role.required' => 'Veuillez attribuez un role.',
-            'password.required' => 'Veuillez entrez le mot de passe.'
+            'password.required' => 'Veuillez entrez le mot de passe.',
+            'myPassword.required' => 'Veuillez entrez votre mot de passe.',
         ]);
 
         if ($validation->fails())
             return back()->withErrors($validation->errors())->withInput();
+
+        if(!password_verify($request->myPassword, auth()->user()->password)) {
+            return back()->withErrors(['Votre mot de passe est incorrect !']);
+        }
 
         $validated = $validation->validated();
 

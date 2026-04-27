@@ -38,7 +38,7 @@ Route::controller(UserController::class)->group(function() {
     Route::post('utilisateurAdd', 'store')->name('utilisateurAdd');
     Route::get('utilisateurDelete/{id}', 'destroy')->name('utilisateurDelete');
     Route::get('utilisateurForm/{id}', 'show')->name('utilisateurForm');
-    Route::POST('utilisateurEdit/{id}', 'edit')->name('utilisateurEdit');
+    Route::post('utilisateurEdit/{id}', 'edit')->name('utilisateurEdit');
 });
 
 Route::controller(RendezVousController::class)->group(function() {
