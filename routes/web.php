@@ -31,7 +31,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::controller(UserController::class)->group(function() {
-    Route::get('/utilisateurs/{id_role}/page{num_page}', 'index')->name('utilisateurs');
+    Route::get('utilisateurs/{id_role}/page{num_page}', 'index')->name('utilisateurs');
+    Route::post('utilisateurs/{id_role}/page{num_page}', 'index')->name('utilisateursSearch');
     Route::post('utilisateurAdd', 'store')->name('utilisateurAdd');
     Route::get('utilisateurDelete/{id}', 'destroy')->name('utilisateurDelete');
     Route::get('utilisateurForm/{id}', 'show')->name('utilisateurForm');
