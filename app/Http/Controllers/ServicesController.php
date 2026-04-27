@@ -42,6 +42,8 @@ class ServicesController extends Controller
             'duree' => 'nullable|float',
         ]);
 
+        var_dump("EOEOJVEOIR");
+
         $service = new Services;
         $service->id = $request->id;
         $service->description = $request->description;

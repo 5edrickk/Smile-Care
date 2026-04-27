@@ -40,7 +40,7 @@ Route::controller(TypesServicesController::class)->group(function() {
 
 Route::controller(ServicesController::class)->group(function() {
     Route::get('/services/servicesCreate', 'create')->name('services.new');
-    Route::get('/services/servicesStore', 'store')->name('services.store');
+    Route::post('/services/servicesStore', 'store')->name('services.store');
 });
 
 require __DIR__.'/auth.php';

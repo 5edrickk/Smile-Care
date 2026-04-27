@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="flex justify-center">
         <div class="w-[75%]">
-            <form action="{{ route('services.store') }}" method="" class="flex flex-col">
+            <form action="{{ route('services.store') }}" method="POST" class="flex flex-col">
                     <input type="text" name="service_name" id="service_name" placeholder="Nom du service" required>
 
                     <input type="text" name="service_description" id="service_description" placeholder="Description">
