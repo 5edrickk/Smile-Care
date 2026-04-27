@@ -35,7 +35,21 @@ class ServicesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id' => 'required|integer',
+            'description' => 'nullable|string|max:500',
+            'id_type' => 'required|integer|exists:type_services,id',
+            'duree' => 'nullable|float',
+        ]);
+
+        $service = new Services;
+        $service->id = $request->id;
+        $service->description = $request->description;
+        $service->id_type = $request->id_type;
+        $service->duree = $request->duree;
+        $service->save();
+
+        return redirect()->route('services')->with('success', 'MESSAGE TEST(GOOD)');
     }
 
     /**

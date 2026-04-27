@@ -1,21 +1,20 @@
 <x-app-layout>
     <div class="flex justify-center">
         <div class="w-[75%]">
-            <form action="" class="flex flex-row">
-                <fieldset>
+            <form action="{{ route('services.store') }}" method="" class="flex flex-col">
+                    <input type="text" name="service_name" id="service_name" placeholder="Nom du service" required>
 
-                    <label for="service_name">Nom du service</label>
-                    <input type="text">
+                    <input type="text" name="service_description" id="service_description" placeholder="Description">
 
-                    <label for="service_description">Description</label>
-                    <input type="text">
+                    <select type="text" name="service_categorie" id="service_categorie" required>
+                        @foreach ($id_type as $categorie)
+                            <option value={{ $categorie->name }}>{{ $categorie->name }}</option>
+                        @endforeach
+                    </select>
 
-                    <label for="service_categorie">Catégorie</label>
-                    <input type="text">
+                    <input type="text" name="service_duree" id="service_duree" placeholder="Durée">
 
-                    <label for="service_duree">Durée</label>
-                    <input type="text">
-                </fieldset>
+                    <button type="submit">Enregistrer</button>
             </form>
         </div>
     </div>
