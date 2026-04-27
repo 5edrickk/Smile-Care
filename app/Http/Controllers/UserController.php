@@ -49,7 +49,7 @@ class UserController extends Controller
         return $returnValues;
     }
 
-    public function index(int $id_role, int $num_page) {
+    public function index(Request $request, int $id_role, int $num_page) {
 
         $amount = 10;
         $min = ($num_page * $amount) + 1;
@@ -60,24 +60,36 @@ class UserController extends Controller
 
         if(auth()->user() != null) {
             if(auth()->user()->id_role === 1 && $id_role === 2) {
-                foreach(User::whereBetween('id_role', [2, 4])->orderBy('id')->take($max)->get() as $user) {
+                $allUsers = User::whereBetween('id_role', [2, 4])->orderBy('id')
+                            ->where('name', 'LIKE', "%{$request->searchNom}%")
+                            ->where('prenom', 'LIKE', "%{$request->searchPrenom}%")->get();
+                foreach($allUsers as $user) {
                     $index++;
                     if($index >= $min) {
                         array_push($users, $user);
+                    }
+                    if($index >= $max) {
+                        break;
                     }
                 }
                 return view('usersView', [
                     'users' => $users,
                     'id_role' => $id_role,
-                    'max_pages' => ceil(count($users) / $amount),
+                    'max_pages' => ceil(count($allUsers) / $amount) - 1,
                     'num_page' => $num_page,
                 ]);
             }
             if(auth()->user()->id_role === 4) {
-                foreach(User::where('id_role', '=', $id_role)->take($max)->get() as $user) {
+                $allUsers = User::where('id_role', '=', $id_role)
+                            ->where('name', 'LIKE', "%{$request->searchNom}%")
+                            ->where('prenom', 'LIKE', "%{$request->searchPrenom}%")->get();
+                foreach($allUsers as $user) {
                     foreach(RendezVous::where('id_dentiste', '=', auth()->user()->id)->get() as $rdv) {
                         if($user->id === $rdv->id_user && $index >= $min) {
                             array_push($users, $user);
+                        }
+                        if($index >= $max) {
+                            break;
                         }
                     }
                 }
@@ -85,7 +97,7 @@ class UserController extends Controller
                 return view('usersView', [
                     'users' => $unique,
                     'id_role' => $id_role,
-                    'max_pages' => ceil(count($unique) / $amount),
+                    'max_pages' => ceil(count($allUsers) / $amount) - 1,
                     'num_page' => $num_page,
                 ]);
             }
@@ -94,10 +106,24 @@ class UserController extends Controller
             return view('auth/login');
         }
 
-        foreach(User::where('id_role', '=', $id_role)->take($max)->get() as $user) {
+        $allUsers = [];
+        if($id_role === 2) {
+            $allUsers = User::whereBetween('id_role', [2, 4])->orderBy('id')
+                        ->where('name', 'LIKE', "%{$request->searchNom}%")
+                        ->where('prenom', 'LIKE', "%{$request->searchPrenom}%")->get();
+        }
+        else {
+            $allUsers = User::where('id_role', '=', $id_role)
+                        ->where('name', 'LIKE', "%{$request->searchNom}%")
+                        ->where('prenom', 'LIKE', "%{$request->searchPrenom}%")->get();
+        }
+        foreach($allUsers as $user) {
             $index++;
             if($index >= $min) {
                 array_push($users, $user);
+            }
+            if($index >= $max) {
+                break;
             }
         }
         // $traitement = RendezVous::orderBy('heure_date')->where('heure_date', '>=', now())->first();
@@ -105,7 +131,7 @@ class UserController extends Controller
         return view('usersView', [
             'users' => $users,
             'id_role' => $id_role,
-            'max_pages' => ceil(count($users) / $amount),
+            'max_pages' => ceil(count($allUsers) / $amount) - 1,
             'num_page' => $num_page,
         ]);
     }
