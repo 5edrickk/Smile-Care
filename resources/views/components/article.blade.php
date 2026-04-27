@@ -80,11 +80,20 @@
 
             @if(auth()->user()->id_role === 4 || auth()->user()->id_role === 1)
                 <!-- TRAITEMENTS ET SERVICES -->
-                <!-- METTRE LES HIGHLIGHTS QUAND LA PAGE DES TRAITEMENTS ET SERVICES SERA FAIT -->
-                <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-auto p-1">
+                <a href="{{ route('services') }}">
+                    @if(str_contains(url()->full(), '/services'))
+                        <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-auto p-1
+                                    bg-[#C9F1FD] rounded-lg border-4 border-[#00A4D3]">
                     <x-heroicon-o-clipboard-document-list class="h-full"/>
                     <p class="text-right">Traitements & Services</p>
-                </div>
+                        </div>
+                    @else
+                        <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-auto p-1">
+                    <x-heroicon-o-clipboard-document-list class="h-full"/>
+                    <p class="text-right">Traitements & Services</p>
+                        </div>
+                    @endif
+                </a>
             @endif
 
             <!-- PAIEMENTS -->
