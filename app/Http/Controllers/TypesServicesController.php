@@ -3,24 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Models\TypesServices;
+use App\Models\Services;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class TypesServicesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() : View
     {
-        //
+        return view('services/services', [
+            'typesServices' => TypesServices::All(),
+            'services' => Services::All()
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create (Request $request, int $nb): View
     {
-        //
+        $name = Services::select('name')->get();
+        $description = Services::select('description')->get();
+
+        return view('services/servicesCreate', ['name' => $name, 'description' => $description]);
     }
 
     /**
@@ -61,5 +69,11 @@ class TypesServicesController extends Controller
     public function destroy(TypesServices $typesServices)
     {
         //
+    }
+
+    public function indexByCategory(Request $request, int $id) : View
+    {
+        return view('services/categorie', ['typeService'=> TypesServices::find($id),
+        'services' => Services::all()]);
     }
 }
