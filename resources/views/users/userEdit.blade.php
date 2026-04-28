@@ -15,12 +15,12 @@
 
                     <div class="flex">
                         <div class="flex flex-col justify-center w-[50%]">
-                            <label class="block text-sm font-medium text-gray-700">Nom : </label>
-                            <input type="text" name="name" id="name" value="{{ $user->name }}">
-                        </div>
-                        <div class="flex flex-col justify-center w-[50%]">
                             <label class="block text-sm font-medium text-gray-700">Prénom : </label>
                             <input type="text" name="prenom" id="prenom" value="{{ $user->prenom }}">
+                        </div>
+                        <div class="flex flex-col justify-center w-[50%]">
+                            <label class="block text-sm font-medium text-gray-700">Nom : </label>
+                            <input type="text" name="name" id="name" value="{{ $user->name }}">
                         </div>
                     </div>
 
