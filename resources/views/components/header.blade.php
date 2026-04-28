@@ -42,10 +42,10 @@
         </div>
         @if (auth()->user() != null)
             @if (File::exists(public_path('img/UsersImages/' . auth()->user()->photo)))
-                <img src="{{ asset('img/userIcon.png') }}" class="ml-6 w-[15%] rounded-[100px]" alt="Logo">
+                <a href="{{ route('profile.edit') }}" class="ml-6 w-[15%] rounded-[100px]" alt="Logo"><img src="{{ asset('img/userIcon.png') }}"></a>
             @else
-                <img src="{{ asset('img/UsersImages/' . auth()->user()->photo) }}" class="ml-6 w-[15%] rounded-[100px]"
-                    alt="Logo">
+                <a href="{{ route('profile.edit') }}" class="ml-6 w-[15%] rounded-[100px]"><img src="{{ asset('img/UsersImages/' . auth()->user()->photo) }}"
+                    alt="Logo"></a>
             @endif
         @endif
     </div>
