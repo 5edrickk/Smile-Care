@@ -80,14 +80,12 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::controller(TypesServicesController::class)->group(function() {
-    Route::get('/services', 'index')->name('services');
-    Route::get('/services/categorie/{id}', 'indexByCategory')->name('services.categorie');
-});
-
 Route::controller(ServicesController::class)->group(function() {
+    Route::get('/services', 'index')->name('services');
     Route::get('/services/servicesCreate', 'create')->name('services.create');
     Route::post('/services/servicesStore', 'store')->name('services.store');
+    Route::get('/services/servicesEdit/{id}', 'edit')->name('services.edit');
+    Route::put('/services/servicesUpdate/{id}', 'update')->name('services.update');
 });
 
 require __DIR__.'/auth.php';
