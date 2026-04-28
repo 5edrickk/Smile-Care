@@ -1,6 +1,11 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 @use('App\Models\Roles', 'Roles')
 @use('Illuminate\Support\Facades\File', 'File')
+
+@if (auth()->user() === null)
+    <script>window.location = "{{ route('login') }}";</script>
+@endif
+
 <div class="sticky top-0 min-w-full h-[20vh]
             bg-linear-to-t from-[#009CCF] to-[#B0EEFF]
             flex
