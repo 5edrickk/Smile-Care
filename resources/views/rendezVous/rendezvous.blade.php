@@ -1,10 +1,24 @@
-<x-header/>
+<x-header />
+
 <body class="bg-[#EBEBEB]">
-    <div class="flex
-                max-w-full min-h-[80vh]">
-        <x-article/>
-        <div class="py-8 w-[80%]">
+    <div class="flex min-h-[80vh] max-w-full">
+        <x-article />
+        <div class="w-[80%] py-8">
             <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+
+                {{-- Messages flash --}}
+                @if (Session::has('success'))
+                    <div class="mb-4 rounded-lg border border-green-200 bg-green-50 p-4 text-sm text-green-700">
+                        {{ Session::get('success') }}
+                    </div>
+                @endif
+
+                @if (Session::has('error'))
+                    <div class="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+                        {{ Session::get('error') }}
+                    </div>
+                @endif
+
 
                 {{-- Barre de recherche, faudra changer apres pour utilisr livewire --}}
                 <div class="mb-6 flex gap-2">
