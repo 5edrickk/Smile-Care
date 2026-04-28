@@ -41,7 +41,7 @@
                                 class="flex-1 border-gray-300 rounded-md text-sm
                                     focus:ring-indigo-500 focus:border-indigo-500"
                             />
-                        <button
+                            <button
                                 id="btn-rechercher"
                                 class="bg-bluepain text-white px-4 py-2
                                     rounded-md text-sm hover:bg-indigo-700">
@@ -63,10 +63,6 @@
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium
                                             text-gray-500 uppercase tracking-wider">
-                                        #
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium
-                                            text-gray-500 uppercase tracking-wider">
                                         Montant
                                     </th>
                                     <th class="px-6 py-3 text-left text-xs font-medium
@@ -76,6 +72,10 @@
                                     <th class="px-6 py-3 text-left text-xs font-medium
                                             text-gray-500 uppercase tracking-wider">
                                         État
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium
+                                            text-gray-500 uppercase tracking-wider">
+                                        Client
                                     </th>
                                     <th class="px-6 py-3 text-left text-xs font-medium
                                             text-gray-500 uppercase tracking-wider">
@@ -91,9 +91,6 @@
                                 id="tbody-paiements">
                                 @forelse ($paiements as $paiement)
                                     <tr class="hover:bg-gray-50">
-                                        <td class="px-6 py-4 text-sm text-gray-500">
-                                            {{ $paiement->id }}
-                                        </td>
                                         <td class="px-6 py-4 text-sm font-medium text-gray-900">
                                             {{ number_format($paiement->montant, 2) }} $
                                         </td>
@@ -108,8 +105,18 @@
                                                 {{ $paiement->etatPaiement->name ?? '-' }}
                                             </span>
                                         </td>
+                                        <td class="px-6 py-4 text-sm text-gray-900">
+                                            {{ $paiement->rendezVous?->user
+                                                ? $paiement->rendezVous->user->prenom . ' ' . $paiement->rendezVous->user->name
+                                                : '-' }}
+                                        </td>
                                         <td class="px-6 py-4 text-sm text-gray-500">
-                                            {{ $paiement->id_rendez_vous }}
+                                            @if($paiement->rendezVous)
+                                                <span class="block">{{ $paiement->rendezVous->formaterDate() }}</span>
+                                                <span class="block text-gray-400">{{ $paiement->rendezVous->formaterHeure() }}</span>
+                                            @else
+                                                -
+                                            @endif
                                         </td>
                                         <td class="px-6 py-4 text-sm font-medium">
                                             <div class="flex gap-3">

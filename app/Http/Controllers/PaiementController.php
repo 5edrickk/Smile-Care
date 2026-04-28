@@ -16,7 +16,7 @@ class PaiementController extends Controller
     public function index(): mixed
     {
         $paiements = Paiement::with([
-            'rendezVous',
+            'rendezVous.user',
             'etatPaiement',
             'typePaiement'
         ])->get();
@@ -33,7 +33,7 @@ class PaiementController extends Controller
     public function show(int $id): mixed
     {
         $paiement = Paiement::with([
-            'rendezVous',
+            'rendezVous.user',
             'etatPaiement',
             'typePaiement'
         ])->findOrFail($id);
@@ -46,7 +46,6 @@ class PaiementController extends Controller
             'paiement' => $paiement
         ]);
     }
-
 
     public function create(): View
     {
@@ -79,7 +78,6 @@ class PaiementController extends Controller
                     'ERREUR' => $validation->errors()
                 ], 400);
             }
-            // Web → retour formulaire
             return back()->withErrors($validation->errors())->withInput();
         }
 
@@ -116,7 +114,6 @@ class PaiementController extends Controller
             'types'       => TypesPaiements::all(),
         ]);
     }
-
 
     public function update(Request $request, int $id): mixed
     {
@@ -169,12 +166,11 @@ class PaiementController extends Controller
         return back()->with('erreur', 'Échec de la modification.');
     }
 
-
     public function search(Request $request)
     {
         $query = $request->input('query');
 
-        $paiements = Paiement::with(['rendezVous', 'etatPaiement', 'typePaiement'])
+        $paiements = Paiement::with(['rendezVous.user', 'etatPaiement', 'typePaiement'])
             ->whereHas('etatPaiement', function ($q) use ($query) {
                 $q->where('name', 'like', "%{$query}%");
             })
@@ -190,7 +186,12 @@ class PaiementController extends Controller
                 'montant' => $p->montant,
                 'etat'    => $p->etatPaiement->name ?? '-',
                 'type'    => $p->typePaiement->name ?? '-',
-                'rdv'     => $p->id_rendez_vous,
+                'client'  => $p->rendezVous?->user
+                                ? $p->rendezVous->user->prenom . ' ' . $p->rendezVous->user->name
+                                : '-',
+                'rdv'     => $p->rendezVous
+                                ? $p->rendezVous->formaterDate() . ' ' . $p->rendezVous->formaterHeure()
+                                : '-',
             ];
         }));
     }
