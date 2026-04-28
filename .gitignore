@@ -14,16 +14,10 @@
 /vendor
 _ide_helper.php
 
-/.cursor/
 /.idea
 /.nova
 /.vscode
 /.zed
-
-CLAUDE.md
-.claude/
-.claudeignore
-*.claude
 
 Homestead.json
 Homestead.yaml

@@ -17,12 +17,9 @@ class RendezVousController extends Controller
     public function index(): View
     {
         //
-        if(auth()->user() != null) {
-            if(auth()->user()->id_role === 4) {
-                return view('rendezVous/rendezvous',
-                    ['rendezVous' => RendezVous::where('id_dentiste', '=', auth()->user()->id)->with('user', 'dentiste', 'service')->get(),
-                ]);
-            }
+        if (auth()->user() != null && auth()->user()->id_role === 4) {
+            return view('rendezVous/rendezvous', ['rendezVous' => RendezVous::where('id_dentiste', '=', auth()->user()->id)->with('user', 'dentiste', 'service')->get(),
+            ]);
         }
 
         $rendezVous = RendezVous::with('user', 'dentiste', 'service')->get();
@@ -122,9 +119,14 @@ class RendezVousController extends Controller
     public function destroy(Request $request)
     {
         $id = $request->input('id_rendez_vous');
-        if (RendezVous::destroy($id))
-            return redirect()->route('rendezvous')->with('success', 'La suppression du rendez-vous a bien fonctionné.');
-        else
+        $rendezVous = RendezVous::find($id);
+
+        if (!$rendezVous)
             return redirect()->route('rendezvous')->with('error', 'La suppression du rendez-vous a échoué');
+
+        $rendezVous->paiements()->delete();
+        $rendezVous->delete();
+
+        return redirect()->route('rendezvous')->with('success', 'La suppression du rendez-vous a bien fonctionné.');
     }
 }
