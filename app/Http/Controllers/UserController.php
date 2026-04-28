@@ -83,10 +83,15 @@ class UserController extends Controller
                 $allUsers = User::where('id_role', '=', $id_role)
                             ->where('name', 'LIKE', "%{$request->searchNom}%")
                             ->where('prenom', 'LIKE', "%{$request->searchPrenom}%")->get();
+                $allRdv = [];
                 foreach($allUsers as $user) {
-                    foreach(RendezVous::where('id_dentiste', '=', auth()->user()->id)->get() as $rdv) {
+                    foreach(RendezVous::where('id_dentiste', '=', auth()->user()->id)->orderBy('heure_date', 'asc')->get() as $rdv) {
+                        $index++;
                         if($user->id === $rdv->id_user && $index >= $min) {
                             array_push($users, $user);
+                            $addRdv = $rdv;
+                            $rdv->id_service = Services::where('id', '=', $rdv->id_service)->get();
+                            array_push($allRdv, $addRdv);
                         }
                         if($index >= $max) {
                             break;
@@ -99,6 +104,7 @@ class UserController extends Controller
                     'id_role' => $id_role,
                     'max_pages' => ceil(count($allUsers) / $amount) - 1,
                     'num_page' => $num_page,
+                    'rendezVous' => $allRdv,
                 ]);
             }
         }
@@ -126,8 +132,7 @@ class UserController extends Controller
                 break;
             }
         }
-        // $traitement = RendezVous::orderBy('heure_date')->where('heure_date', '>=', now())->first();
-        // $service = Services::find($traitement->id_service);
+
         return view('usersView', [
             'users' => $users,
             'id_role' => $id_role,
@@ -150,6 +155,10 @@ class UserController extends Controller
             'name.required' => 'Veuillez entrez un nom.',
             'prenom.required' => 'Veuillez entrez un prénom.',
             'id_role.required' => 'Veuillez attribuez un role.',
+            'dateNaissance.required' => 'Veuillez entrez une date de naissance',
+            'addresse.required' => 'Veuillez entrez une adresse',
+            'telephone.required' => 'Veuillez entrez un numéro de téléphone',
+            'email.required' => 'Veuillez entrez une adresse courriel',
             'password.required' => 'Veuillez entrez le mot de passe.'
         ]);
 
@@ -200,18 +209,21 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'id_role' => 'required|numeric',
-            'dateNaissance' => 'date',
-            'addresse' => 'string|max:255',
-            'telephone' => 'numeric',
-            'email' => 'string|max:255',
+            'dateNaissance' => 'required|date',
+            'addresse' => 'required|string|max:255',
+            'telephone' => 'required|numeric',
+            'email' => 'required|string|max:255',
             'password' => 'required|string|max:255',
             'myPassword' => 'required|string|max:255',
         ], [
             'name.required' => 'Veuillez entrez un nom.',
             'prenom.required' => 'Veuillez entrez un prénom.',
             'id_role.required' => 'Veuillez attribuez un role.',
-            'password.required' => 'Veuillez entrez le mot de passe.',
-            'myPassword.required' => 'Veuillez entrez votre mot de passe.',
+            'dateNaissance.required' => 'Veuillez entrez une date de naissance',
+            'addresse.required' => 'Veuillez entrez une adresse',
+            'telephone.required' => 'Veuillez entrez un numéro de téléphone',
+            'email.required' => 'Veuillez entrez une adresse courriel',
+            'password.required' => 'Veuillez entrez le mot de passe.'
         ]);
 
         if ($validation->fails())
