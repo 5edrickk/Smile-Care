@@ -38,5 +38,15 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 // -----------------------------------------------------------------------
+// UTILISATEURS - Alexandre
+// -----------------------------------------------------------------------
+Route::middleware('auth:sanctum')->group(function () {
+    Route::controller(UserController::class)->group(function(){
+        Route::post('utilisateurAdd', 'store')->name('api.utilisateurAdd');
+        Route::get('utilisateurDelete/{id}', 'destroy')->name('api.utilisateurDelete');
+    });
+});
+
+// -----------------------------------------------------------------------
 // Ajouter vos routes API ici
 // -----------------------------------------------------------------------
