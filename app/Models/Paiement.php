@@ -27,13 +27,11 @@ class Paiement extends Model
         return $this->belongsTo(RendezVous::class, 'id_rendez_vous');
     }
 
-    // Un paiement appartient à un état (ex: payé, en attente)
     public function etatPaiement(): BelongsTo
     {
         return $this->belongsTo(EtatsPaiement::class, 'id_etat');
     }
 
-    // Un paiement appartient à un type (ex: carte, cash)
     public function typePaiement(): BelongsTo
     {
         return $this->belongsTo(TypesPaiements::class, 'id_type');

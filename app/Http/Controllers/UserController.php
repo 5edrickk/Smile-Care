@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Roles;
 use App\Models\User;
 use App\Models\RendezVous;
+use App\Models\Services;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Validator;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
     //
-    public function getValidation() {
+    public function getValidation(Request $request) {
         $validation = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'id_role' => 'required|numeric',
-            'photo' => 'string|max:255',
             'dateNaissance' => 'date',
             'addresse' => 'string|max:255',
             'telephone' => 'numeric',
-            'codeEmploye' => 'numeric',
             'email' => 'string|max:255',
             'password' => 'required|string|max:255'
         ], [
@@ -32,23 +33,72 @@ class UserController extends Controller
         if ($validation->fails())
             return back()->withErrors($validation->errors())->withInput();
 
-        return $validation->validated();
+        $validated = $validation->validated();
+
+        $returnValues = [
+            'name' => $validated['name'],
+            'prenom' => $validated['prenom'],
+            'id_role' => $validated['id_role'],
+            'dateNaissance' => $validated['dateNaissance'],
+            'addresse' => $validated['addresse'],
+            'telephone' => $validated['telephone'],
+            'email' => $validated['email'],
+            'password' => $validated['password'],
+        ];
+
+        return $returnValues;
     }
 
-    public function index(int $id_role) {
+    public function index(Request $request, int $id_role, int $num_page) {
+
+        $amount = 10;
+        $min = ($num_page * $amount) + 1;
+        $max = ($num_page + 1) * $amount;
+
+        $users = [];
+        $index = 0;
 
         if(auth()->user() != null) {
-            if(auth()->user()->id_role === 4) {
-                $users = [];
-                foreach(User::where('id_role', '=', $id_role)->get() as $user) {
-                    foreach(RendezVous::where('id_dentiste', '=', auth()->user()->id)->get() as $rdv) {
-                        if($user->id === $rdv->id_user) {
-                            array_push($users, $user);
-                        }
+            if(auth()->user()->id_role === 1 && $id_role === 2) {
+                $allUsers = User::whereBetween('id_role', [2, 4])->orderBy('id')
+                            ->where('name', 'LIKE', "%{$request->searchNom}%")
+                            ->where('prenom', 'LIKE', "%{$request->searchPrenom}%")->get();
+                foreach($allUsers as $user) {
+                    $index++;
+                    if($index >= $min) {
+                        array_push($users, $user);
+                    }
+                    if($index >= $max) {
+                        break;
                     }
                 }
                 return view('usersView', [
                     'users' => $users,
+                    'id_role' => $id_role,
+                    'max_pages' => ceil(count($allUsers) / $amount) - 1,
+                    'num_page' => $num_page,
+                ]);
+            }
+            if(auth()->user()->id_role === 4) {
+                $allUsers = User::where('id_role', '=', $id_role)
+                            ->where('name', 'LIKE', "%{$request->searchNom}%")
+                            ->where('prenom', 'LIKE', "%{$request->searchPrenom}%")->get();
+                foreach($allUsers as $user) {
+                    foreach(RendezVous::where('id_dentiste', '=', auth()->user()->id)->get() as $rdv) {
+                        if($user->id === $rdv->id_user && $index >= $min) {
+                            array_push($users, $user);
+                        }
+                        if($index >= $max) {
+                            break;
+                        }
+                    }
+                }
+                $unique = collect($users)->unique()->values()->all();
+                return view('usersView', [
+                    'users' => $unique,
+                    'id_role' => $id_role,
+                    'max_pages' => ceil(count($allUsers) / $amount) - 1,
+                    'num_page' => $num_page,
                 ]);
             }
         }
@@ -56,23 +106,67 @@ class UserController extends Controller
             return view('auth/login');
         }
 
+        $allUsers = [];
+        if($id_role === 2) {
+            $allUsers = User::whereBetween('id_role', [2, 4])->orderBy('id')
+                        ->where('name', 'LIKE', "%{$request->searchNom}%")
+                        ->where('prenom', 'LIKE', "%{$request->searchPrenom}%")->get();
+        }
+        else {
+            $allUsers = User::where('id_role', '=', $id_role)
+                        ->where('name', 'LIKE', "%{$request->searchNom}%")
+                        ->where('prenom', 'LIKE', "%{$request->searchPrenom}%")->get();
+        }
+        foreach($allUsers as $user) {
+            $index++;
+            if($index >= $min) {
+                array_push($users, $user);
+            }
+            if($index >= $max) {
+                break;
+            }
+        }
+        // $traitement = RendezVous::orderBy('heure_date')->where('heure_date', '>=', now())->first();
+        // $service = Services::find($traitement->id_service);
         return view('usersView', [
-            'users' => User::where('id_role', '=', $id_role)->get(),
+            'users' => $users,
+            'id_role' => $id_role,
+            'max_pages' => ceil(count($allUsers) / $amount) - 1,
+            'num_page' => $num_page,
         ]);
     }
 
     public function store(Request $request) {
-        $validated = getValidation();
+        $validation = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'id_role' => 'required|numeric',
+            'dateNaissance' => 'nullable|date',
+            'addresse' => 'nullable|string|max:255',
+            'telephone' => 'nullable|numeric',
+            'email' => 'nullable|string|max:255',
+            'password' => 'required|string|max:255'
+        ], [
+            'name.required' => 'Veuillez entrez un nom.',
+            'prenom.required' => 'Veuillez entrez un prénom.',
+            'id_role.required' => 'Veuillez attribuez un role.',
+            'password.required' => 'Veuillez entrez le mot de passe.'
+        ]);
+
+        if ($validation->fails())
+            return back()->withErrors($validation->errors())->withInput();
+
+        $validated = $validation->validated();
 
         $user = new User();
         $user->name = $validated['name'];
         $user->prenom = $validated['prenom'];
         $user->id_role = $validated['id_role'];
-        $user->photo = $validated['photo'];
-        $user->dateNaissance = $validated['dateNaissance'];
+        if(isset($validated['dateNaissance'])) {
+            $user->dateNaissance = $validated['dateNaissance'];
+        }
         $user->addresse = $validated['addresse'];
         $user->telephone = $validated['telephone'];
-        $user->codeEmploye = $validated['codeEmploye'];
         $user->email = $validated['email'];
         $user->password = password_hash($validated['password'], PASSWORD_DEFAULT);
 
@@ -82,15 +176,70 @@ class UserController extends Controller
         else
             session()->flash('erreur', 'La création de ' . $user->name . ' n\'a pas fonctionné.');
 
-        //RETURN TO USER CREATE PAGE
+        return back()->with('success', 'Le profile de ' . $user->name . ' a été ajouté avec succès !');
     }
 
-    public function update(Request $request, $id) {
+    public function show(int $id) {
+        $user = User::find($id);
+
+        if($id >= 0) {
+            return view('users/userEdit', [
+                'user' => $user,
+                'roles' => Roles::all(),
+            ]);
+        } else {
+            return view('users/userAdd', [
+                'roles' =>Roles::all(),
+            ]);
+        }
+        return back()->with('error', 'Utilisateur non trouvé');
+    }
+
+    public function edit(Request $request, $id) {
+        $validation = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'id_role' => 'required|numeric',
+            'dateNaissance' => 'date',
+            'addresse' => 'string|max:255',
+            'telephone' => 'numeric',
+            'email' => 'string|max:255',
+            'password' => 'required|string|max:255',
+            'myPassword' => 'required|string|max:255',
+        ], [
+            'name.required' => 'Veuillez entrez un nom.',
+            'prenom.required' => 'Veuillez entrez un prénom.',
+            'id_role.required' => 'Veuillez attribuez un role.',
+            'password.required' => 'Veuillez entrez le mot de passe.',
+            'myPassword.required' => 'Veuillez entrez votre mot de passe.',
+        ]);
+
+        if ($validation->fails())
+            return back()->withErrors($validation->errors())->withInput();
+
+        if(!password_verify($request->myPassword, auth()->user()->password)) {
+            return back()->withErrors(['Votre mot de passe est incorrect !']);
+        }
+
+        $validated = $validation->validated();
+
+        $returnValues = [
+            'name' => $validated['name'],
+            'prenom' => $validated['prenom'],
+            'id_role' => $validated['id_role'],
+            'dateNaissance' => $validated['dateNaissance'],
+            'addresse' => $validated['addresse'],
+            'telephone' => $validated['telephone'],
+            'email' => $validated['email'],
+            'password' => $validated['password'],
+        ];
+
         $user = User::findOrFail($id);
+        $oldName = $user->name;
 
-        $validated = getValidation();
+        $user->update($returnValues);
 
-        $user->update($validated->all());
+        return back()->with('success', 'Le profile de ' . $oldName . ' a été modifié avec succès !');
     }
 
     public function destroy(int $id) {

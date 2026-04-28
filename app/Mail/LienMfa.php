@@ -31,13 +31,12 @@ class LienMfa extends Mailable
     {
         return new Content(
             view: 'courriel.lien-mfa',
-            // On passe le lien complet à la vue
             with: [
                 'lienVerification' => route('mfa.verify', [
                     'token' => $this->user->mfa_token
                 ]),
                 'prenom' => $this->user->prenom,
-                'expiration' => 15, // minutes
+                'expiration' => 15,
             ]
         );
     }

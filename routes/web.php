@@ -3,6 +3,8 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RendezVousController;
+use App\Http\Controllers\TypesServicesController;
+use App\Http\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MfaController;
 use App\Http\Controllers\PaiementController;
@@ -31,9 +33,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::controller(UserController::class)->group(function() {
-    Route::get('/utilisateurs/{id_role}', 'index')->name('utilisateurs');
-    Route::get('utilisateurAdd', 'store')->name('utilisateurAdd');
+    Route::get('utilisateurs/{id_role}/page{num_page}', 'index')->name('utilisateurs');
+    Route::post('utilisateurs/{id_role}/page{num_page}', 'index')->name('utilisateursSearch');
+    Route::post('utilisateurAdd', 'store')->name('utilisateurAdd');
     Route::get('utilisateurDelete/{id}', 'destroy')->name('utilisateurDelete');
+    Route::get('utilisateurForm/{id}', 'show')->name('utilisateurForm');
+    Route::post('utilisateurEdit/{id}', 'edit')->name('utilisateurEdit');
 });
 
 Route::controller(RendezVousController::class)->group(function() {
@@ -67,6 +72,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/paiements/{id}/edit', 'edit')->name('paiements.edit');
         Route::put('/paiements/{id}', 'update')->name('paiements.update');
     });
+});
+
+Route::controller(TypesServicesController::class)->group(function() {
+    Route::get('/services', 'index')->name('services');
+    Route::get('/services/categorie/{id}', 'indexByCategory')->name('services.categorie');
+});
+
+Route::controller(ServicesController::class)->group(function() {
+    Route::get('/services/servicesCreate', 'create')->name('services.create');
+    Route::post('/services/servicesStore', 'store')->name('services.store');
 });
 
 require __DIR__.'/auth.php';

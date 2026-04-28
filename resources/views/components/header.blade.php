@@ -1,12 +1,19 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 @use('App\Models\Roles', 'Roles')
 @use('Illuminate\Support\Facades\File', 'File')
-<div class="sticky top-0 flex h-[20vh] min-w-full bg-gradient-to-t from-[#009CCF] to-[#B0EEFF] p-0 font-bold text-white">
+<div class="sticky top-0 min-w-full h-[20vh]
+            bg-linear-to-t from-[#009CCF] to-[#B0EEFF]
+            flex
+            text-white font-bold
+            p-0">
 
     <!-- Panneau des Dentistes/Administrateurs -->
-    <div
-        class="flex h-full min-h-full min-w-[20%] flex-col items-center justify-center border-r-[2px] border-[#EBEBEB] text-[1.5rem]">
-        @if (auth()->user() != null)
+    <div class="min-w-[20%] min-h-full
+                text-[1.5rem]
+                h-full
+                border-r-2 border-[#EBEBEB]
+                flex flex-col items-center justify-center">
+        @if(auth()->user() != null)
             <p>Panneau</p>
             <p>{{ Str::lower(Roles::where('id', '=', auth()->user()->id_role)->value('name')) }} </p>
         @endif

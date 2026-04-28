@@ -21,12 +21,10 @@ class PaiementController extends Controller
             'typePaiement'
         ])->get();
 
-        // Si requête API → retourner JSON
         if (request()->is('api/*')) {
             return PaiementResource::collection($paiements);
         }
 
-        // Si requête Web → retourner vue
         return view('paiements.index', [
             'paiements' => $paiements
         ]);
@@ -76,7 +74,6 @@ class PaiementController extends Controller
         ]);
 
         if ($validation->fails()) {
-            // API → JSON
             if (request()->is('api/*')) {
                 return response()->json([
                     'ERREUR' => $validation->errors()

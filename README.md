@@ -90,5 +90,8 @@ composer install
 composer update
 npx @tailwindcss/upgrade --force
 npm install
+npm run build
+npm run dev
 php artisan migrate:fresh
+php artisan migrate --seed
 ```
