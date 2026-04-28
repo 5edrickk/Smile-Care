@@ -130,11 +130,11 @@
 @endif
 
 <!-- BOUTON ADD -->
-<a href="{{ route('utilisateurForm', -1) }}" class="w-[15%]
-                bg-green-100 border-t-[2px] border-l-[2px] border-r-[2px] border-green-500
-                mt-[-50px]
+<a href="{{ route('utilisateurForm', -1) }}" class="w-[15%] h-16
+                -mt-16
+                bg-green-100 border-[2px] border-green-500
                 sticky bottom-0 left-[100%] p-4
-                rounded-t-lg
+                rounded-lg
                 text-green-500
                 flex justify-center align-middle">
     <p>Ajouter un utilisateur</p>
