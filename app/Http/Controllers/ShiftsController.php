@@ -16,15 +16,22 @@ class ShiftsController extends Controller
     }
     public function punch() {
         $shifts = Shift::where('id_user', '=', auth()->user()->id)->orderBy('heure_punch', 'desc')->get();
-        $lastShift = $shifts[0];
+        if(count($shifts) > 0) {
+            $lastShift = $shifts[0];
+        }
 
         $newShift = new Shift;
         $newShift->id_user = auth()->user()->id;
         $newShift->heure_punch = now();
-        if($lastShift->state === "enter") {
-            $newShift->state = "exit";
+        if(count($shifts) > 0) {
+            if($lastShift->state === "enter") {
+                $newShift->state = "exit";
+            }
+            elseif($lastShift->state === "exit") {
+                $newShift->state = "enter";
+            }
         }
-        elseif($lastShift->state === "exit") {
+        else {
             $newShift->state = "enter";
         }
         $newShift->save();
