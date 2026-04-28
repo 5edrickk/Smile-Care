@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ShiftsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RendezVousController;
 use App\Http\Controllers\TypesServicesController;
@@ -39,6 +40,11 @@ Route::controller(UserController::class)->group(function() {
     Route::get('utilisateurDelete/{id}', 'destroy')->name('utilisateurDelete');
     Route::get('utilisateurForm/{id}', 'show')->name('utilisateurForm');
     Route::post('utilisateurEdit/{id}', 'edit')->name('utilisateurEdit');
+});
+
+Route::controller(ShiftsController::class)->group(function() {
+    Route::get('shifts', 'index')->name('shifts');
+    Route::get('shiftPunch', 'punch')->name('shiftPunch');
 });
 
 Route::controller(RendezVousController::class)->group(function() {
