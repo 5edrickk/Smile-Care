@@ -47,13 +47,10 @@ Route::controller(RendezVousController::class)->group(function() {
 });
 
 Route::controller(MfaController::class)->group(function () {
-    // Page "vérifiez votre courriel" — accessible sans être connecté
     Route::get('/mfa/notice', 'notice')->name('mfa.notice');
 
-    // Lien cliqué depuis le courriel — accessible sans être connecté
     Route::get('/mfa/verify', 'verify')->name('mfa.verify');
 
-    // Renvoyer le lien — accessible sans être connecté
     Route::post('/mfa/resend', 'resend')->name('mfa.resend');
 });
 
