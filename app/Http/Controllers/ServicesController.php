@@ -36,13 +36,6 @@ class ServicesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:255',
-            'id_type' => 'required|integer|exists:type_services,id',
-            'duree' => 'nullable|float|regex:/[0-9]*',
-        ]);
-
         $service = new Services;
         $service->name = $request->service_name;
         $service->description = $request->service_description;

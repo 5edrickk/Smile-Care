@@ -4,14 +4,14 @@
                 max-w-full min-h-[80vh]">
         <x-article/>
 
-        <div class="min-h-[70%] w-[80%] flex justify-center flex-col">
+        <div class="h-[100vh] min-h-[70%] w-[80%] flex justify-center flex-col">
             <div>
                 <a href="{{ route('services.create') }}" class="fixed w-35 rounded-lg border border-bluepain bg-white px-4 py-2.5 text-sm text-bluepain shadow-sm font-bold">Ajouter service</a>
             </div>
 
             <div class="w-[75%] m-auto">
                 @foreach ($typesServices as $categorie)
-                    <div class="service bg-white rounded-lg m-5">
+                    <div class="service bg-white rounded-lg m-5 shadow-md">
                         <div class="bg-bluepain rounded-lg font-semibold text-lg p-2 text-white">{{ $categorie->name }}</div>
                         <div class="p-3 hidden" id="servicesSecrets{{$categorie->id}}">
                             <p class="mb-3"><?php echo $categorie->description; ?></p>
@@ -33,4 +33,3 @@
         </div>
     </div>
 </body>
-<svg class="text-[#006E8C] hover:text-[#C9F1FD]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
