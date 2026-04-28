@@ -22,7 +22,7 @@
             </style>
         @endif
     </head>
-    <body class="bg-gradient-to-b from-hospitalfashion to-lighttooth text-[#1b1b18] flex p-6 lg:p-8 items-center justify-center min-h-screen flex-col">
+    <body class="bg-linear-to-b from-hospitalfashion to-lighttooth text-[#1b1b18] flex p-6 lg:p-8 items-center justify-center min-h-screen flex-col">
         <main class="flex w-full justify-center">
             <div class="max-w-200 min-w-100 h-auto flex flex-col justify-center items-center">
                 <div class="flex justify-center items-center">

@@ -1,7 +1,7 @@
 <x-header/>
 <body class="bg-[#EBEBEB]">
     <div class="flex
-                max-w-[100%] min-h-[80vh]">
+                max-w-full min-h-[80vh]">
         <x-article/>
         <div class="py-8 w-[80%]">
             <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
