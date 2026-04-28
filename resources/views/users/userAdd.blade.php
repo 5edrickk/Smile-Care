@@ -27,7 +27,7 @@
                         <label class="block text-sm font-medium text-gray-700">Role : </label>
                         <select name="id_role" id="id_role" required>
                             @foreach($roles as $role)
-                                @if ($role->name !== "Admin")
+                                @if ($role->name !== "Admin" && $role->name !== "Employé" && $role->name !== "Receptionniste" && $role->name !== "Dentiste")
                                     <option value="{{ $role->id }}">{{ $role->name }}</option>
                                 @elseif (auth()->user()->id_role === 1)
                                     <option value="{{ $role->id }}">{{ $role->name }}</option>
