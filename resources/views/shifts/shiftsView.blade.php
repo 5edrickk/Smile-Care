@@ -39,13 +39,13 @@
                         <div class="w-[100%] h-[50px]
                                     bg-green-100 rounded-lg border-4 border-green-500 text-green-500
                                     flex flex-col justify-center">
-                            <p>{{ $shifts[$i]->heure_punch }} - {{ $shifts[$i]->state }}</p>
+                            <p>{{ $shifts[$i]->heure_punch }} - entrée</p>
                         </div>
                     @elseif ($shifts[$i]->state === "exit")
                         <div class="w-[100%] h-[50px]
                                     bg-red-100 rounded-lg border-4 border-red-500 text-red-500
                                     flex flex-col justify-center">
-                            <p>{{ $shifts[$i]->heure_punch }} - {{ $shifts[$i]->state }}</p>
+                            <p>{{ $shifts[$i]->heure_punch }} - sortie</p>
                         </div>
                     @endif
                     @if ($i < count($shifts) - 1)

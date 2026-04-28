@@ -119,7 +119,7 @@
             <!-- QUARTS DE TRAVAIL -->
             <!-- METTRE LES HIGHLIGHTS QUAND LA PAGE DES QUARTS DE TRAVAIL SERA FAIT -->
                 <a href="{{ route('shifts') }}">
-                    @if(str_contains(url()->full(), '/shifts/'))
+                    @if(str_contains(url()->full(), '/shifts'))
                         <div class="flex justify-between items-center mt-4 mb-4 h-[55px] w-[85%] m-auto p-1
                                     bg-[#C9F1FD] rounded-lg border-4 border-[#00A4D3]">
                             <x-heroicon-o-calendar-date-range class="h-full"/>
