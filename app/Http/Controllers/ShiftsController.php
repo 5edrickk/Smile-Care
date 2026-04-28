@@ -10,13 +10,19 @@ class ShiftsController extends Controller
 {
     //
     public function index() {
+        $shifts = Shift::where('id_user', '=', auth()->user()->id)->get();
+        if(count($shifts) > 0) {
+            $shifts = Shift::where('id_user', '=', auth()->user()->id)->orderBy('heure_punch', 'desc')->get();
+        }
+
         return view('shifts/shiftsView', [
-            'shifts' => Shift::where('id_user', '=', auth()->user()->id)->orderBy('heure_punch', 'desc')->get(),
+            'shifts' => $shifts,
         ]);
     }
     public function punch() {
-        $shifts = Shift::where('id_user', '=', auth()->user()->id)->orderBy('heure_punch', 'desc')->get();
+        $shifts = Shift::where('id_user', '=', auth()->user()->id)->get();
         if(count($shifts) > 0) {
+            $shifts = Shift::where('id_user', '=', auth()->user()->id)->orderBy('heure_punch', 'desc')->get();
             $lastShift = $shifts[0];
         }
 
