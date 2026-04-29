@@ -149,7 +149,7 @@ class UserController extends Controller
             'dateNaissance' => 'nullable|date',
             'addresse' => 'nullable|string|max:255',
             'telephone' => 'nullable|numeric',
-            'email' => 'nullable|string|max:255',
+            'email' => 'required|string|max:255',
             'password' => 'required|string|max:255'
         ], [
             'name.required' => 'Veuillez entrez un nom.',
