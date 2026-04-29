@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\EtatsRendezVous;
 use App\Models\RendezVous;
+use App\Http\Resources\RendezVousResource;
 use App\Models\Services;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\QueryException;
 
 class RendezVousController extends Controller
 {
@@ -49,30 +52,65 @@ class RendezVousController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validation = Validator::make($request->all(), [
             'id_user' => 'required|integer|exists:users,id',
             'id_dentiste' => 'required|integer|exists:users,id',
             'id_etat' => 'required|integer|exists:etats_rendez_vous,id',
             'id_service' => 'required|integer|exists:services,id',
-            'heure_date' => 'required|date',
+            'heure_date' => 'required|date|regex:/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/',
             'commentaire' => 'nullable|string|max:500',
+        ], [
+            'id_user.required' => 'Veuillez entrer l\'identifiant de l\'utilisateur.',
+            'id_user.regex' => 'L\'identifiant de l\'utilisateur doit être un nombre supérieur ou égal à 0.',
+            'id_dentiste.required' => 'Veuillez entrer l\'identifiant du dentiste.',
+            'id_dentiste.regex' => 'L\'identifiant du dentiste doit être un nombre supérieur ou égal à 0.',
+            'id_etat.required' => 'Veuillez entrer l\'identifiant de l\'état.',
+            'id_etat.regex' => 'L\'identifiant de l\'état doit être un nombre supérieur ou égal à 0.',
+            'id_service.required' => 'Veuillez entrer l\'identifiant du service.',
+            'id_service.regex' => 'L\'identifiant du service doit être un nombre supérieur ou égal à 0.',
+            'heure_date.required' => 'Veuillez entrer une date et une heure.',
+            'heure_date.regex' => 'La date et l\'heure doivent être au format YYYY-MM-DDTHH:MM.',
+            'commentaire.max' => 'Votre commentaire ne peut pas dépasser 500 caractères.',
         ]);
 
-        $rendezVous = new RendezVous;
-        $rendezVous->id_user = $request->id_user;
-        $rendezVous->id_dentiste = $request->id_dentiste;
-        $rendezVous->id_etat = $request->id_etat;
-        $rendezVous->id_service = $request->id_service;
-        $rendezVous->heure_date = $request->heure_date;
-        $rendezVous->commentaire = $request->commentaire;
-
-        if($rendezVous->save()) {
-            session()->flash('success', 'Rendez-vous ajouté avec succès');
-        } else {
-            session()->flash('error', 'La création du rendez-vous a échoué');
+        if ($validation->fails()) {
+            if ($request->routeIs('api.rendezvous.store')) {
+                return response()->json(['ERREUR' => $validation->errors()], 400);
+            } else {
+                return back()->withErrors($validation->errors())->withInput();
+            }
         }
 
-        return redirect()->route('rendezvous');
+        $contenuDecode = $validation->validated();
+
+        try {
+            $rendezVous = RendezVous::create([
+                'id_user' => $contenuDecode['id_user'],
+                'id_dentiste' => $contenuDecode['id_dentiste'],
+                'id_etat' => $contenuDecode['id_etat'],
+                'id_service' => $contenuDecode['id_service'],
+                'heure_date' => $contenuDecode['heure_date'],
+                'commentaire' => $contenuDecode['commentaire']
+            ]);
+            
+            if ($request->routeIs('api.rendezvous.store')) {
+                return response()->json([
+                    'SUCCÈS' => 'Rendez-vous ajouté avec succès',
+                    'data' => new RendezVousResource($rendezVous)
+                ], 200);
+            } else {
+                session()->flash('success', 'Rendez-vous ajouté avec succès');
+                return redirect()->route('rendezvous');
+            }
+        } catch (QueryException $erreur) {
+            report($erreur);
+            if ($request->routeIs('api.rendezvous.store')) {
+                return response()->json(['ERREUR' => 'Le rendez-vous n\'a pas été ajouté.' . $erreur->getMessage()], 500);
+            } else {
+                session()->flash('error', 'Le rendez-vous n\'a pas été ajouté.');
+                return redirect()->route('rendezvous');
+            }
+        }
     }
 
     /**
@@ -85,11 +123,22 @@ class RendezVousController extends Controller
         if ($rendezVous) {
             $dentiste = User::find($rendezVous->id_dentiste);
             $etatRendezVous = EtatsRendezVous::find($rendezVous->id_etat);
-            return view('rendezVous/rendezvousId', ['id' => $rendezVous->id, 'rendezVous' => $rendezVous, 'dentiste' => $dentiste, 'etatRendezVous' => $etatRendezVous]);
+            
+            if (request()->is('api/*')) {
+                return new RendezVousResource($rendezVous);
+            } else {
+                return view('rendezVous/rendezvousId', ['id' => $rendezVous->id, 'rendezVous' => $rendezVous, 'dentiste' => $dentiste, 'etatRendezVous' => $etatRendezVous]);
+            }
         }
         else {
-            session()->flash('error', 'Rendez-vous non trouvé');
-            return redirect()->route('rendezvous');
+            if (request()->is('api/*')) {
+                return response()->json([
+                    'ERREUR' => 'Rendez-vous non trouvé'
+                ], 400);
+            } else {
+                session()->flash('error', 'Rendez-vous non trouvé');
+                return redirect()->route('rendezvous');
+            }
         }
     }
 
@@ -118,33 +167,75 @@ class RendezVousController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $validated = $request->validate([
+        $rendezVous = RendezVous::find($id);
+        if (!$rendezVous) {
+            if ($request->routeIs('api.rendezvous.update')) {
+                return response()->json(['ERREUR' => 'Rendez-vous non trouvé'], 400);
+            } else {
+                session()->flash('error', 'Rendez-vous non trouvé');
+                return redirect()->route('rendezvous');
+            }
+        }
+
+        $validation = Validator::make($request->all(), [
+            'id_user' => 'required|integer|exists:users,id',
             'id_dentiste' => 'required|integer|exists:users,id',
             'id_etat' => 'required|integer|exists:etats_rendez_vous,id',
             'id_service' => 'required|integer|exists:services,id',
             'heure_date' => 'required|date|regex:/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/',
             'commentaire' => 'nullable|string|max:500',
+        ], [
+            'id_user.required' => 'Veuillez entrer l\'identifiant de l\'utilisateur.',
+            'id_user.regex' => 'L\'identifiant de l\'utilisateur doit être un nombre supérieur ou égal à 0.',
+            'id_dentiste.required' => 'Veuillez entrer l\'identifiant du dentiste.',
+            'id_dentiste.regex' => 'L\'identifiant du dentiste doit être un nombre supérieur ou égal à 0.',
+            'id_etat.required' => 'Veuillez entrer l\'identifiant de l\'état.',
+            'id_etat.regex' => 'L\'identifiant de l\'état doit être un nombre supérieur ou égal à 0.',
+            'id_service.required' => 'Veuillez entrer l\'identifiant du service.',
+            'id_service.regex' => 'L\'identifiant du service doit être un nombre supérieur ou égal à 0.',
+            'heure_date.required' => 'Veuillez entrer une date et une heure.',
+            'heure_date.regex' => 'La date et l\'heure doivent être au format YYYY-MM-DDTHH:MM.',
+            'commentaire.max' => 'Votre commentaire ne peut pas dépasser 500 caractères.',
         ]);
 
-        $rendezVous = RendezVous::find($id);
-        if (!$rendezVous) {
-            session()->flash('error', 'Rendez-vous non trouvé');
-            return redirect()->route('rendezvous');
+        if ($validation->fails()) {
+            if ($request->routeIs('api.rendezvous.update')) {
+                return response()->json(['ERREUR' => $validation->errors()], 400);
+            } else {
+                return back()->withErrors($validation->errors())->withInput();
+            }
         }
 
-        $rendezVous->id_dentiste = $validated['id_dentiste'];
-        $rendezVous->id_etat = $validated['id_etat'];
-        $rendezVous->id_service = $validated['id_service'];
-        $rendezVous->heure_date = $validated['heure_date'];
-        $rendezVous->commentaire = $validated['commentaire'];
+        $contenuDecode = $validation->validated();
 
-        if($rendezVous->save()) {
-            session()->flash('success', 'Rendez-vous modifié avec succès');
-        } else {
-            session()->flash('error', 'La modification du rendez-vous a échoué');
+        try {
+            $rendezVous->update([
+                'id_user' => $contenuDecode['id_user'] ?? $rendezVous->id_user,
+                'id_dentiste' => $contenuDecode['id_dentiste'] ?? $rendezVous->id_dentiste,
+                'id_etat' => $contenuDecode['id_etat'] ?? $rendezVous->id_etat,
+                'id_service' => $contenuDecode['id_service'] ?? $rendezVous->id_service,
+                'heure_date' => $contenuDecode['heure_date'] ?? $rendezVous->heure_date,
+                'commentaire' => $contenuDecode['commentaire']
+            ]);
+
+            if ($request->routeIs('api.rendezvous.update')) {
+                return response()->json([
+                    'SUCCÈS' => 'Rendez-vous modifié avec succès',
+                    'data' => new RendezVousResource($rendezVous)
+                ], 200);
+            } else {
+                session()->flash('success', 'Rendez-vous modifié avec succès');
+                return redirect()->route('rendezvous');
+            }
+        } catch (QueryException $erreur) {
+            report($erreur);
+            if ($request->routeIs('api.rendezvous.update')) {
+                return response()->json(['ERREUR' => 'Le rendez-vous n\'a pas été modifié.' . $erreur->getMessage()], 500);
+            } else {
+                session()->flash('error', 'Le rendez-vous n\'a pas été modifié.');
+                return redirect()->route('rendezvous');
+            }
         }
-
-        return redirect()->route('rendezvous');
     }
 
     /**

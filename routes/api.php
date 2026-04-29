@@ -49,9 +49,14 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 // -----------------------------------------------------------------------
-// Ajouter vos routes API ici
+// RENDEZ-VOUS — Sedrick
 // -----------------------------------------------------------------------
 Route::controller(RendezVousController::class)->group(function () {
-    Route::get('/rendezvous', 'index')->name('api.rendezvous.index');
     Route::get('/rendezvous/{id}', 'show')->name('api.rendezvous.show');
+    Route::post('/rendezvous', 'store')->name('api.rendezvous.store');
+    Route::put('/rendezvous/{id}', 'update')->name('api.rendezvous.update');
 });
+
+// -----------------------------------------------------------------------
+// Ajouter vos routes API ici
+// -----------------------------------------------------------------------
