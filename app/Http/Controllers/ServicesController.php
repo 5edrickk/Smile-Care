@@ -49,9 +49,11 @@ class ServicesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Services $services)
+    public function show(int $id)
     {
-        //
+        $service = Services::find($id);
+        $categorie = TypesServices::find($service->id_type);
+        return view('services/servicesShow', ['service' => $service, 'categorie' => $categorie]);
     }
 
     /**

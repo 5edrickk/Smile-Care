@@ -87,6 +87,7 @@ Route::controller(ServicesController::class)->group(function() {
     Route::get('/services/servicesEdit/{id}', 'edit')->name('services.edit');
     Route::put('/services/servicesUpdate/{id}', 'update')->name('services.update');
     Route::get('/services/servicesDestroy/{id}', 'destroy')->name('services.destroy');
+    Route::get('/services/servicesShow/{id}', 'show')->name('services.show');
 });
 
 require __DIR__.'/auth.php';
