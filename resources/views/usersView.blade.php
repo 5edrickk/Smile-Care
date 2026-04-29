@@ -7,27 +7,25 @@
         <x-article/>
 
         <div class="min-h-[70%] w-[80%]">
-            @if($max_pages > 0)
-                <!-- SEARCHBAR -->
-                <form action="{{ route('utilisateursSearch', ['id_role' => $id_role, 'num_page' => $num_page]) }}" method="POST"
-                        class="mb-6 flex justify-center gap-2
-                            min-h-[2%]
-                            mt-8">
-                    @csrf
-                    <div class="flex flex-row justify-center align-middle
-                                w-[75%]">
-                        <input placeholder="Chercher par nom..." name="searchNom" id="searchNom"
-                            class="w-full rounded-l-lg border border-gray-500 bg-white px-3 py-2.5 text-lg">
-                        <input placeholder="Chercher par prénom..." name="searchPrenom" id="searchPrenom"
-                            class="w-full rounded-r-lg border border-gray-500 bg-white px-3 py-2.5 text-lg">
-                    </div>
+            <!-- SEARCHBAR -->
+            <form action="{{ route('utilisateursSearch', ['id_role' => $id_role, 'num_page' => $num_page]) }}" method="POST"
+                    class="mb-6 flex justify-center gap-2
+                        min-h-[2%]
+                        mt-8">
+                @csrf
+                <div class="flex flex-row justify-center align-middle
+                            w-[75%]">
+                    <input placeholder="Chercher par prénom..." name="searchPrenom" id="searchPrenom"
+                        class="w-full rounded-l-lg border border-gray-500 bg-white px-3 py-2.5 text-lg">
+                    <input placeholder="Chercher par nom..." name="searchNom" id="searchNom"
+                        class="w-full rounded-r-lg border border-gray-500 bg-white px-3 py-2.5 text-lg">
+                </div>
 
-                    <button type="submit"
-                        class="w-25 rounded-lg border border-gray-500 bg-white px-4 py-2.5 text-sm shadow-sm hover:bg-gray-50">
-                        Rechercher
-                    </button>
-                </form>
-            @endif
+                <button type="submit"
+                    class="w-25 rounded-lg border border-gray-500 bg-white px-4 py-2.5 text-sm shadow-sm hover:bg-gray-50">
+                    Rechercher
+                </button>
+            </form>
 
             <div class="pl-25 pr-25 pt-6 pb-6
                         grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 p-10
@@ -45,7 +43,7 @@
                             shadow-xs
                             flex justify-between">
                             <div class="w-[50%]">
-                                {{ $user->name . ' ' . $user->prenom }}
+                                {{ $user->prenom . ' ' . $user->name }}
                                 <br>
                                 {{ Number::format(Carbon::parse($user->dateNaissance)->diffInYears(now()), precision:0) . ' ans'}}
                             </div>
@@ -77,12 +75,15 @@
                                 <p><strong>Téléphone : </strong> {{ " " . $user->telephone }}</p>
                                 <p><strong>Addresse : </strong> {{ " " . $user->addresse }}</p>
 
-                                {{-- @if(str_contains(url()->full(), '/utilisateurs/5'))
-                                    @if($user->id_role === 5 && (auth()->user()->id_role === 1 || auth()->user()->id_role === 4))
-                                        <p><strong>Prochain traitement : </strong><br>{{ $service->name }}</p>
-                                        <p><strong>Date du prochain traitement : </strong><br>{{ $traitement->heure_date }}</p>
-                                    @endif
-                                @endif --}}
+                                @if(auth()->user()->id_role === 4)
+                                    @foreach ($rendezVous as $rdv)
+                                        @if ($rdv->id_user === $user->id)
+                                            <p><strong>Prochain traitement : </strong><br>{{ $rdv->id_service[0]->name }}</p>
+                                            <p><strong>Date du prochain traitement : </strong><br>{{ $rdv->heure_date }}</p>
+                                            @break;
+                                        @endif
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -91,6 +92,8 @@
         </div>
     </div>
 </body>
+
+<x-footer/>
 
 @if($max_pages > 0)
     <!-- PAGE PRÉCÉDENTE/SUIVANT -->
@@ -131,9 +134,9 @@
 
 <!-- BOUTON ADD -->
 <a href="{{ route('utilisateurForm', -1) }}" class="w-[15%] h-16
-                -mt-16
+                -mt-16 mr-4
                 bg-green-100 border-[2px] border-green-500
-                sticky bottom-0 left-[100%] p-4
+                sticky bottom-[35px] left-[100%] p-4
                 rounded-lg
                 text-green-500
                 flex justify-center align-middle">

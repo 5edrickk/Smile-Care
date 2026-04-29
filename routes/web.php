@@ -47,24 +47,24 @@ Route::controller(ShiftsController::class)->group(function() {
     Route::get('shiftPunch', 'punch')->name('shiftPunch');
 });
 
-Route::controller(RendezVousController::class)->group(function() {
-    Route::get('/rendezvous', 'index')->name('rendezvous');
-    Route::get('/rendezvous/create', 'create')->name('rendezvousCreate');
-    Route::post('/rendezvous', 'store')->name('rendezvousStore');
-    Route::get('/rendezvous/{id}', 'show')->name('rendezvousID'); // ajouter un middleware pour verifier l'auth et verifier si l'user a le droit d'acceder a cette route
-    Route::get('/rendezvous/{id}/edit', 'edit')->name('rendezvousEdit');
-    Route::put('/rendezvous/{id}', 'update')->name('rendezvousUpdate');
-    Route::post('/rendezvous/destroy', 'destroy')->name('rendezvousDestroy');
+Route::middleware('auth')->group(function () {
+    Route::controller(RendezVousController::class)->group(function() {
+        Route::get('/rendezvous', 'index')->name('rendezvous');
+        Route::get('/rendezvous/create', 'create')->name('rendezvousCreate');
+        Route::post('/rendezvous', 'store')->name('rendezvousStore');
+        Route::get('/rendezvous/search', 'search')->name('rendezvous.search');
+        Route::get('/rendezvous/{id}', 'show')->name('rendezvousID');
+        Route::get('/rendezvous/{id}/edit', 'edit')->name('rendezvousEdit');
+        Route::put('/rendezvous/{id}', 'update')->name('rendezvousUpdate');
+        Route::post('/rendezvous/destroy', 'destroy')->name('rendezvousDestroy');
+    });
 });
 
 Route::controller(MfaController::class)->group(function () {
-    // Page "vérifiez votre courriel" — accessible sans être connecté
     Route::get('/mfa/notice', 'notice')->name('mfa.notice');
 
-    // Lien cliqué depuis le courriel — accessible sans être connecté
     Route::get('/mfa/verify', 'verify')->name('mfa.verify');
 
-    // Renvoyer le lien — accessible sans être connecté
     Route::post('/mfa/resend', 'resend')->name('mfa.resend');
 });
 

@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -57,9 +58,24 @@ class User extends Authenticatable
         return $this->belongsTo(Roles::class, 'id_role'); // ← corrigé
     }
 
-    // Relation avec les médicaments
+    // Relation avec les médicaments (ordonnance principale)
     public function medicament(): BelongsTo
     {
         return $this->belongsTo(Medicament::class, 'ordonnance');
+    }
+
+    public function shifts(): HasMany
+    {
+        return $this->hasMany(Shift::class, 'id_user');
+    }
+
+    public function rendezVous(): HasMany
+    {
+        return $this->hasMany(RendezVous::class, 'id_user');
+    }
+
+    public function rendezVousComeDentiste(): HasMany
+    {
+        return $this->hasMany(RendezVous::class, 'id_dentiste');
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\PaiementController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RendezVousController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,24 @@ Route::controller(ServicesController::class)->group(function() {
     Route::put('/services/update/{id}', 'update')->name('api.services.update');
     Route::get('/services/destroy/{id}', 'destroy')->name('api.services.destroy');
     Route::get('/services/{id}', 'show')->name('api.services.show');
+
+// -----------------------------------------------------------------------
+// UTILISATEURS - Alexandre
+// -----------------------------------------------------------------------
+Route::middleware('auth:sanctum')->group(function () {
+    Route::controller(UserController::class)->group(function(){
+        Route::post('utilisateurAdd', 'store')->name('api.utilisateurAdd');
+        Route::get('utilisateurDelete/{id}', 'destroy')->name('api.utilisateurDelete');
+    });
+});
+
+// -----------------------------------------------------------------------
+// RENDEZ-VOUS — Sedrick
+// -----------------------------------------------------------------------
+Route::controller(RendezVousController::class)->group(function () {
+    Route::get('/rendezvous/{id}', 'show')->name('api.rendezvous.show');
+    Route::post('/rendezvous', 'store')->name('api.rendezvous.store');
+    Route::put('/rendezvous/{id}', 'update')->name('api.rendezvous.update');
 });
 
 // -----------------------------------------------------------------------
