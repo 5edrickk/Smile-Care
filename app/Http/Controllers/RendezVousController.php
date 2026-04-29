@@ -155,11 +155,12 @@ class RendezVousController extends Controller
         }
 
         $dentistes = User::where('id_role', 4)->get();
+        $clients = User::where('id_role', 5)->get();
         $etatsRendezVous = EtatsRendezVous::all();
         $services = Services::all();
         $heures = RendezVous::select('heure_date')->distinct()->get();
 
-        return view('rendezVous/rendezvousEdit', ['rendezVous' => $rendezVous, 'dentistes' => $dentistes, 'etatsRendezVous' => $etatsRendezVous, 'services' => $services, 'heures' => $heures]);
+        return view('rendezVous/rendezvousEdit', [ 'clients' => $clients, 'rendezVous' => $rendezVous, 'dentistes' => $dentistes, 'etatsRendezVous' => $etatsRendezVous, 'services' => $services, 'heures' => $heures]);
     }
 
     /**

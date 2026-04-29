@@ -25,6 +25,25 @@
                             </div>
                         @endif
 
+                        {{-- Client --}}
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">{{ __('Client') }}<span
+                                    class="text-red-500">*</span></label>
+                            <select name="id_user" required
+                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400"
+                                id="id_user">
+                                <option value="">{{ __('Sélectionner un client') }}</option>
+                                @foreach ($clients as $client)
+                                    <option value="{{ $client->id }}"
+                                        {{ old('id_user', $rendezVous->id_user) == $client->id ? 'selected' : '' }}>
+                                        {{ $client->name }} {{ $client->prenom }} ({{ $client->email }})
+                                    </option>
+                                @endforeach
+                            </select>
+                            <p class="mt-1 hidden text-sm text-red-600" id="erreur-id_user"></p>
+                            <x-input-error :messages="$errors->get('id_user')" class="mt-2" />
+                        </div>
+
                         {{-- Dentiste --}}
                         <div>
                             <label class="block text-sm font-medium text-gray-700">{{ __('Dentiste') }}<span
