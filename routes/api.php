@@ -49,6 +49,7 @@ Route::controller(ServicesController::class)->group(function() {
     Route::put('/services/update/{id}', 'update')->name('api.services.update');
     Route::get('/services/destroy/{id}', 'destroy')->name('api.services.destroy');
     Route::get('/services/{id}', 'show')->name('api.services.show');
+});
 
 // -----------------------------------------------------------------------
 // UTILISATEURS - Alexandre
