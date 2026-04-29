@@ -7,27 +7,25 @@
         <x-article/>
 
         <div class="min-h-[70%] w-[80%]">
-            @if($max_pages > 0)
-                <!-- SEARCHBAR -->
-                <form action="{{ route('utilisateursSearch', ['id_role' => $id_role, 'num_page' => $num_page]) }}" method="POST"
-                        class="mb-6 flex justify-center gap-2
-                            min-h-[2%]
-                            mt-8">
-                    @csrf
-                    <div class="flex flex-row justify-center align-middle
-                                w-[75%]">
-                        <input placeholder="Chercher par nom..." name="searchNom" id="searchNom"
-                            class="w-full rounded-l-lg border border-gray-500 bg-white px-3 py-2.5 text-lg">
-                        <input placeholder="Chercher par prénom..." name="searchPrenom" id="searchPrenom"
-                            class="w-full rounded-r-lg border border-gray-500 bg-white px-3 py-2.5 text-lg">
-                    </div>
+            <!-- SEARCHBAR -->
+            <form action="{{ route('utilisateursSearch', ['id_role' => $id_role, 'num_page' => $num_page]) }}" method="POST"
+                    class="mb-6 flex justify-center gap-2
+                        min-h-[2%]
+                        mt-8">
+                @csrf
+                <div class="flex flex-row justify-center align-middle
+                            w-[75%]">
+                    <input placeholder="Chercher par prénom..." name="searchPrenom" id="searchPrenom"
+                        class="w-full rounded-l-lg border border-gray-500 bg-white px-3 py-2.5 text-lg">
+                    <input placeholder="Chercher par nom..." name="searchNom" id="searchNom"
+                        class="w-full rounded-r-lg border border-gray-500 bg-white px-3 py-2.5 text-lg">
+                </div>
 
-                    <button type="submit"
-                        class="w-25 rounded-lg border border-gray-500 bg-white px-4 py-2.5 text-sm shadow-sm hover:bg-gray-50">
-                        Rechercher
-                    </button>
-                </form>
-            @endif
+                <button type="submit"
+                    class="w-25 rounded-lg border border-gray-500 bg-white px-4 py-2.5 text-sm shadow-sm hover:bg-gray-50">
+                    Rechercher
+                </button>
+            </form>
 
             <div class="pl-25 pr-25 pt-6 pb-6
                         grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 p-10
