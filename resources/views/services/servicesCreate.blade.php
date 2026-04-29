@@ -12,7 +12,7 @@
                 <form action="{{ route('services.store') }}" method="POST" class="space-y-4 px-6 py-6 shadow-2xl">
                     @csrf
                     <label for="service_name" class="text-sm font-medium">Nom du service<span class="text-red-500">*</span></label>
-                    <input type="text" name="service_name" id="service_name" required
+                    <input type="text" name="service_name" id="service_name" required maxlength="255"
                         class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">
 
                     <label for="service_categorie" class="text-sm font-medium">Catégorie<span class="text-red-500">*</span></label>
@@ -26,11 +26,11 @@
                     </select>
 
                     <label for="service_duree" class="text-sm font-medium">Durée<span class="text-red-500">*</span></label>
-                    <input type="number" name="service_duree" id="service_duree" required
+                    <input type="number" name="service_duree" id="service_duree" required min="1"
                         class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">
 
                     <label for="service_description" class="text-sm font-medium">Description</label>
-                    <textarea type="text" name="service_description" id="service_description"
+                    <textarea type="text" name="service_description" id="service_description" maxlength="255"
                         class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400"></textarea>
 
                     <div class="flex items-center justify-end gap-3 pt-2">
