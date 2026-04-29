@@ -6,6 +6,7 @@ use App\Models\Services;
 use App\Models\TypesServices;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Symfony\Component\VarDumper\VarDumper;
 
 class ServicesController extends Controller
 {
@@ -14,7 +15,10 @@ class ServicesController extends Controller
      */
     public function index()
     {
-        return Services::All();
+        return view('services/services', [
+            'typesServices' => TypesServices::All(),
+            'services' => Services::All()
+        ]);
     }
 
     /**
@@ -22,12 +26,9 @@ class ServicesController extends Controller
      */
     public function create(): View
     {
-        $name = Services::select('name')->get();
-        $description = Services::select('description')->get();
-        $duree = Services::select('duree')->get();
         $id_type = TypesServices::all();
 
-        return view('services/servicesCreate', ['name' => $name, 'description' => $description, 'duree' => $duree, 'id_type' => $id_type]);
+        return view('services/servicesCreate', ['id_type' => $id_type]);
     }
 
     /**
@@ -35,13 +36,6 @@ class ServicesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:255',
-            'id_type' => 'required|integer|exists:type_services,id',
-            'duree' => 'nullable|float|regex:/[0-9]*',
-        ]);
-
         $service = new Services;
         $service->name = $request->service_name;
         $service->description = $request->service_description;
@@ -49,7 +43,7 @@ class ServicesController extends Controller
         $service->duree = $request->service_duree;
         $service->save();
 
-        return redirect()->route('services')->with('success', 'MESSAGE TEST(GOOD)');
+        return redirect()->route('services')->with('success', 'Le service \"' . $service->name . '\" a été ajouté!');
     }
 
     /**
@@ -63,17 +57,28 @@ class ServicesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Services $services)
+    public function edit(int $id)
     {
-        //
-    }
+        $service = Services::findOrFail($id);
+        $id_type = TypesServices::all();
 
+        return view('services/servicesEdit', ['service' => $service, 'id_type' => $id_type]);
+    }
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Services $services)
+    public function update(Request $request, int $id)
     {
-        //
+        $service = Services::findOrFail($id);
+        $service->name = $request->service_name;
+        $service->description = $request->service_description;
+        $service->id_type = $request->service_categorie;
+        $service->duree = $request->service_duree;
+        if($service->save()){
+            session('error', '');
+        }
+
+        return redirect()->route('services')->with('success', 'Le service \"' . $service->name . '\" a été modifié!');
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ShiftsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RendezVousController;
 use App\Http\Controllers\TypesServicesController;
@@ -55,13 +56,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::controller(MfaController::class)->group(function () {
-    // Page "vérifiez votre courriel" — accessible sans être connecté
     Route::get('/mfa/notice', 'notice')->name('mfa.notice');
 
-    // Lien cliqué depuis le courriel — accessible sans être connecté
     Route::get('/mfa/verify', 'verify')->name('mfa.verify');
 
-    // Renvoyer le lien — accessible sans être connecté
     Route::post('/mfa/resend', 'resend')->name('mfa.resend');
 });
 
@@ -77,14 +75,12 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::controller(TypesServicesController::class)->group(function() {
-    Route::get('/services', 'index')->name('services');
-    Route::get('/services/categorie/{id}', 'indexByCategory')->name('services.categorie');
-});
-
 Route::controller(ServicesController::class)->group(function() {
+    Route::get('/services', 'index')->name('services');
     Route::get('/services/servicesCreate', 'create')->name('services.create');
     Route::post('/services/servicesStore', 'store')->name('services.store');
+    Route::get('/services/servicesEdit/{id}', 'edit')->name('services.edit');
+    Route::put('/services/servicesUpdate/{id}', 'update')->name('services.update');
 });
 
 require __DIR__.'/auth.php';

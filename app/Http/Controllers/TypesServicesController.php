@@ -14,10 +14,7 @@ class TypesServicesController extends Controller
      */
     public function index() : View
     {
-        return view('services/services', [
-            'typesServices' => TypesServices::All(),
-            'services' => Services::All()
-        ]);
+        //
     }
 
     /**

@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shift_user', function (Blueprint $table) {
-            $table->engine = "InnoDB";
-            $table->bigInteger('id_shift')->unsigned();
+        Schema::create('shifts', function (Blueprint $table) {
+            $table->id();
             $table->bigInteger('id_user')->unsigned();
+            $table->dateTime('heure_punch');
+            $table->string('state')->default('enter');
         });
-        Schema::table('shift_user', function (Blueprint $table) {
-            $table->foreign('id_shift')->references('id')->on('shifts');
+
+        Schema::table('shifts', function(Blueprint $table) {
             $table->foreign('id_user')->references('id')->on('users');
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('shift_user');
+        Schema::dropIfExists('shifts');
     }
 };

@@ -45,7 +45,7 @@
                             shadow-xs
                             flex justify-between">
                             <div class="w-[50%]">
-                                {{ $user->name . ' ' . $user->prenom }}
+                                {{ $user->prenom . ' ' . $user->name }}
                                 <br>
                                 {{ Number::format(Carbon::parse($user->dateNaissance)->diffInYears(now()), precision:0) . ' ans'}}
                             </div>
@@ -77,12 +77,15 @@
                                 <p><strong>Téléphone : </strong> {{ " " . $user->telephone }}</p>
                                 <p><strong>Addresse : </strong> {{ " " . $user->addresse }}</p>
 
-                                {{-- @if(str_contains(url()->full(), '/utilisateurs/5'))
-                                    @if($user->id_role === 5 && (auth()->user()->id_role === 1 || auth()->user()->id_role === 4))
-                                        <p><strong>Prochain traitement : </strong><br>{{ $service->name }}</p>
-                                        <p><strong>Date du prochain traitement : </strong><br>{{ $traitement->heure_date }}</p>
-                                    @endif
-                                @endif --}}
+                                @if(auth()->user()->id_role === 4)
+                                    @foreach ($rendezVous as $rdv)
+                                        @if ($rdv->id_user === $user->id)
+                                            <p><strong>Prochain traitement : </strong><br>{{ $rdv->id_service[0]->name }}</p>
+                                            <p><strong>Date du prochain traitement : </strong><br>{{ $rdv->heure_date }}</p>
+                                            @break;
+                                        @endif
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -130,11 +133,11 @@
 @endif
 
 <!-- BOUTON ADD -->
-<a href="{{ route('utilisateurForm', -1) }}" class="w-[15%]
-                bg-green-100 border-t-[2px] border-l-[2px] border-r-[2px] border-green-500
-                mt-[-50px]
+<a href="{{ route('utilisateurForm', -1) }}" class="w-[15%] h-16
+                -mt-16
+                bg-green-100 border-[2px] border-green-500
                 sticky bottom-0 left-[100%] p-4
-                rounded-t-lg
+                rounded-lg
                 text-green-500
                 flex justify-center align-middle">
     <p>Ajouter un utilisateur</p>

@@ -1,13 +1,10 @@
 function rechercherPaiements() {
     const query = document.getElementById('search-input').value.trim();
-
     if (query === '') {
         reinitialiserRecherche();
         return;
     }
-
     const tbody = document.getElementById('tbody-paiements');
-
     tbody.innerHTML = `
         <tr>
             <td colspan="6" class="px-6 py-8 text-center text-sm text-gray-400">
@@ -15,7 +12,6 @@ function rechercherPaiements() {
             </td>
         </tr>
     `;
-
     fetch(`/paiements/search?query=${encodeURIComponent(query)}`, {
         method: 'GET',
         headers: {
@@ -46,7 +42,6 @@ function rechercherPaiements() {
 
 function afficherResultats(paiements) {
     const tbody = document.getElementById('tbody-paiements');
-
     if (paiements.length === 0) {
         tbody.innerHTML = `
             <tr>
@@ -58,11 +53,9 @@ function afficherResultats(paiements) {
         `;
         return;
     }
-
     tbody.innerHTML = paiements.map(function (p) {
         return `
             <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-sm text-gray-500">${p.id}</td>
                 <td class="px-6 py-4 text-sm font-medium text-gray-900">
                     ${parseFloat(p.montant).toFixed(2)} $
                 </td>
@@ -75,7 +68,8 @@ function afficherResultats(paiements) {
                         ${p.etat}
                     </span>
                 </td>
-                <td class="px-6 py-4 text-sm text-gray-500">#${p.rdv}</td>
+                <td class="px-6 py-4 text-sm text-gray-900">${p.client}</td>
+                <td class="px-6 py-4 text-sm text-gray-500">${p.rdv}</td>
                 <td class="px-6 py-4 text-sm font-medium">
                     <div class="flex gap-3">
                         <a href="/paiements/${p.id}"
@@ -106,11 +100,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (btnRechercher) {
         btnRechercher.addEventListener('click', rechercherPaiements);
     }
-
     if (btnReinitialiser) {
         btnReinitialiser.addEventListener('click', reinitialiserRecherche);
     }
-
     if (input) {
         input.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
