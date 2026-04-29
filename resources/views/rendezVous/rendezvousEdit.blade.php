@@ -113,4 +113,6 @@
             </div>
         </div>
     </div>
-</body
+</body>
+
+<x-footer/>

@@ -125,3 +125,5 @@
         </div>
     </div>
 </body>
+
+<x-footer/>
