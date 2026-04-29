@@ -40,11 +40,10 @@ Route::middleware('auth:sanctum')->group(function () {
 // -----------------------------------------------------------------------
 // UTILISATEURS - Alexandre
 // -----------------------------------------------------------------------
-Route::middleware('auth:sanctum')->group(function () {
-    Route::controller(UserController::class)->group(function(){
-        Route::post('utilisateurAdd', 'store')->name('api.utilisateurAdd');
-        Route::get('utilisateurDelete/{id}', 'destroy')->name('api.utilisateurDelete');
-    });
+Route::controller(UserController::class)->group(function(){
+    Route::post('api/utilisateurAdd', 'store')->name('api.utilisateurAdd');
+    Route::get('api/utilisateur/{id}', 'show')->name('api.utilisateur.show');
+    Route::delete('api/utilisateurDelete/{id}', 'destroy')->name('api.utilisateurDelete');
 });
 
 // -----------------------------------------------------------------------

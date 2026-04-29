@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Roles;
 use App\Models\User;
+use App\Http\Resources\UserResource;
 use App\Models\RendezVous;
 use App\Models\Services;
 use Illuminate\Http\Request;
@@ -190,6 +191,9 @@ class UserController extends Controller
 
     public function show(int $id) {
         $user = User::find($id);
+        if(request()->is('api/*')) {
+            return new UserResource($user);
+        }
 
         if($id >= 0) {
             return view('users/userEdit', [
