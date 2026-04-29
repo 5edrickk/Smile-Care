@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\PaiementController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RendezVousController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,15 @@ Route::controller(UserController::class)->group(function(){
     Route::post('api/utilisateurAdd', 'store')->name('api.utilisateurAdd');
     Route::get('api/utilisateur/{id}', 'show')->name('api.utilisateur.show');
     Route::delete('api/utilisateurDelete/{id}', 'destroy')->name('api.utilisateurDelete');
+});
+
+// -----------------------------------------------------------------------
+// RENDEZ-VOUS — Sedrick
+// -----------------------------------------------------------------------
+Route::controller(RendezVousController::class)->group(function () {
+    Route::get('/rendezvous/{id}', 'show')->name('api.rendezvous.show');
+    Route::post('/rendezvous', 'store')->name('api.rendezvous.store');
+    Route::put('/rendezvous/{id}', 'update')->name('api.rendezvous.update');
 });
 
 // -----------------------------------------------------------------------

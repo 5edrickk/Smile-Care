@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 
+#[Fillable('id_user', 'id_dentiste', 'id_etat', 'id_service', 'heure_date', 'commentaire')]
 class RendezVous extends Model
 {
     //
