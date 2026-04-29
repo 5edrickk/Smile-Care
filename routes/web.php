@@ -86,6 +86,7 @@ Route::controller(ServicesController::class)->group(function() {
     Route::post('/services/servicesStore', 'store')->name('services.store');
     Route::get('/services/servicesEdit/{id}', 'edit')->name('services.edit');
     Route::put('/services/servicesUpdate/{id}', 'update')->name('services.update');
+    Route::get('/services/servicesDestroy/{id}', 'destroy')->name('services.destroy');
 });
 
 require __DIR__.'/auth.php';

@@ -43,7 +43,7 @@ class ServicesController extends Controller
         $service->duree = $request->service_duree;
         $service->save();
 
-        return redirect()->route('services')->with('success', 'Le service \"' . $service->name . '\" a été ajouté!');
+        return redirect()->route('services')->with('success', 'Le service \"' . $service->name . '\" a été ajouté.');
     }
 
     /**
@@ -78,14 +78,21 @@ class ServicesController extends Controller
             session('error', '');
         }
 
-        return redirect()->route('services')->with('success', 'Le service \"' . $service->name . '\" a été modifié!');
+        return redirect()->route('services')->with('success', 'Le service \"' . $service->name . '\" a été modifié.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Services $services)
+    public function destroy(Services $services, int $id)
     {
-        //
+        $service = Services::findOrFail($id);
+
+        if (!$service)
+            return redirect()->route('services')->with('error', 'La suppression du service a échoué');
+
+        $service->delete();
+
+        return redirect()->route('services')->with('success', 'Le service a été supprimé.');
     }
 }
