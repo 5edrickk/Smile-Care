@@ -42,6 +42,11 @@ Route::controller(UserController::class)->group(function() {
     Route::post('utilisateurEdit/{id}', 'edit')->name('utilisateurEdit');
 });
 
+Route::controller(ShiftsController::class)->group(function() {
+    Route::get('shifts', 'index')->name('shifts');
+    Route::get('shiftPunch', 'punch')->name('shiftPunch');
+});
+
 Route::middleware('auth')->group(function () {
     Route::controller(RendezVousController::class)->group(function() {
         Route::get('/rendezvous', 'index')->name('rendezvous');
