@@ -7,6 +7,7 @@ use App\Models\RendezVous;
 use App\Models\Services;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class RendezVousController extends Controller
@@ -17,8 +18,10 @@ class RendezVousController extends Controller
     public function index(): View
     {
         //
-        if (auth()->user() != null && auth()->user()->id_role === 4) {
-            return view('rendezVous/rendezvous', ['rendezVous' => RendezVous::where('id_dentiste', '=', auth()->user()->id)->with('user', 'dentiste', 'service')->get(),
+        $user = Auth::user();
+
+        if ($user != null && $user->id_role === 4) {
+            return view('rendezVous/rendezvous', ['rendezVous' => RendezVous::where('id_dentiste', '=', $user->id)->with('user', 'dentiste', 'service')->get(),
             ]);
         }
 
@@ -142,6 +145,51 @@ class RendezVousController extends Controller
         }
 
         return redirect()->route('rendezvous');
+    }
+
+    /**
+     * Search for a resource.
+     */
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $rendezvousQuery = RendezVous::select('id', 'id_user', 'id_dentiste', 'id_etat', 'id_service', 'heure_date', 'commentaire')
+            ->with(['user', 'dentiste', 'service', 'etatsRendezVous'])
+            ->where(function($queryBuilder) use ($query) {
+                $queryBuilder
+                    ->whereHas('user', function ($q) use ($query) {
+                        $q->where('name', 'like', "%{$query}%")
+                          ->orWhere('prenom', 'like', "%{$query}%");
+                    })
+                    ->orWhereHas('dentiste', function ($q) use ($query) {
+                        $q->where('name', 'like', "%{$query}%")
+                          ->orWhere('prenom', 'like', "%{$query}%");
+                    })
+                    ->orWhereHas('service', function ($q) use ($query) {
+                        $q->where('name', 'like', "%{$query}%")
+                          ->orWhere('description', 'like', "%{$query}%");
+                    });
+            });
+
+        $user = Auth::user();
+        if ($user != null && $user->id_role === 4) {
+            $rendezvousQuery->where('id_dentiste', '=', $user->id);
+        }
+
+        $rendezvous = $rendezvousQuery->get();
+
+        return response()->json($rendezvous->map(function ($r) {
+            return [
+                'id'      => $r->id,
+                'user'    => $r->user->name . ' ' . $r->user->prenom,
+                'dentiste' => $r->dentiste->name . ' ' . $r->dentiste->prenom,
+                'service' => $r->service->name,
+                'heure_date' => $r->heure_date,
+                'commentaire' => $r->commentaire,
+                'etat' => optional($r->etatsRendezVous)->name,
+            ];
+        }));
     }
 
     /**

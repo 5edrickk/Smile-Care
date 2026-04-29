@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\PaiementController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RendezVousController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
 // -----------------------------------------------------------------------
 // Ajouter vos routes API ici
 // -----------------------------------------------------------------------
+Route::controller(RendezVousController::class)->group(function () {
+    Route::get('/rendezvous', 'index')->name('api.rendezvous.index');
+    Route::get('/rendezvous/{id}', 'show')->name('api.rendezvous.show');
+});
