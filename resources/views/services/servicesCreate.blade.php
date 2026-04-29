@@ -25,8 +25,8 @@
                         @endforeach
                     </select>
 
-                    <label for="service_duree" class="text-sm font-medium">Durée</label>
-                    <input type="number" name="service_duree" id="service_duree"
+                    <label for="service_duree" class="text-sm font-medium">Durée<span class="text-red-500">*</span></label>
+                    <input type="number" name="service_duree" id="service_duree" required
                         class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">
 
                     <label for="service_description" class="text-sm font-medium">Description</label>
@@ -49,3 +49,5 @@
         </div>
     </div>
 </body>
+
+<x-footer/>

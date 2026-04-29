@@ -95,6 +95,8 @@
     </div>
 </body>
 
+<x-footer/>
+
 @if($max_pages > 0)
     <!-- PAGE PRÉCÉDENTE/SUIVANT -->
     <div class="sticky bottom-5
@@ -134,9 +136,9 @@
 
 <!-- BOUTON ADD -->
 <a href="{{ route('utilisateurForm', -1) }}" class="w-[15%] h-16
-                -mt-16
+                -mt-16 mr-4
                 bg-green-100 border-[2px] border-green-500
-                sticky bottom-0 left-[100%] p-4
+                sticky bottom-[35px] left-[100%] p-4
                 rounded-lg
                 text-green-500
                 flex justify-center align-middle">
