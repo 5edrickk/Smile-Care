@@ -1,5 +1,29 @@
+@vite(['resources/css/app.css', 'resources/js/delete-confirm.js'])
 @use('Carbon\Carbon', 'Carbon')
 @use('Illuminate\Support\Number', 'Number')
+
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-red-500/50 hidden
+            border-4 border-red-500" id="confirmation">
+  <div class="bg-red-500 rounded-lg shadow-xl">
+    <p class="w-[100%] h-[10%]
+                p-6
+                text-white">Confirmation</p>
+    <div class="w-[100%] h-[15%]
+                bg-red-100
+                rounded-b-lg
+                p-6">
+        Êtes-vous sur que vous voulez supprimer l'utilisateur ?
+
+        <div class="flex justify-between pt-4">
+            <button class="bg-red-200 border-2 border-red-400 rounded-lg shadow-xl py-1 px-10
+                            hover:bg-red-100 hover:border-red-300" id="btnNon">Non</button>
+            <button class="bg-red-300 border-2 border-red-600 rounded-lg shadow-xl py-1 px-10
+                            hover:bg-red-200 hover:border-red-300" id="btnOui">Oui</button>
+        </div>
+    </div>
+  </div>
+</div>
+
 <x-header/>
 <body class="bg-[#EBEBEB]">
     <div class="flex
@@ -53,9 +77,10 @@
                                     <a href="{{ route('utilisateurForm', $user->id) }}" class="w-[12%] mr-2 ml-2 flex justify-center align-middle">
                                         <x-heroicon-o-pencil-square class="text-[#006E8C] hover:text-[#C9F1FD]"/>
                                     </a>
-                                    <a href="{{ route('utilisateurDelete', $user->id) }}" class="w-[12%] mr-2 ml-2 flex justify-center align-middle">
+                                    <button class="w-[12%] mr-2 ml-2 flex justify-center align-middle
+                                                deleteBtn" value="{{ $user->id }}">
                                         <x-heroicon-o-trash class="text-red-500 hover:text-[#FDC9C9]"/>
-                                    </a>
+                                    </button>
                                 @endif
                             </div>
                         </div>
