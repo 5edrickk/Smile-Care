@@ -6,7 +6,7 @@
         <div class="py-8 w-[80%]">
             <div class="mx-auto w-[100%] h-[100%] px-4 sm:px-6 lg:px-8">
                 <div>
-                    <a href="{{ route('services.create') }}" class="fixed bottom-0 right-3 w-35 rounded-t-lg hover:border bg-white px-4 py-2.5 text-sm text-bluepain shadow-sm font-bold">Ajouter service</a>
+                    <a href="{{ route('services.create') }}" class="fixed bottom-10 right-3 w-35 rounded-lg hover:border bg-white px-4 py-2.5 text-sm text-bluepain shadow-sm font-bold">Ajouter service</a>
                 </div>
 
                 <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 max-h-[80vh]">
