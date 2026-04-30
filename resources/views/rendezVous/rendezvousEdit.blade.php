@@ -140,4 +140,6 @@
         </div>
     </div>
     @vite('resources/js/rendezVous-validation.js')
-</body
+</body>
+
+<x-footer/>
