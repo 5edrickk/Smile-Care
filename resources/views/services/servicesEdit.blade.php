@@ -26,12 +26,12 @@
                             {{ Session::get('erreur') }}
                         </div>
                     @endif
-                    <label for="service_name" class="text-sm font-medium">Nom du service<span class="text-red-500">*</span></label>
-                    <input type="text" name="service_name" id="service_name" required maxlength="255" value="{{ $service->name }}"
+                    <label for="name" class="text-sm font-medium">Nom du service<span class="text-red-500">*</span></label>
+                    <input type="text" name="name" id="service_name" required maxlength="255" value="{{ $service->name }}"
                         class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">
 
-                    <label for="service_categorie" class="text-sm font-medium">Catégorie<span class="text-red-500">*</span></label>
-                    <select type="text" name="service_categorie" id="service_categorie" required
+                    <label for="categorie" class="text-sm font-medium">Catégorie<span class="text-red-500">*</span></label>
+                    <select type="text" name="categorie" id="service_categorie" required
                         class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">
                         @foreach ($id_type as $categorie)
                             @if($categorie->id === $service->id_type)
@@ -42,12 +42,12 @@
                         @endforeach
                     </select>
 
-                    <label for="service_duree" class="text-sm font-medium">Durée<span class="text-red-500">*</span></label>
-                    <input type="number" name="service_duree" id="service_duree" required value="{{ $service->duree }}"
+                    <label for="duree" class="text-sm font-medium">Durée<span class="text-red-500">*</span></label>
+                    <input type="number" name="duree" id="service_duree" required value="{{ $service->duree }}"
                         class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">
 
-                    <label for="service_description" class="text-sm font-medium">Description</label>
-                    <textarea type="text" name="service_description" id="service_description" maxlength="255"
+                    <label for="description" class="text-sm font-medium">Description</label>
+                    <textarea type="text" name="description" id="service_description" maxlength="255"
                         class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">{{ $service->description }}
                     </textarea>
 

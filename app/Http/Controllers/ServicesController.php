@@ -7,6 +7,7 @@ use App\Models\Services;
 use App\Models\TypesServices;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Database\QueryException;
 
 class ServicesController extends Controller
 {
@@ -60,11 +61,33 @@ class ServicesController extends Controller
     public function store(Request $request)
     {
         $service = new Services;
-        $service->name = $request->service_name;
-        $service->description = $request->service_description;
-        $service->id_type = $request->service_categorie;
-        $service->duree = $request->service_duree;
-        $service->save();
+
+        $service->name = $request->name;
+        $service->description = $request->description;
+        $service->id_type = $request->categorie;
+        $service->duree = $request->duree;
+        try{
+            $service->save();
+            if (request()->is('api/*')) {
+                return response()->json([
+                    'SUCCÈS' => 'Service ajouté avec succès',
+                    'data' => new ServicesResource($service)
+                ], 200);
+            } else {
+                session()->flash('success', 'Service ajouté avec succès');
+                return redirect()->route('services');
+            }
+        }
+        catch (QueryException $erreur) {
+            report($erreur);
+            if (request()->is('api/*')) {
+                return response()->json(['ERREUR' => 'Le service n\'a pas été ajouté - ' . $erreur->getMessage()], 500);
+            } else {
+                session()->flash('error', 'Le service n\'a pas été ajouté');
+                return redirect()->route('services');
+            }
+        }
+
 
         return redirect()->route('services')->with('success', 'Le service \"' . $service->name . '\" a été ajouté.');
     }
@@ -114,15 +137,31 @@ class ServicesController extends Controller
     public function update(Request $request, int $id)
     {
         $service = Services::findOrFail($id);
-        $service->name = $request->service_name;
-        $service->description = $request->service_description;
-        $service->id_type = $request->service_categorie;
-        $service->duree = $request->service_duree;
-        if($service->save()){
-            session('error', '');
+        $service->name = $request->name;
+        $service->description = $request->description;
+        $service->id_type = $request->categorie;
+        $service->duree = $request->duree;
+                try{
+            $service->save();
+            if (request()->is('api/*')) {
+                return response()->json([
+                    'SUCCÈS' => 'Le service \'' . $service->name . '\' a été modifié',
+                    'data' => new ServicesResource($service)
+                ], 200);
+            } else {
+                session()->flash('success', 'Le service \'' . $service->name . '\' a été modifié');
+                return redirect()->route('services');
+            }
         }
-
-        return redirect()->route('services')->with('success', 'Le service \"' . $service->name . '\" a été modifié.');
+        catch (QueryException $erreur) {
+            report($erreur);
+            if (request()->is('api/*')) {
+                return response()->json(['ERREUR' => 'Le service \'' . $service->name . '\' n\'a pas été modifié - ' . $erreur->getMessage()], 500);
+            } else {
+                session()->flash('error', 'Le service \'' . $service->name . '\' n\'a pas été modifié');
+                return redirect()->route('services');
+            }
+        }
     }
 
     /**

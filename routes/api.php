@@ -49,10 +49,12 @@ Route::controller(ServicesController::class)->group(function() {
     Route::put('/services/update/{id}', 'update')->name('api.services.update');
     Route::get('/services/destroy/{id}', 'destroy')->name('api.services.destroy');
     Route::get('/services/{id}', 'show')->name('api.services.show');
+});
 
 // -----------------------------------------------------------------------
 // UTILISATEURS - Alexandre
-// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------]
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::controller(UserController::class)->group(function(){
         Route::post('utilisateurAdd', 'store')->name('api.utilisateurAdd');
