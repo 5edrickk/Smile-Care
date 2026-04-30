@@ -6,6 +6,7 @@ use App\Models\Roles;
 use App\Models\User;
 use App\Http\Resources\UserResource;
 use App\Models\RendezVous;
+use App\Models\Shift;
 use App\Models\Services;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -286,6 +287,7 @@ class UserController extends Controller
     public function destroy(int $id) {
         $user = User::find($id);
         $rdv = RendezVous::where('id_dentiste', '=', $id)->delete();
+        Shift::where('id_user', '=', $id)->delete();
 
         $oldName = $user->name;
 
