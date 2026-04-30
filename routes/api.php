@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\PaiementController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RendezVousController;
@@ -42,9 +43,9 @@ Route::middleware('auth:sanctum')->group(function () {
 // UTILISATEURS - Alexandre
 // -----------------------------------------------------------------------
 Route::controller(UserController::class)->group(function(){
-    Route::post('api/utilisateurAdd', 'store')->name('api.utilisateurAdd');
-    Route::get('api/utilisateur/{id}', 'show')->name('api.utilisateur.show');
-    Route::delete('api/utilisateurDelete/{id}', 'destroy')->name('api.utilisateurDelete');
+    Route::post('/utilisateurAdd', 'store')->name('api.utilisateurAdd');
+    Route::get('/utilisateur/{id}', 'show')->name('api.utilisateur.show');
+    Route::delete('/utilisateurDelete/{id}', 'destroy')->name('api.utilisateurDelete');
 });
 
 // -----------------------------------------------------------------------

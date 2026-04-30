@@ -83,3 +83,5 @@
     </div>
 </body>
 @vite('resources/js/rendezVous-search.js')
+
+<x-footer/>
