@@ -43,7 +43,6 @@ Route::middleware('auth:sanctum')->group(function () {
 // -----------------------------------------------------------------------
 // SERVICES - Bernardo
 // -----------------------------------------------------------------------
-
 Route::controller(ServicesController::class)->group(function() {
     Route::get('/services', 'index')->name('api.services');
     Route::post('/services/store', 'store')->name('api.services.store');
