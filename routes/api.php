@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\PaiementController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Support\Facades\Route;
@@ -42,7 +43,6 @@ Route::middleware('auth:sanctum')->group(function () {
 // -----------------------------------------------------------------------
 // SERVICES - Bernardo
 // -----------------------------------------------------------------------
-
 Route::controller(ServicesController::class)->group(function() {
     Route::get('/services', 'index')->name('api.services');
     Route::post('/services/store', 'store')->name('api.services.store');
@@ -53,13 +53,11 @@ Route::controller(ServicesController::class)->group(function() {
 
 // -----------------------------------------------------------------------
 // UTILISATEURS - Alexandre
-// -----------------------------------------------------------------------]
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::controller(UserController::class)->group(function(){
-        Route::post('utilisateurAdd', 'store')->name('api.utilisateurAdd');
-        Route::get('utilisateurDelete/{id}', 'destroy')->name('api.utilisateurDelete');
-    });
+// -----------------------------------------------------------------------
+Route::controller(UserController::class)->group(function(){
+    Route::post('/utilisateurAdd', 'store')->name('api.utilisateurAdd');
+    Route::get('/utilisateur/{id}', 'show')->name('api.utilisateur.show');
+    Route::delete('/utilisateurDelete/{id}', 'destroy')->name('api.utilisateurDelete');
 });
 
 // -----------------------------------------------------------------------

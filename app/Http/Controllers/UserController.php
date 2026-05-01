@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Roles;
 use App\Models\User;
+use App\Http\Resources\UserResource;
 use App\Models\RendezVous;
+use App\Models\Shift;
 use App\Models\Services;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -149,7 +151,7 @@ class UserController extends Controller
             'dateNaissance' => 'nullable|date',
             'addresse' => 'nullable|string|max:255',
             'telephone' => 'nullable|numeric',
-            'email' => 'required|string|max:255',
+            'email' => 'required|string|max:255|regex:/^[a-zA-Z0-9]*@[a-zA-Z0-9]*.com+$/u',
             'password' => 'required|string|max:255'
         ], [
             'name.required' => 'Veuillez entrez un nom.',
@@ -158,12 +160,19 @@ class UserController extends Controller
             'dateNaissance.required' => 'Veuillez entrez une date de naissance',
             'addresse.required' => 'Veuillez entrez une adresse',
             'telephone.required' => 'Veuillez entrez un numéro de téléphone',
+            'telephone.numeric' => 'Veuillez entrez seulement des numéros pour le téléphone',
             'email.required' => 'Veuillez entrez une adresse courriel',
+            'email.regex' => 'Veuillez entrez le Email avec le bon format (abc@def.com)',
             'password.required' => 'Veuillez entrez le mot de passe.'
         ]);
 
         if ($validation->fails())
-            return back()->withErrors($validation->errors())->withInput();
+            if(request()->is('api/*')) {
+                return ['erreur' => 'La vaidation a Fail'];
+            }
+            else {
+                return back()->withErrors($validation->errors())->withInput();
+            }
 
         $validated = $validation->validated();
 
@@ -171,13 +180,22 @@ class UserController extends Controller
         $user->name = $validated['name'];
         $user->prenom = $validated['prenom'];
         $user->id_role = $validated['id_role'];
-        if(isset($validated['dateNaissance'])) {
-            $user->dateNaissance = $validated['dateNaissance'];
-        }
+        $user->dateNaissance = $validated['dateNaissance'];
         $user->addresse = $validated['addresse'];
         $user->telephone = $validated['telephone'];
         $user->email = $validated['email'];
         $user->password = password_hash($validated['password'], PASSWORD_DEFAULT);
+
+        if(request()->is('api/*')) {
+            try {
+                $user->save();
+                return response()->json($user);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'error' => $e->getMessage()
+                ], 500);
+            }
+        }
 
 
         if($user->save())
@@ -190,6 +208,15 @@ class UserController extends Controller
 
     public function show(int $id) {
         $user = User::find($id);
+
+        if(request()->is('api/*')) {
+            if($user !== null) {
+                return new UserResource($user);
+            }
+            else {
+                return ['erreur' => 'utilisateur introuvable ou inexistant'];
+            }
+        }
 
         if($id >= 0) {
             return view('users/userEdit', [
@@ -212,7 +239,7 @@ class UserController extends Controller
             'dateNaissance' => 'required|date',
             'addresse' => 'required|string|max:255',
             'telephone' => 'required|numeric',
-            'email' => 'required|string|max:255',
+            'email' => 'required|string|max:255|regex:/^[a-zA-Z0-9]*@[a-zA-Z0-9]*.com+$/u',
             'password' => 'required|string|max:255',
             'myPassword' => 'required|string|max:255',
         ], [
@@ -222,8 +249,11 @@ class UserController extends Controller
             'dateNaissance.required' => 'Veuillez entrez une date de naissance',
             'addresse.required' => 'Veuillez entrez une adresse',
             'telephone.required' => 'Veuillez entrez un numéro de téléphone',
+            'telephone.numeric' => 'Veuillez entrez seulement des numéros pour le téléphone',
             'email.required' => 'Veuillez entrez une adresse courriel',
-            'password.required' => 'Veuillez entrez le mot de passe.'
+            'email.regex' => 'Veuillez entrez le Email avec le bon format (abc@def.com)',
+            'password.required' => 'Veuillez entrez le nouveau mot de passe.',
+            'myPassword.required' => 'Veuillez entrez votre mot de passe.',
         ]);
 
         if ($validation->fails())
@@ -257,9 +287,26 @@ class UserController extends Controller
     public function destroy(int $id) {
         $user = User::find($id);
         $rdv = RendezVous::where('id_dentiste', '=', $id)->delete();
+        Shift::where('id_user', '=', $id)->delete();
 
         $oldName = $user->name;
+
+        if(request()->is('api/*')) {
+            try {
+                $user->delete();
+                return [
+                    'name' => $oldName,
+                    'state' => 'deleted'
+                ];
+            } catch (\Exception $e) {
+                return response()->json([
+                    'error' => $e->getMessage()
+                ], 500);
+            }
+        }
+
         $user->delete();
+
         return back()->withSuccess($oldName . " a été supprimer avec succès !");
     }
 }
