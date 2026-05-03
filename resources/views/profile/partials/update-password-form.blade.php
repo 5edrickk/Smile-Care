@@ -1,11 +1,10 @@
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
-            Changer le mot de passe
+            {{ __('Changer le mot de passe') }}
         </h2>
         <p class="mt-1 text-sm text-gray-600">
-            Assurez-vous d'utiliser un mot de passe long et aléatoire
-            pour sécuriser votre compte.
+            {{ __('Assurez-vous d\'utiliser un mot de passe long et aléatoire pour sécuriser votre compte.') }}
         </p>
     </header>
 
@@ -39,13 +38,13 @@
 
         <div class="flex items-center gap-4">
             <x-primary-button>
-                Enregistrer
+                {{ __('Enregistrer') }}
             </x-primary-button>
 
             @if (session('status') === 'password-updated')
                 <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
                     class="text-sm text-gray-600">
-                    Mot de passe mis à jour.
+                    {{ __('Mot de passe mis à jour.') }}
                 </p>
             @endif
         </div>
