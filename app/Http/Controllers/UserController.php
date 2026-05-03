@@ -74,7 +74,7 @@ class UserController extends Controller
                         break;
                     }
                 }
-                return view('usersView', [
+                return view('/users/usersView', [
                     'users' => $users,
                     'id_role' => $id_role,
                     'max_pages' => ceil(count($allUsers) / $amount) - 1,
@@ -101,7 +101,7 @@ class UserController extends Controller
                     }
                 }
                 $unique = collect($users)->unique()->values()->all();
-                return view('usersView', [
+                return view('/users/usersView', [
                     'users' => $unique,
                     'id_role' => $id_role,
                     'max_pages' => ceil(count($allUsers) / $amount) - 1,
@@ -135,7 +135,7 @@ class UserController extends Controller
             }
         }
 
-        return view('usersView', [
+        return view('/users/usersView', [
             'users' => $users,
             'id_role' => $id_role,
             'max_pages' => ceil(count($allUsers) / $amount) - 1,
