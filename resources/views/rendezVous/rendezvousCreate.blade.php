@@ -1,12 +1,12 @@
-<x-header/>
+<x-header />
+
 <body class="bg-[#EBEBEB]">
-    <div class="flex
-                max-w-full min-h-[80vh]">
-        <x-article/>
-        <div class="py-8 w-[80%]">
+    <div class="flex min-h-[80vh] max-w-full">
+        <x-article />
+        <div class="w-[80%] py-8">
             <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
                 <div class="overflow-hidden rounded-lg bg-white shadow-md">
-                    <div class="bg-cyan-500 px-6 py-5 text-white">
+                    <div class="bg-[#009CCF] px-6 py-5 text-white">
                         <span class="text-base font-semibold">{{ __('Détails du rendez-vous') }}</span>
                     </div>
 
@@ -17,7 +17,7 @@
                             <label class="block text-sm font-medium text-gray-700">{{ __('Client') }}<span
                                     class="text-red-500">*</span></label>
                             <select name="id_user" required
-                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">
+                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-[#009CCF]">
                                 <option value="">{{ __('Sélectionner un client') }}</option>
                                 @foreach ($clients as $client)
                                     <option value="{{ $client->id }}"
@@ -32,7 +32,7 @@
                             <label class="block text-sm font-medium text-gray-700">{{ __('Dentiste') }}<span
                                     class="text-red-500">*</span></label>
                             <select name="id_dentiste" required
-                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">
+                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-[#009CCF]">
                                 <option value="">{{ __('Sélectionner un dentiste') }}</option>
                                 @foreach ($dentistes as $dentiste)
                                     <option value="{{ $dentiste->id }}"
@@ -47,7 +47,7 @@
                             <label class="block text-sm font-medium text-gray-700">{{ __('État') }}<span
                                     class="text-red-500">*</span></label>
                             <select name="id_etat" required
-                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">
+                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-[#009CCF]">
                                 <option value="">{{ __('Sélectionner un état') }}</option>
                                 @foreach ($etatsRendezVous as $etat)
                                     <option value="{{ $etat->id }}"
@@ -62,7 +62,7 @@
                             <label class="block text-sm font-medium text-gray-700">{{ __('Service') }}<span
                                     class="text-red-500">*</span></label>
                             <select name="id_service" required
-                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">
+                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-[#009CCF]">
                                 <option value="">{{ __('Sélectionner un service') }}</option>
                                 @foreach ($services as $service)
                                     <option value="{{ $service->id }}"
@@ -78,7 +78,7 @@
                             <label class="block text-sm font-medium text-gray-700">{{ __('Date et heure') }}<span
                                     class="text-red-500">*</span></label>
                             <input type="datetime-local" name="heure_date" id="heure_date" required
-                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400"
+                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-[#009CCF]"
                                 value="{{ old('heure_date') }}" />
                         </div>
                         <script>
@@ -106,7 +106,7 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-700">{{ __('Commentaire') }}</label>
                             <textarea name="commentaire" rows="3"
-                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">{{ old('commentaire') }}</textarea>
+                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-[#009CCF]">{{ old('commentaire') }}</textarea>
                         </div>
 
                         <div class="flex items-center justify-end gap-3 pt-2">
@@ -115,7 +115,7 @@
                                 {{ __('Annuler') }}
                             </a>
                             <button type="submit"
-                                class="rounded-lg bg-cyan-500 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-600">
+                                class="rounded-lg bg-[#009CCF] px-4 py-2 text-sm font-semibold text-white hover:bg-[#009CCF] hover:text-white">
                                 {{ __('Créer') }}
                             </button>
                         </div>
@@ -126,4 +126,4 @@
     </div>
 </body>
 
-<x-footer/>
+<x-footer />

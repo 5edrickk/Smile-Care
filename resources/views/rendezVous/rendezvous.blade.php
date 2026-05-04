@@ -20,7 +20,7 @@
                 @endif
 
 
-                {{-- Barre de recherche, faudra changer apres pour utilisr livewire --}}
+                {{-- Barre de recherche --}}
                 <div class="mb-6 flex gap-2">
                     <input id="search-input" placeholder="{{ __('Chercher un patient...') }}"
                         class="w-full rounded-lg border border-gray-500 bg-white px-3 py-2.5 text-lg">
@@ -35,7 +35,7 @@
                 </div>
                 <div class="mb-6 flex justify-end">
                     <a href="{{ route('rendezvousCreate') }}"
-                        class="text-md rounded-lg border border-cyan-400 bg-white px-4 py-2 font-semibold text-cyan-500 shadow-sm hover:bg-cyan-50">
+                        class="text-md rounded-lg border border-[#009CCF] bg-white px-4 py-2 font-semibold text-[#009CCF] shadow-sm hover:bg-[#009CCF] hover:text-white">
                         {{ __('Créer un rendez-vous') }}
                     </a>
                 </div>
@@ -49,9 +49,9 @@
                             </div>
                         @else
                             @foreach ($rendezVous as $rdv)
-                                <div class="overflow-hidden rounded-lg shadow-md">
+                                <div class="mb-4 overflow-hidden rounded-lg shadow-md">
                                     <a href="{{ route('rendezvousID', ['id' => $rdv->id]) }}">
-                                        <div class="bg-cyan-500 px-4 py-2 text-white">
+                                        <div class="bg-[#009CCF] px-4 py-2 text-white">
                                             <p class="font-semibold">{{ $rdv->formaterDate() }}</p>
                                             <p class="text-sm">{{ $rdv->formaterHeure() }}</p>
                                         </div>
@@ -84,4 +84,4 @@
 </body>
 @vite('resources/js/rendezVous-search.js')
 
-<x-footer/>
+<x-footer />

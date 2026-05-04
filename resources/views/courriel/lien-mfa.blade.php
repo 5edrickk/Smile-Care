@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <style>
@@ -9,6 +10,7 @@
             margin: 0;
             padding: 0;
         }
+
         .container {
             max-width: 600px;
             margin: 40px auto;
@@ -17,22 +19,26 @@
             padding: 40px;
             border: 1px solid #e0e0e0;
         }
+
         .logo {
             font-size: 22px;
             font-weight: bold;
             color: #1a73e8;
             margin-bottom: 24px;
         }
+
         h1 {
             font-size: 20px;
             color: #1a1a1a;
             margin-bottom: 12px;
         }
+
         p {
             font-size: 15px;
             color: #444;
             line-height: 1.6;
         }
+
         .btn {
             display: inline-block;
             margin: 24px 0;
@@ -44,11 +50,13 @@
             font-size: 15px;
             font-weight: bold;
         }
+
         .expire {
             font-size: 13px;
             color: #888;
             margin-top: 16px;
         }
+
         .footer {
             margin-top: 32px;
             font-size: 12px;
@@ -58,30 +66,32 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="logo">SmileCare</div>
 
-        <h1>Bonjour {{ $prenom }},</h1>
+        <h1>{{ __('Bonjour') }} {{ $prenom }},</h1>
 
         <p>
-            Une tentative de connexion a été détectée sur votre compte.
-            Pour compléter votre authentification, cliquez sur le bouton ci-dessous.
+            {{ __('Une tentative de connexion a été détectée sur votre compte.') }}
+            {{ __('Pour compléter votre authentification, cliquez sur le bouton ci-dessous.') }}
         </p>
 
         <a href="{{ $lienVerification }}" class="btn">
-            Vérifier ma connexion
+            {{ __('Vérifier ma connexion') }}
         </a>
 
         <p class="expire">
-            Ce lien expire dans {{ $expiration }} minutes.
-            Si vous n'avez pas tenté de vous connecter, ignorez ce courriel.
+            {{ __('Ce lien expire dans') }} {{ $expiration }} {{ __('minutes.') }}
+            {{ __('Si vous n\'avez pas tenté de vous connecter, ignorez ce courriel.') }}
         </p>
 
         <div class="footer">
-            SmileCare — Clinique dentaire<br>
-            Ce courriel a été envoyé automatiquement, merci de ne pas y répondre.
+            SmileCare — {{ __('Clinique dentaire') }}<br>
+            {{ __('Ce courriel a été envoyé automatiquement, merci de ne pas y répondre.') }}
         </div>
     </div>
 </body>
+
 </html>

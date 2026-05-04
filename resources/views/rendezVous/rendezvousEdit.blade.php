@@ -6,7 +6,7 @@
         <div class="w-[80%] py-8">
             <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
                 <div class="overflow-hidden rounded-lg bg-white shadow-md">
-                    <div class="bg-cyan-500 px-6 py-5 text-white">
+                    <div class="bg-[#009CCF] px-6 py-5 text-white">
                         <span class="text-base font-semibold">{{ __('Détails du rendez-vous') }}</span>
                     </div>
 
@@ -30,7 +30,7 @@
                             <label class="block text-sm font-medium text-gray-700">{{ __('Dentiste') }}<span
                                     class="text-red-500">*</span></label>
                             <select name="id_dentiste" required
-                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400"
+                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-[#009CCF]"
                                 id="id_dentiste">
                                 <option value="">{{ __('Sélectionner un dentiste') }}</option>
                                 @foreach ($dentistes as $dentiste)
@@ -49,7 +49,7 @@
                             <label class="block text-sm font-medium text-gray-700">{{ __('État') }}<span
                                     class="text-red-500">*</span></label>
                             <select name="id_etat" required
-                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400"
+                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-[#009CCF]"
                                 id="id_etat">
                                 <option value="">{{ __('Sélectionner un état') }}</option>
                                 @foreach ($etatsRendezVous as $etat)
@@ -68,7 +68,7 @@
                             <label class="block text-sm font-medium text-gray-700">{{ __('Service') }}<span
                                     class="text-red-500">*</span></label>
                             <select name="id_service" required
-                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400"
+                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-[#009CCF]"
                                 id="id_service">
                                 <option value="">{{ __('Sélectionner un service') }}</option>
                                 @foreach ($services as $service)
@@ -88,7 +88,7 @@
                             <label class="block text-sm font-medium text-gray-700">{{ __('Date et heure') }}<span
                                     class="text-red-500">*</span></label>
                             <input type="datetime-local" name="heure_date" id="heure_date" required
-                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400"
+                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-[#009CCF]"
                                 id="heure_date" value="{{ old('heure_date', $rendezVous->heure_date) }}" />
                             <p class="mt-1 hidden text-sm text-red-600" id="erreur-heure_date"></p>
                             <x-input-error :messages="$errors->get('heure_date')" class="mt-2" />
@@ -120,7 +120,7 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-700">{{ __('Commentaire') }}</label>
                             <textarea name="commentaire" rows="3"
-                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">{{ old('commentaire', $rendezVous->commentaire) }}</textarea>
+                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-[#009CCF]">{{ old('commentaire', $rendezVous->commentaire) }}</textarea>
                         </div>
 
                         {{-- Boutons --}}
@@ -130,7 +130,7 @@
                                 {{ __('Annuler') }}
                             </a>
                             <button type="submit"
-                                class="rounded-lg bg-cyan-500 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-600">
+                                class="rounded-lg bg-[#009CCF] px-4 py-2 text-sm font-semibold text-white hover:bg-[#009CCF] hover:text-white">
                                 {{ __('Modifier') }}
                             </button>
                         </div>
@@ -142,4 +142,4 @@
     @vite('resources/js/rendezVous-validation.js')
 </body>
 
-<x-footer/>
+<x-footer />

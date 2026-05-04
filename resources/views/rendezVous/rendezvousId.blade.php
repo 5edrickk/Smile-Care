@@ -1,13 +1,13 @@
-<x-header/>
+<x-header />
+
 <body class="bg-[#EBEBEB]">
-    <div class="flex
-                max-w-full min-h-[80vh]">
-        <x-article/>
-        <div class="py-8 w-[80%]">
+    <div class="flex min-h-[80vh] max-w-full">
+        <x-article />
+        <div class="w-[80%] py-8">
             <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
 
                 <div class="overflow-hidden rounded-lg bg-white shadow-md">
-                    <div class="flex items-center justify-between bg-cyan-500 px-6 py-5 text-white">
+                    <div class="flex items-center justify-between bg-[#009CCF] px-6 py-5 text-white">
                         <div class="text-base font-semibold">
                             <span class="font-semibold"> {{ $rendezVous->user->name . ' ' . $rendezVous->user->prenom }}
                             </span>
@@ -43,7 +43,8 @@
                             <div class="flex flex-col gap-2">
                                 <p class="mt-1 border-b border-gray-300 pb-2 text-sm text-gray-900">
                                     Nom du service : {{ $rendezVous->service->name }}</p>
-                                <p class="mt-1 text-sm text-gray-900">Description : {{ $rendezVous->service->description }}
+                                <p class="mt-1 text-sm text-gray-900">Description :
+                                    {{ $rendezVous->service->description }}
                                 </p>
                             </div>
                         </div>
@@ -71,8 +72,8 @@
                     </div>
                     <div class="flex justify-end gap-3 px-6 py-5">
                         <a href="{{ route('rendezvousEdit', ['id' => $rendezVous->id]) }}"
-                            class="text-md rounded-lg border border-cyan-400 bg-white px-4 py-2 font-semibold text-cyan-500 shadow-sm hover:bg-cyan-50">
-                            <p class="">Modifier</p>
+                            class="text-md rounded-lg border border-[#009CCF] bg-white px-4 py-2 font-semibold text-[#009CCF] shadow-sm hover:bg-[#009CCF] hover:text-white">
+                            {{ __('Modifier') }}
                         </a>
 
                         <form method="POST" action="{{ route('rendezvousDestroy') }}">
@@ -80,7 +81,7 @@
                             <button type="submit" name="id_rendez_vous" value="{{ $rendezVous->id }}"
                                 class="inline-flex items-center justify-center gap-2 rounded-lg border border-transparent bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:bg-red-800">
                                 <x-heroicon-o-trash class="h-4 w-4 text-white" />
-                                <p class="text-sm font-semibold text-white">Supprimer</p>
+                                <p class="text-sm font-semibold text-white">{{ __('Supprimer') }}</p>
                             </button>
                         </form>
 
@@ -92,4 +93,4 @@
     </div>
 </body>
 
-<x-footer/>
+<x-footer />
