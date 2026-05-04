@@ -223,6 +223,6 @@ php artisan migrate --seed
 | **MySQL** | Base de données relationnelle |
 | **Docker** | Environnement de développement |
 | **Laravel Sanctum** | Authentification API par token |
-| **Mailtrap / SMTP** | Envoi de courriels (MFA, notifications) |
+| **MailHog** | Envoi et test de courriels en local (MFA, notifications) |
 | **Postman** | Test de l'API REST |
 | **Git / GitHub** | Gestion de version et collaboration |
