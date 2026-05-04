@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'SmileCare'),
 
     /*
     |--------------------------------------------------------------------------
@@ -78,9 +78,9 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'fr'),
+    'locale' => env('APP_LOCALE', 'fr_CA'),
 
-    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'fr'),
+    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'fr_CA'),
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'fr_CA'),
 
