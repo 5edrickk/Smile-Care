@@ -9,8 +9,6 @@ use App\Http\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MfaController;
 use App\Http\Controllers\PaiementController;
-use App\Models\Roles;
-use Illuminate\Support\Str;
 
 // Route::controller(NomDuControleur::class)->group(function() {
 //     Route::get('/Route', 'MethodeDuControleur')->name('NomDeLaRoute');
@@ -22,12 +20,7 @@ use Illuminate\Support\Str;
 // NomDuControleur--> c'est le nom du contrôleur que l'on va utiliser pour afficher la page
 
 Route::get('/', function () {
-    $role = null;
-    $role = 'bosta';
-    if (auth()->user() != null) {
-        $role = Str::lower(Roles::where('id', auth()->user()->id_role)->value('name'));
-    }
-    return view('welcome', ['role' => $role]);
+    return view('welcome');
 })->name('pageeinitial');
 
 Route::middleware('auth')->group(function () {
