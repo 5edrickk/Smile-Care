@@ -9,7 +9,7 @@ use App\Http\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MfaController;
 use App\Http\Controllers\PaiementController;
-
+use App\Http\Controllers\LangController;
 // Route::controller(NomDuControleur::class)->group(function() {
 //     Route::get('/Route', 'MethodeDuControleur')->name('NomDeLaRoute');
 //     });
@@ -84,6 +84,10 @@ Route::controller(ServicesController::class)->group(function() {
     Route::put('/services/update/{id}', 'update')->name('services.update');
     Route::get('/services/destroy/{id}', 'destroy')->name('services.destroy');
     Route::get('/services/{id}', 'show')->name('services.show');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/lang/{locale}', [LangController::class, 'switch'])->name('lang.switch');
 });
 
 require __DIR__.'/auth.php';
