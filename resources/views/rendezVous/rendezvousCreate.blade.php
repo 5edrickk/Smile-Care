@@ -10,7 +10,8 @@
                         <span class="text-base font-semibold">{{ __('Détails du rendez-vous') }}</span>
                     </div>
 
-                    <form action="{{ route('rendezvousStore') }}" method="POST" class="space-y-4 px-6 py-6 shadow-2xl">
+                    <form action="{{ route('rendezvousStore') }}" method="POST" class="space-y-4 px-6 py-6 shadow-2xl"
+                        id="form-rendez-vous">
                         @csrf
 
                         <div>
@@ -26,6 +27,8 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <p class="mt-1 hidden text-sm text-red-600" id="erreur-id_user"></p>
+                            <x-input-error :messages="$errors->get('id_user')" class="mt-2" />
                         </div>
 
                         <div>
@@ -41,6 +44,8 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <p class="mt-1 hidden text-sm text-red-600" id="erreur-id_dentiste"></p>
+                            <x-input-error :messages="$errors->get('id_dentiste')" class="mt-2" />
                         </div>
 
                         <div>
@@ -56,6 +61,8 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <p class="mt-1 hidden text-sm text-red-600" id="erreur-id_etat"></p>
+                            <x-input-error :messages="$errors->get('id_etat')" class="mt-2" />
                         </div>
 
                         <div>
@@ -71,6 +78,8 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <p class="mt-1 hidden text-sm text-red-600" id="erreur-id_service"></p>
+                            <x-input-error :messages="$errors->get('id_service')" class="mt-2" />
                         </div>
 
                         {{-- Source: https://techsolutionstuff.com/post/how-to-use-flatpickr-in-laravel-10 --}}
@@ -80,6 +89,8 @@
                             <input type="datetime-local" name="heure_date" id="heure_date" required
                                 class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-[#009CCF]"
                                 value="{{ old('heure_date') }}" />
+                            <p class="mt-1 hidden text-sm text-red-600" id="erreur-heure_date"></p>
+                            <x-input-error :messages="$errors->get('heure_date')" class="mt-2" />
                         </div>
                         <script>
                             flatpickr("#heure_date", {
@@ -107,6 +118,8 @@
                             <label class="block text-sm font-medium text-gray-700">{{ __('Commentaire') }}</label>
                             <textarea name="commentaire" rows="3"
                                 class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-[#009CCF]">{{ old('commentaire') }}</textarea>
+                            <p class="mt-1 hidden text-sm text-red-600" id="erreur-commentaire"></p>
+                            <x-input-error :messages="$errors->get('commentaire')" class="mt-2" />
                         </div>
 
                         <div class="flex items-center justify-end gap-3 pt-2">
