@@ -1,3 +1,4 @@
+@vite(['resources/js/services-fetch.js'])
 <x-header/>
 <body class="bg-[#EBEBEB]">
     <div class="flex
