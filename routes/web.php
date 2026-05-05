@@ -76,14 +76,16 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::controller(ServicesController::class)->group(function() {
-    Route::get('/services', 'index')->name('services');
-    Route::get('/services/create', 'create')->name('services.create');
-    Route::post('/services/store', 'store')->name('services.store');
-    Route::get('/services/edit/{id}', 'edit')->name('services.edit');
-    Route::put('/services/update/{id}', 'update')->name('services.update');
-    Route::get('/services/destroy/{id}', 'destroy')->name('services.destroy');
-    Route::get('/services/{id}', 'show')->name('services.show');
+Route::middleware('auth')->group(function () {
+    Route::controller(ServicesController::class)->group(function() {
+        Route::get('/services', 'index')->name('services');
+        Route::get('/services/create', 'create')->name('services.create');
+        Route::post('/services/store', 'store')->name('services.store');
+        Route::get('/services/edit/{id}', 'edit')->name('services.edit');
+        Route::put('/services/update/{id}', 'update')->name('services.update');
+        Route::get('/services/destroy/{id}', 'destroy')->name('services.destroy');
+        Route::get('/services/{id}', 'show')->name('services.show');
+    });
 });
 
 require __DIR__.'/auth.php';
