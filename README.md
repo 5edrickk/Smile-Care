@@ -100,8 +100,8 @@ L'API permet à l'application mobile de communiquer avec le serveur. Elle utilis
 |---|---|---|
 | `GET` | `/api/services` | Lister tous les services |
 | `GET` | `/api/services/{id}` | Consulter un service |
-| `POST` | `/api/services` | Ajouter un service |
-| `PUT` | `/api/services/{id}` | Modifier un service |
+| `POST` | `/api/services/store` | Ajouter un service |
+| `PUT` | `/api/services/update/{id}` | Modifier un service |
 
 > **Note :** Toutes les routes API (sauf login) requièrent un header `Authorization: Bearer {token}`.  
 > Pour tester l'API, utilisez **Postman** en pointant sur `http://localhost/api/...`.
