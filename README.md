@@ -134,14 +134,14 @@ cd /home/www/
 
 ### 3. Cloner le dépôt
 ```bash
-git clone https://github.com/5edrickk/SmileCare.git
+git clone https://github.com/5edrickk/Smile-Care.git
 ```
 
 ---
 
 ### 4. Entrer dans le dossier du projet
 ```bash
-cd SmileCare
+cd Smile-Care
 ```
 
 ---
