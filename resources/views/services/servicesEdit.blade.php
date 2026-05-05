@@ -1,4 +1,6 @@
+@vite(['resources/js/services-validation.js'])
 <x-header/>
+
 <body class="bg-[#EBEBEB]">
     <div class="flex
                 max-w-full min-h-[80vh]">
@@ -10,7 +12,7 @@
                     Modifier service "{{ $service->name }}"
                 </div>
                 <form action="{{ route('services.update', ['id' => $service->id]) }}" method="POST"
-                    class="space-y-4 px-6 py-6 shadow-2xl">
+                    class="form-services space-y-4 px-6 py-6 shadow-2xl">
                     @csrf @method("put")
                     {{-- Messages flash --}}
                     @if (Session::has('succes'))
@@ -28,11 +30,11 @@
                     @endif
                     <label for="name" class="text-sm font-medium">Nom du service<span class="text-red-500">*</span></label>
                     <input type="text" name="name" id="service_name" required maxlength="255" value="{{ $service->name }}"
-                        class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">
+                        class="services-name mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">
 
                     <label for="categorie" class="text-sm font-medium">Catégorie<span class="text-red-500">*</span></label>
                     <select type="text" name="categorie" id="service_categorie" required
-                        class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">
+                        class="services-categorie mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">
                         @foreach ($id_type as $categorie)
                             @if($categorie->id === $service->id_type)
                                 <option value="{{ $categorie->id }}" selected>{{ $categorie->name }}</option>
@@ -44,11 +46,11 @@
 
                     <label for="duree" class="text-sm font-medium">Durée<span class="text-red-500">*</span></label>
                     <input type="number" name="duree" id="service_duree" required value="{{ $service->duree }}"
-                        class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">
+                        class="services-duree mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">
 
                     <label for="description" class="text-sm font-medium">Description</label>
                     <textarea type="text" name="description" id="service_description" maxlength="255"
-                        class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">{{ $service->description }}
+                        class="services-description mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-1 focus:ring-cyan-400">{{ $service->description }}
                     </textarea>
 
                     <div class="flex items-center justify-end gap-3 pt-2">
