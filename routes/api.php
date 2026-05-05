@@ -43,12 +43,19 @@ Route::middleware('auth:sanctum')->group(function () {
 // -----------------------------------------------------------------------
 // SERVICES - Bernardo
 // -----------------------------------------------------------------------
-Route::controller(ServicesController::class)->group(function() {
-    Route::get('/services', 'index')->name('api.services');
-    Route::post('/services/store', 'store')->name('api.services.store');
-    Route::put('/services/update/{id}', 'update')->name('api.services.update');
-    Route::get('/services/destroy/{id}', 'destroy')->name('api.services.destroy');
-    Route::get('/services/{id}', 'show')->name('api.services.show');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::controller(ServicesController::class)->group(function() {
+        Route::get('/services', 'index')->name('api.services');
+        Route::get('/services/destroy/{id}', 'destroy')->name('api.services.destroy');
+        Route::get('/services/{id}', 'show')->name('api.services.show');
+    });
+
+    Route::controller(ServicesController::class)
+    ->middleware(EnsureUserIsAdmin::class)
+    ->group(function() {
+        Route::post('/services/store', 'store')->name('api.services.store');
+        Route::put('/services/update/{id}', 'update')->name('api.services.update');
+    });
 });
 
 // -----------------------------------------------------------------------
