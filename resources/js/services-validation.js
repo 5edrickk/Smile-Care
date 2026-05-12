@@ -36,7 +36,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         "La durée doit être un chiffre",
                     );
                     valide = false;
-                } else if (!/\b([1-9]|[0-2][0-4])\b/.test(service_duree)) {
+                } else if (!/\b^([1-9]|[0-2][0-4])\b/.test(service_duree)) {
+
                     afficherErreur(
                         "service_duree",
                         "La durée doit se situer entre 1 et 24",
