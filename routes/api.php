@@ -76,8 +76,8 @@ Route::middleware('auth:sanctum')->group(function () {
 // -----------------------------------------------------------------------
 Route::middleware('auth:sanctum')->group(function () {
         Route::controller(RendezVousController::class)->group(function () {
-            Route::get('/rendezvous/{id}', 'show')->name('api.rendezvous.show');
             Route::get('/rendezvous/user/{id}', 'user')->name('api.rendezvous.showUser');
+            Route::get('/rendezvous/{id}', 'show')->name('api.rendezvous.show');
             Route::post('/rendezvous', 'store')->name('api.rendezvous.store');
             Route::put('/rendezvous/{id}', 'update')->name('api.rendezvous.update');
         });
