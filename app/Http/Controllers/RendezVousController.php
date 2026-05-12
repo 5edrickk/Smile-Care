@@ -142,6 +142,33 @@ class RendezVousController extends Controller
         }
     }
 
+    public function user(int $id)
+    {
+        if ($id >= 0) {
+            $rendezVous = RendezVous::where('id_user', $id)->get();
+        }
+        else {
+            return response()->json([
+                'ERREUR' => 'Identifiant de l\'utilisateur invalide ou absent'
+            ], 400);
+        }
+        if (request()->is('api/*')) {
+            if ($rendezVous) {
+                return response()->json([
+                    'data' => new RendezVousResource($rendezVous)
+                ], 200);
+            }
+            else {
+                return response()->json([
+                    'ERREUR' => 'Rendez-vous non trouvé'
+                ], 400);
+            }
+        }
+        else {
+
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
