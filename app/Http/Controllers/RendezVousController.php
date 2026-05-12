@@ -142,6 +142,21 @@ class RendezVousController extends Controller
         }
     }
 
+    public function user(int $id)
+    {
+        if ($id < 1) {
+            return response()->json([
+                'ERREUR' => 'Identifiant de l\'utilisateur invalide ou absent'
+            ], 400);
+        }
+
+        $rendezVous = RendezVous::where('id_user', $id)->with(['user', 'dentiste', 'service', 'etatsRendezVous'])->get();
+
+        return response()->json([
+            'data' => RendezVousResource::collection($rendezVous),
+        ], 200);
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
