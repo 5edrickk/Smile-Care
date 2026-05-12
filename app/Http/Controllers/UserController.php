@@ -51,7 +51,18 @@ class UserController extends Controller
         return $returnValues;
     }
 
-    public function index(Request $request, int $id_role, int $num_page) {
+    public function index(Request $request, int $id_role, int $num_page = 0) {
+
+        if(request()->is('api/*')) {
+            try {
+                $users = User::where('id_role', '=', $id_role)->get();
+                return response()->json($users);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'error' => $e->getMessage()
+                ], 500);
+            }
+        }
 
         $amount = 10;
         $min = ($num_page * $amount) + 1;

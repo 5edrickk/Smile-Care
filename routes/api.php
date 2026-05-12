@@ -67,6 +67,7 @@ Route::middleware('auth:sanctum')->group(function () {
     ->group(function(){
         Route::post('/utilisateurAdd', 'store')->name('api.utilisateurAdd');
         Route::get('/utilisateur/{id}', 'show')->name('api.utilisateur.show');
+        Route::get('/utilisateurs/{id_role}', 'index')->name('api.utilisateurs.index');
         Route::delete('/utilisateurDelete/{id}', 'destroy')->name('api.utilisateurDelete');
     });
 });
