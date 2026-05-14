@@ -295,6 +295,65 @@ class UserController extends Controller
         return back()->with('success', 'Le profile de ' . $oldName . ' a été modifié avec succès !');
     }
 
+    public function putEdit(Request $request, $id) {
+        $validation = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'dateNaissance' => 'required|date',
+            'addresse' => 'required|string|max:255',
+            'telephone' => 'required|numeric',
+            'email' => 'required|string|max:255|regex:/^[a-zA-Z0-9]*@[a-zA-Z0-9]*.com+$/u',
+        ], [
+            'name.required' => 'Veuillez entrez un nom.',
+            'prenom.required' => 'Veuillez entrez un prénom.',
+            'dateNaissance.required' => 'Veuillez entrez une date de naissance',
+            'addresse.required' => 'Veuillez entrez une adresse',
+            'telephone.required' => 'Veuillez entrez un numéro de téléphone',
+            'telephone.numeric' => 'Veuillez entrez seulement des numéros pour le téléphone',
+            'email.required' => 'Veuillez entrez une adresse courriel',
+            'email.regex' => 'Veuillez entrez le Email avec le bon format (abc@def.com)',
+        ]);
+
+        if ($validation->fails()) {
+            if(request()->is('api/*')) {
+                return response()->json([
+                    'error' => "Validator failed"
+                ], 500);
+            }
+            return back()->withErrors($validation->errors())->withInput();
+        }
+
+        if(!password_verify($request->myPassword, User::find($id)->password)) {
+            if(request()->is('api/*')) {
+                return response()->json([
+                    'error' => "Votre mot de passe est incorrect !"
+                ], 500);
+            }
+            return back()->withErrors(['Votre mot de passe est incorrect !']);
+        }
+
+        $validated = $validation->validated();
+
+        $returnValues = [
+            'name' => $validated['name'],
+            'prenom' => $validated['prenom'],
+            'dateNaissance' => $validated['dateNaissance'],
+            'addresse' => $validated['addresse'],
+            'telephone' => $validated['telephone'],
+            'email' => $validated['email'],
+        ];
+
+        $user = User::findOrFail($id);
+        $oldName = $user->name;
+
+        $user->update($returnValues);
+
+        if(request()->is('api/*')) {
+            return response()->json($user);
+        }
+        return back()->with('success', 'Le profile de ' . $oldName . ' a été modifié avec succès !');
+    }
+
     public function destroy(int $id) {
         $user = User::find($id);
         $rdv = RendezVous::where('id_dentiste', '=', $id)->delete();
