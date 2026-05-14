@@ -60,11 +60,14 @@ Route::middleware('auth:sanctum')->group(function () {
 // -----------------------------------------------------------------------
 // UTILISATEURS - Alexandre
 // -----------------------------------------------------------------------
-Route::middleware('auth:sanctum')->group(function () {
-    Route::controller(UserController::class)
-    ->middleware(EnsureUserIsAdmin::class)
-    ->group(function(){
+Route::controller(UserController::class)->group(function(){
         Route::post('/utilisateurAdd', 'store')->name('api.utilisateurAdd');
+});
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::controller(UserController::class)->group(function(){
+        Route::put('utilisateurEdit/{id}', 'putEdit')->name('api.utilisateurEdit');
         Route::get('/utilisateur/{id}', 'show')->name('api.utilisateur.show');
         Route::get('/utilisateurs/{id_role}', 'index')->name('api.utilisateurs.index');
         Route::delete('/utilisateurDelete/{id}', 'destroy')->name('api.utilisateurDelete');
