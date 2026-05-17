@@ -1,4 +1,4 @@
-# 🦷 SmileCare — Système de gestion de clinique dentaire
+# 🦷 SmileCare - Système de gestion de clinique dentaire
 
 SmileCare est une application Web développée avec **Laravel** dans le cadre du projet intégrateur du programme **Techniques de l'informatique** au Cégep de Sherbrooke. Elle permet à une clinique dentaire de gérer ses utilisateurs (dentistes, réceptionnistes, administrateurs), ses rendez-vous, ses paiements et ses services/traitements, le tout depuis une interface Web sécurisée.
 
