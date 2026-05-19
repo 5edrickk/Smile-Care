@@ -20,13 +20,16 @@ class ServicesController extends Controller
         if($services){
             $typesServices = TypesServices::All();
             if(request()->is('api/*')) {
-                $servicesAray = [];
+                $servicesArray = [];
 
                 foreach ($services as $service) {
                     $element = new ServicesResource($service);
-                    array_push($servicesAray, $element);
+                    $element['id_type'] = TypesServices::find($element['id_type'])->name;
+
+                    array_push($servicesArray, $element);
                 }
-                return $servicesAray;
+
+                return $servicesArray;
             }
             else {
                 return view('services/services', ['typesServices' => $typesServices, 'services' => $services]);
