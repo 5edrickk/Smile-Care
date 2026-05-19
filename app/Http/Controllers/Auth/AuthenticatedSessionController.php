@@ -86,7 +86,8 @@ class AuthenticatedSessionController extends Controller
 
         // Générer et retourner le token
         return response()->json([
-            'SUCCÈS' => $utilisateur->createToken($request->nom_token)->plainTextToken
+            'SUCCÈS' => $utilisateur->createToken($request->nom_token)->plainTextToken,
+            'id' => $utilisateur->id,
         ], 200);
     }
 }
